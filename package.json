@@ -1,0 +1,24 @@
+{
+  "name": "cluedo",
+  "version": "1.0.0",
+  "description": "Jeu de cluedo",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CIASIE-2018/Cluedo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CIASIE-2018/Cluedo/issues"
+  },
+  "homepage": "https://github.com/CIASIE-2018/Cluedo#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "twig": "^1.12.0"
+  }
+}
