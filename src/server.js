@@ -2,7 +2,8 @@ let express = require('express')
 
 let app = express()
 
-app.set('view engine', 'twig')
+app.set('view engine', 'twig');
+app.set("views", "./src/views");
 
 app.use('/assets',express.static('public'))
 
