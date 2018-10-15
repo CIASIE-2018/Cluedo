@@ -1,9 +1,14 @@
 <html>
     <head>
         <link rel="stylesheet" href="/assets/semantic/semantic.min.css">
-        {# {{header}} #}
+        <link rel="stylesheet" href="/assets/css/custom-header.css">
+        <link rel="stylesheet" href="/assets/css/custom-footer.css">
     </head>
     <body>
-        <h1>CLUEDO</h1>
+        {% include 'header.twig' %}
+
+        {% include 'plateau.twig' %}
+
+        {% include 'footer.twig' %}
     </body>
 </html>

@@ -1,0 +1,15 @@
+#grey-back {
+    background-color: #dcddde;
+}
+
+#bottom-0 {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+#FlexRight {
+    display: flex;
+    justify-content: flex-end;
+}
