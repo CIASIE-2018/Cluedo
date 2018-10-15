@@ -1,37 +1,26 @@
-class Grid {
-    contructor(){
-        const read = function () {
-            var fs = require("fs");
-            var buf = new Buffer(1024);
-    
-            console.log("Going to open an existing file");
-            fs.open('grid.txt', 'r+', function(err, fd) {
-               if (err) {
-                  return console.error(err);
-               }
-               console.log("File opened successfully!");
-               console.log("Going to read the file");
-               
-               fs.read(fd, buf, 0, buf.length, 0, function(err, bytes){
-                  if (err){
-                     console.log(err);
-                  }
-            
-                  // Print only read bytes to avoid junk.
-                  if(bytes > 0){
-                     console.log(buf.slice(0, bytes).toString());
-                  }
-            
-                  // Close the opened file.
-                  fs.close(fd, function(err){
-                     if (err){
-                        console.log(err);
-                     } 
-                     console.log("File closed successfully.");
-                  });
-               });
+class GridController {
+    constructor(){
+            const fs = require("fs");
+            var contents = fs.readFileSync("src/controller/grid.txt", 'utf8');
+            let i = 0;
+            let x = 0;
+            let y = 0;
+            let grid= new Array(25);
+            grid[y]= new Array(25)
+            while(i<contents.length){
+                if(contents[i]=='\n'){
+                    y++;
+                    grid[y]= new Array(x)
+                    x=0;
+                }else{
+                    grid[y][x] = contents[i];
+                    x++;
+                }
+                i++;
+            }
+            grid.forEach(element => {
+                console.log(element.toString())
             });
-        }
     }
 }
 module.exports = GridController;
