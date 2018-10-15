@@ -1,6 +1,9 @@
 {% for i in 0..24 %}
     {% for j in 0..24 %}
-        <button id="MyCustomButton">X</button>
+        <button id="MyCustomButton">{{ test[i][j] }}</button>
     {% endfor %}
     </br>
 {% endfor %}
+
+{{ grille }}
+{{ grille[1][1] }}
