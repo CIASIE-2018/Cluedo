@@ -1,0 +1,15 @@
+#margin-button {
+    margin: 0;
+}
+
+#MyCustomButton {
+    border: solid orange 0.2px;
+    background-color: white; 
+    height: 30px;
+    width: 30px;
+    margin-right: -4px;
+}
+
+.font-i {
+    font-size: 5px;
+}
