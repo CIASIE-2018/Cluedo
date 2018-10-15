@@ -1,4 +1,5 @@
     let Player = require('./PlayerController');
+    let Grid = require('./GridController');
 
     const start = function() {
         /*let LogService = require('../service/logService');
