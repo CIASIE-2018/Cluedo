@@ -19,7 +19,9 @@
   "homepage": "https://github.com/CIASIE-2018/Cluedo#readme",
   "dependencies": {
     "express": "^4.16.3",
+    "fs-js": "^1.0.6",
     "nodemon": "^1.18.4",
+    "service-js": "0.0.1",
     "twig": "^1.12.0"
   }
 }

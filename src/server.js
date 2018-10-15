@@ -1,3 +1,4 @@
+let Cluedo = require('./controller/CluedoController');
 let express = require('express')
 
 let app = express()
@@ -13,6 +14,10 @@ app.get('/', (request, response) => {
 
 app.get('/cluedo', (request, response) => {
     response.render('cluedo')
+    Cluedo.start();
+    
+
 })
+
 
 app.listen(8080)
