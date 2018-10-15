@@ -5,7 +5,7 @@ class GridController {
             let i = 0;
             let x = 0;
             let y = 0;
-            let grid= new Array(25);
+            this.grid= new Array(25);
             grid[y]= new Array(25)
             while(i<contents.length){
                 if(contents[i]=='\n'){
