@@ -1,8 +1,10 @@
 class PlayerController {
 
-    constructor(id,pseudo){
+    constructor(id,pseudo,x,y){
         this.id=id;
         this.pseudo=pseudo;
+        this.x=x;
+        this.y=y;
         //this.cartes=cartes;
         //this.grille=new Grille();
         console.log("np")
