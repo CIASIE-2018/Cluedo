@@ -1,9 +1,9 @@
+<div id="plateau">
 {% for i in 0..24 %}
+    <div id="ligne">
     {% for j in 0..24 %}
-        <button id="MyCustomButton">{{ test[i][j] }}</button>
+        <button id="MyCustomButton">{{ grille[i][j] }}</button>
     {% endfor %}
-    </br>
+    </div> 
 {% endfor %}
-
-{{ grille }}
-{{ grille[1][1] }}
+</div> 

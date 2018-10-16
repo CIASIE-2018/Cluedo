@@ -14,11 +14,17 @@ app.get('/', (request, response) => {
 })
 
 app.get('/cluedo', (request, response) => {
-    const grille = new Grid();
-    console.log(grille);
+    //const grille = new Grid();
+
+    var grille = new Array();
+    for (var i = 0; i < 25; i++)
+        grille[i] = new Array();
+    for (var i = 0; i < 25; i++)
+        for (var j = 0; j < 25; j++)
+            grille[i][j] = 0;
 
     response.render('cluedo', { grille });
-    Cluedo.start();
+    //Cluedo.start();
 })
 
 
