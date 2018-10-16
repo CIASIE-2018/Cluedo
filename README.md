@@ -29,3 +29,15 @@ Début de code pour l'acceuil(index.html) et l'objet joueur (joueur.js)
 
 Apprentissage Twig + Semantic + NodeJS
 
+/////////////////////////////////////
+
+grid :
+
+x = Mur
+
+o = Chemin
+
+p{chiffre} = Porte d'une pièce
+
+{chiffre} = id d'un joueur
+
