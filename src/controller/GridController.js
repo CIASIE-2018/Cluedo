@@ -3,22 +3,10 @@ class GridController {
         const fs = require("fs");
         var contents = fs.readFileSync("src/controller/grid.txt", 'utf8');
 
-        this.grille = new Array();
-        for (var i = 0; i < 25; i++)
-            this.grille[i] = new Array();
+        var i = 0;
+        var y = 0;
+        var x = 0;
 
-        for (var i = 0; i < 25; i++)
-            for (var j = 0; j < 25; j++)
-                if (contents[i] != '\n') {
-                    this.grille[i][j] = contents[i];
-                }
-    }
-}
-module.exports = GridController;
-
-
-
-        /*
         this.grid= new Array(25);
         this.grid[y]= new Array(25);
         while(i<contents.length){
@@ -32,8 +20,6 @@ module.exports = GridController;
             }
             i++;
         }
-        this.grid.forEach(element => {
-            console.log(element.toString())
-        });
-        */
-
+    }
+}
+module.exports = GridController;

@@ -5,7 +5,6 @@
         /*let LogService = require('../service/logService');
         LogService.write("ntm");
         let hugo = new Player(1,"hugo");*/
-        let g = new Grid();
     }
 
 

@@ -14,8 +14,9 @@ app.get('/', (request, response) => {
 })
 
 app.get('/cluedo', (request, response) => {
-    var grille = new Grid().grille;
-    response.render('cluedo', { grille });
+    var grid = new Grid().grid;
+    Cluedo.start();
+    response.render('cluedo', { grid });
 })
 
 
