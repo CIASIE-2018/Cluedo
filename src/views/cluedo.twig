@@ -8,8 +8,16 @@
     <body>
         {% include 'header.twig' %}
 
-        {% include 'plateau.twig' %}
-
+        <div id="flex">
+            <div id="width-plateau">
+                <div id="div-plateau">
+                    {% include 'plateau.twig' %}
+                </div>
+            </div>
+            <div id="width-option">
+                {% include 'player-option.twig' %}
+            </div>
+        </div>
         {% include 'footer.twig' %}
     </body>
 </html>
