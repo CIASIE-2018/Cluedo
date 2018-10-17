@@ -7,7 +7,7 @@
         let hugo = new Player(1,"hugo");
         let g = new Grid();
         g.placePlayer(1,1,1);
-        g.toString();
+        
     }
 
 
