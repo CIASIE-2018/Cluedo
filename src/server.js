@@ -40,9 +40,14 @@ app.get("/", (request, response) => {
 });
 
 app.get("/cluedo", (request, response) => {
+  //Test grille insjection en HTML
   var grid = new Grid().grid;
+
+  //Test cartes insjection en HTML 
+  let paquet = new CardPack(cards.cards);
+  let cartes = paquet.getManyCards(3);
   Cluedo.start();
-  response.render("cluedo", { grid });
+  response.render("cluedo", { grid, cartes });
 });
 
 app.listen(config.app.port);
