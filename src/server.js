@@ -20,7 +20,7 @@ app.use(config.ressources.staticFilesRootPath, express.static("public"));
 // let paquet = new CardPack(cards.cards);
 // let cartes = paquet.getManyCards(3);
 // for (let i in cartes) {
-//   console.log(cartes[i]);
+//   console.log(cartes[i].getImagePath());
 // }
 
 app.get("/", (request, response) => {
