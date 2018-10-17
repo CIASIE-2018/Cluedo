@@ -1,9 +1,10 @@
-const config = require("./config.json");
+const config = require("../config.json");
 
 // Définit une carte (ex: "salle de bal", "chandelier", ...)
 class Card {
-  constructor(name, type, image) {
+  constructor(name, label, type, image) {
     this.name = name;
+    this.label = label;
     this.type = type;
     this.image = image;
   }
@@ -12,14 +13,18 @@ class Card {
     return this.name;
   }
 
+  getLabel() {
+    return this.label;
+  }
+
   getType() {
     return this.type;
   }
 
   getImage() {
     return (
-      this.config.ressources.staticFilesRootPath +
-      this.config.ressources.imagePath +
+      config.ressources.staticFilesRootPath +
+      config.ressources.imagesPath +
       this.image
     );
   }
