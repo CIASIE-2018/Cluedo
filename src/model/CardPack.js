@@ -3,7 +3,7 @@ const arrayShuffle = require("array-shuffle");
 // Définit un paquet de cartes
 class CardPack {
   constructor(pack) {
-    this.pack = pack.cards;
+    this.pack = pack;
     this.shuffle();
   }
 
