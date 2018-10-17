@@ -1,5 +1,10 @@
 let Cluedo = require("./controller/CluedoController");
-let Grid = require("./controller/GridController");
+
+let Player = require('./controller/PlayerController');
+let Grid = require('./controller/GridController');
+let CardPack = require('./model/CardPack');
+let ListCard = require('./cards.json');
+
 let express = require("express");
 
 const config = require("./config.json");
@@ -16,9 +21,17 @@ app.get("/", (request, response) => {
 });
 
 app.get("/cluedo", (request, response) => {
+  //Test grille insjection en HTML
   var grid = new Grid().grid;
+
+  //Test cartes insjection en HTML 
+  var p = new CardPack(ListCard);
+  p.shuffle();
+  var cards = new Player(1,"hugo",p.getManyCards(3));
+  //console.log(cards);
+
   Cluedo.start();
-  response.render("cluedo", { grid });
+  response.render("cluedo", { grid,cards });
 });
 
 app.listen(config.app.port);
