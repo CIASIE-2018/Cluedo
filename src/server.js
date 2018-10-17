@@ -28,6 +28,13 @@ app.use(session);
 //   console.log(cartes[i]); //cartes[i].getImagePath() pour obtenir l'url de l'image
 // }
 
+// ---------  Pour tester le fcontionnement des cartes
+let paquet = new CardPack(cards.cards);
+let cartes = paquet.getManyCards(3);
+for (let i in cartes) {
+  console.log(cartes[i]); //cartes[i].getImagePath() pour obtenir l'url de l'image
+}
+
 app.get("/", (request, response) => {
   response.render("index");
 });
