@@ -11,6 +11,20 @@ class CardPack {
     return this.pack;
   }
 
+  // Retourne la carte suivante
+  getFollowingCard() {
+    return this.pack.pop();
+  }
+
+  // Renvoie plusieurs cartes pour le début de partie
+  getManyCards(how) {
+    let cards = [];
+    for (let i = 0; i <= how; i++) {
+      cards[i] = this.getFollowingCard();
+    }
+    return cards;
+  }
+
   // Mélange le jeu
   shuffle() {
     this.pack = arrayShuffle(this.pack);
