@@ -5,7 +5,6 @@ class PlayerController {
         this.pseudo=pseudo;
         this.cartes=cartes;
         //this.grille=new Grille();
-        console.log("np");
     }
 
     getCard(){
