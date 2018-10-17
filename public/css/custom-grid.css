@@ -1,0 +1,38 @@
+#suspect{
+    border:solid  black 2px;
+    width: 35%;
+    margin-left: 5%
+}
+
+#armes{
+    border:solid  black 2px;
+    width: 35%;
+    margin-left:5%;
+}
+
+#lieux{
+    border:solid  black 2px;
+    width: 35%;
+    margin-left: 5%;
+    margin-top:3%;
+}
+
+h1{
+    text-align: center;
+    border-bottom: solid black 2px;
+}
+
+p{
+    font-size: 20px;
+    margin-top:-10px;
+    margin-bottom: -5px;
+}
+
+.g{
+    display: flex;
+    flex-wrap: wrap; 
+}
+
+
+
+

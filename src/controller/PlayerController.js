@@ -5,7 +5,7 @@ class PlayerController {
         this.pseudo=pseudo;
         //this.cartes=cartes;
         //this.grille=new Grille();
-        console.log("np")
+        console.log("np");
     }
 
     getCard(){
@@ -22,6 +22,12 @@ class PlayerController {
         } else {
             //joueur suivant
         }
+    }
+
+    rollTheDice(){
+        let d1=Math.floor(Math.random() * 6) + 1 ;
+        let d2=Math.floor(Math.random() * 6) + 1 ;
+        return(d1+d2);
     }
 
 }
