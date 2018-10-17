@@ -35,12 +35,10 @@ app.get("/cluedo", (request, response) => {
   var grid = new Grid().grid;
 
   //Test cartes insjection en HTML 
-  var p = new CardPack(ListCard);
-  p.shuffle();
-  var cards = new Player(1, "hugo", p.getManyCards(3));
-  //console.log(cards);
+  let paquet = new CardPack(cards.cards);
+  let cartes = paquet.getManyCards(3);
   Cluedo.start();
-  response.render("cluedo", { grid, cards });
+  response.render("cluedo", { grid, cartes });
 });
 
 app.listen(config.app.port);
