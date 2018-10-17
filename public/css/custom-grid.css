@@ -1,18 +1,20 @@
 #suspect{
     border:solid  black 2px;
-    width: 25%;
+    width: 35%;
+    margin-left: 5%
 }
 
 #armes{
     border:solid  black 2px;
-    width: 25%;
+    width: 35%;
     margin-left:5%;
 }
 
 #lieux{
     border:solid  black 2px;
-    width: 25%;
+    width: 35%;
     margin-left: 5%;
+    margin-top:3%;
 }
 
 h1{
@@ -28,8 +30,7 @@ p{
 
 .g{
     display: flex;
-    flex-wrap: wrap;
-    visibility: hidden;
+    flex-wrap: wrap; 
 }
 
 
