@@ -1,0 +1,47 @@
+#margin-button {
+    margin: 0;
+}
+
+#MyCustomButton {
+    border: solid orange 0.2px;
+    background-color: white; 
+    height: 31px;
+    width: 31px;
+    margin-right: -4px;
+    box-sizing: border-box;
+}
+
+#ligne {
+    height: 31px;
+    width: calc(31px * 25);
+}
+
+#plateau {
+    margin-top : 30px;
+    margin-left: 30px;
+    line-height: 100%;
+}
+
+#width-plateau {
+    width: 75%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#div-plateau {
+    width: calc(31px * 25);
+}
+
+#width-option {
+    width: 25%;
+    height: calc(31px * 25);
+    padding: 5px;
+    /* background-color: red; */
+    border-radius: 50px 0 0 50px;
+    overflow-y: scroll;
+}
+
+#flex {
+    display: flex;
+}
