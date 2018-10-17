@@ -2,8 +2,10 @@
 let express = require("express");
 let Cluedo = require("./controller/CluedoController");
 let Grid = require("./controller/GridController");
-const Card = require("./model/CardModel");
-const CardPack = require("./model/CardPack");
+let session = require("./service/session");
+let cookieSession = require("cookie-session");
+let Card = require("./model/CardModel");
+let CardPack = require("./model/CardPack");
 
 // Data
 const config = require("./config.json");
@@ -15,13 +17,16 @@ app.set("view engine", "twig");
 app.set("views", "./src/views");
 
 app.use(config.ressources.staticFilesRootPath, express.static("public"));
+// Paramètre le système de session (voir session.js)
+app.use(cookieSession({ secret: config.app.secretSession }));
+app.use(session);
 
 // ---------  Pour tester le fcontionnement des cartes
-let paquet = new CardPack(cards.cards);
-let cartes = paquet.getManyCards(3);
-for (let i in cartes) {
-  console.log(cartes[i]); //cartes[i].getImagePath() pour obtenir l'url de l'image
-}
+// let paquet = new CardPack(cards.cards);
+// let cartes = paquet.getManyCards(3);
+// for (let i in cartes) {
+//   console.log(cartes[i]); //cartes[i].getImagePath() pour obtenir l'url de l'image
+// }
 
 app.get("/", (request, response) => {
   response.render("index");
