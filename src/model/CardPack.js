@@ -1,9 +1,21 @@
 const arrayShuffle = require("array-shuffle");
+const Card = require("./CardModel");
 
 // Définit un paquet de cartes
 class CardPack {
-  constructor(pack) {
-    this.pack = pack.cards;
+  // prend en paramètre un array contenant des cartes
+  constructor(cardsPack) {
+    this.pack = [];
+    for (let i in cardsPack) {
+      this.pack.push(
+        new Card(
+          cardsPack[i].name,
+          cardsPack[i].label,
+          cardsPack[i].type,
+          cardsPack[i].image
+        )
+      );
+    }
     this.shuffle();
   }
 
@@ -30,7 +42,7 @@ class CardPack {
     this.pack = arrayShuffle(this.pack);
   }
 
-  toString(){
+  toString() {
     return this.pack.toString();
   }
 }
