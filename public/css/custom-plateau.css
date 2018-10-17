@@ -1,0 +1,22 @@
+#margin-button {
+    margin: 0;
+}
+
+#MyCustomButton {
+    border: solid orange 0.2px;
+    background-color: white; 
+    height: 31px;
+    width: 31px;
+    margin-right: -4px;
+    box-sizing: border-box;
+}
+
+#ligne {
+    height: 31px;
+}
+
+#plateau {
+    margin-top : 30px;
+    margin-left: 30px;
+    line-height: 100%;
+}

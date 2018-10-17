@@ -1,4 +1,5 @@
 let Cluedo = require('./controller/CluedoController');
+let Grid = require('./controller/GridController');
 let express = require('express')
 
 let app = express()
@@ -13,10 +14,9 @@ app.get('/', (request, response) => {
 })
 
 app.get('/cluedo', (request, response) => {
-    response.render('cluedo')
+    var grid = new Grid().grid;
     Cluedo.start();
-    
-
+    response.render('cluedo', { grid });
 })
 
 
