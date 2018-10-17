@@ -4,127 +4,127 @@
       "name": "mme_rose",
       "label": "Mme. Rose",
       "type": "characters",
-      "image": "characters/mme_rose.jpg"
+      "image": "/characters/mme_rose.jpg"
     },
     {
       "name": "colonel_moutarde",
       "label": "Colonel Moutarde",
       "type": "characters",
-      "image": "characters/colonel_moutarde.jpg"
+      "image": "/characters/colonel_moutarde.jpg"
     },
     {
       "name": "mme_leblanc",
       "label": "Mme. Leblanc",
       "type": "characters",
-      "image": "characters/mme_leblanc.jpg"
+      "image": "/characters/mme_leblanc.jpg"
     },
     {
       "name": "docteur_olive",
       "label": "Docteur Olive",
       "type": "characters",
-      "image": "characters/docteur_olive.jpg"
+      "image": "/characters/docteur_olive.jpg"
     },
     {
       "name": "mme_pervanche",
       "label": "Mme. Pervanche",
       "type": "characters",
-      "image": "characters/mme_pervanche.jpg"
+      "image": "/characters/mme_pervanche.jpg"
     },
     {
       "name": "professeur_violet",
       "label": "Professeur Violet",
       "type": "characters",
-      "image": "characters/professeur_violet.jpg"
+      "image": "/characters/professeur_violet.jpg"
     },
     {
       "name": "chandelier",
       "label": "Chandelier",
       "type": "weapons",
-      "image": "weapons/chandelier.jpg"
+      "image": "/weapons/chandelier.jpg"
     },
     {
       "name": "poignard",
       "label": "Poignard",
       "type": "weapons",
-      "image": "weapons/poignard.jpg"
+      "image": "/weapons/poignard.jpg"
     },
     {
       "name": "matraque",
       "label": "Matraque",
       "type": "weapons",
-      "image": "weapons/matraque.jpg"
+      "image": "/weapons/matraque.jpg"
     },
     {
       "name": "revolver",
       "label": "Revolver",
       "type": "weapons",
-      "image": "weapons/revolver.jpg"
+      "image": "/weapons/revolver.jpg"
     },
     {
       "name": "corde",
       "label": "Corde",
       "type": "weapons",
-      "image": "weapons/corde.jpg"
+      "image": "/weapons/corde.jpg"
     },
     {
       "name": "cle_a_molette",
       "label": "Clé à molette",
       "type": "weapons",
-      "image": "weapons/cle_a_molette.jpg"
+      "image": "/weapons/cle_a_molette.jpg"
     },
     {
       "name": "cuisine",
       "label": "Cuisine",
       "type": "rooms",
-      "image": "rooms/cuisine.jpg"
+      "image": "/rooms/cuisine.jpg"
     },
     {
       "name": "salle_de_bal",
       "label": "12",
       "type": "rooms",
-      "image": "rooms/salle_de_bal.jpg"
+      "image": "/rooms/salle_de_bal.jpg"
     },
     {
       "name": "salon",
       "label": "Salon",
       "type": "rooms",
-      "image": "rooms/salon.jpg"
+      "image": "/rooms/salon.jpg"
     },
     {
       "name": "salle_a_manger",
       "label": "Salle à manger",
       "type": "rooms",
-      "image": "rooms/salle_a_manger.jpg"
+      "image": "/rooms/salle_a_manger.jpg"
     },
     {
       "name": "salle_de_billard",
       "label": "Salle de billard",
       "type": "rooms",
-      "image": "rooms/salle_de_billard.jpg"
+      "image": "/rooms/salle_de_billard.jpg"
     },
     {
       "name": "bibliotheque",
       "label": "Bibliothèque",
       "type": "rooms",
-      "image": "rooms/bibliotheque.jpg"
+      "image": "/rooms/bibliotheque.jpg"
     },
     {
       "name": "hall",
       "label": "Hall",
       "type": "rooms",
-      "image": "rooms/hall.jpg"
+      "image": "/rooms/hall.jpg"
     },
     {
       "name": "bureau",
       "label": "Bureau",
       "type": "rooms",
-      "image": "rooms/bureau.jpg"
+      "image": "/rooms/bureau.jpg"
     },
     {
       "name": "serre",
       "label": "Serre",
       "type": "rooms",
-      "image": "rooms/serre.jpg"
+      "image": "/rooms/serre.jpg"
     }
   ]
 }
