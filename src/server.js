@@ -10,7 +10,7 @@ app.set("views", "./src/views");
 app.use('/assets', express.static('public'))
 
 app.get('/', (request, response) => {
-    response.render('index', { test: 'Salut' })
+    response.render('index')
 })
 
 app.get('/cluedo', (request, response) => {
