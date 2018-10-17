@@ -1,11 +1,9 @@
 class PlayerController {
 
-    constructor(id,pseudo,x,y){
+    constructor(id,pseudo,cartes){
         this.id=id;
         this.pseudo=pseudo;
-        this.x=x;
-        this.y=y;
-        //this.cartes=cartes;
+        this.cartes=cartes;
         //this.grille=new Grille();
         console.log("np");
     }
@@ -25,6 +23,7 @@ class PlayerController {
             //joueur suivant
         }
     }
+
     //methode pour un lancer deux dés a 6 faces
     rollTheDice(){
         let d1=Math.floor(Math.random() * 6) + 1 ;
