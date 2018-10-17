@@ -4,12 +4,21 @@
         <link rel="stylesheet" href="/assets/css/custom-header.css">
         <link rel="stylesheet" href="/assets/css/custom-footer.css">
         <link rel="stylesheet" href="/assets/css/custom-plateau.css">
+        <link rel="stylesheet" href="/assets/css/custom-grid.css">
     </head>
     <body>
         {% include 'header.twig' %}
 
-        {% include 'plateau.twig' %}
-
+        <div id="flex">
+            <div id="width-plateau">
+                <div id="div-plateau">
+                    {% include 'plateau.twig' %}
+                </div>
+            </div>
+            <div id="width-option">
+                {% include 'player-option.twig' %}
+            </div>
+        </div>
         {% include 'footer.twig' %}
     </body>
 </html>
