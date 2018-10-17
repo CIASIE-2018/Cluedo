@@ -1,0 +1,10 @@
+{
+  "app": {
+    "port": 8080
+  },
+  "ressources": {
+    "staticFilesRootPath": "/assets",
+    "imagesPath": "/images",
+    "stylePath": "/css"
+  }
+}
