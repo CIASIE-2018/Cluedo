@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/CIASIE-2018/Cluedo#readme",
   "dependencies": {
+    "array-shuffle": "^1.0.1",
     "express": "^4.16.3",
     "fs-js": "^1.0.6",
     "nodemon": "^1.18.4",
