@@ -17,11 +17,11 @@ app.set("views", "./src/views");
 app.use(config.ressources.staticFilesRootPath, express.static("public"));
 
 // ---------  Pour tester le fcontionnement des cartes
-// let paquet = new CardPack(cards.cards);
-// let cartes = paquet.getManyCards(3);
-// for (let i in cartes) {
-//   console.log(cartes[i].getImagePath());
-// }
+let paquet = new CardPack(cards.cards);
+let cartes = paquet.getManyCards(3);
+for (let i in cartes) {
+  console.log(cartes[i]); //cartes[i].getImagePath() pour obtenir l'url de l'image
+}
 
 app.get("/", (request, response) => {
   response.render("index");
