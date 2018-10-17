@@ -1,5 +1,6 @@
 {
   "app": {
+    "baseUrl": "localhost",
     "port": 8080
   },
   "ressources": {

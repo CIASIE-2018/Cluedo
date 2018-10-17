@@ -1,8 +1,13 @@
+// Modules
+let express = require("express");
 let Cluedo = require("./controller/CluedoController");
 let Grid = require("./controller/GridController");
-let express = require("express");
+const Card = require("./model/CardModel");
+const CardPack = require("./model/CardPack");
 
+// Data
 const config = require("./config.json");
+const cards = require("./cards.json");
 
 let app = express();
 
@@ -10,6 +15,13 @@ app.set("view engine", "twig");
 app.set("views", "./src/views");
 
 app.use(config.ressources.staticFilesRootPath, express.static("public"));
+
+// ---------  Pour tester le fcontionnement des cartes
+let paquet = new CardPack(cards.cards);
+let cartes = paquet.getManyCards(3);
+for (let i in cartes) {
+  console.log(cartes[i]); //cartes[i].getImagePath() pour obtenir l'url de l'image
+}
 
 app.get("/", (request, response) => {
   response.render("index");
