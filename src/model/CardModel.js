@@ -12,3 +12,5 @@ class Card {
 
     getImage() => {return this.image};
 }
+
+module.exports = Card;
