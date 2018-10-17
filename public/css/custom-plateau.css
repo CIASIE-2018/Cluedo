@@ -2,6 +2,22 @@
     margin: 0;
 }
 
+#MyCustomButton-carte {
+    background-color: white;
+}
+
+#MyCustomButton-tableau {
+    background-color: white;
+}
+
+#MyCustomButton-accuse {
+    background-color: white;
+}
+
+#MyCustomButton-accuse-fin {
+    background-color: white;
+}
+
 #MyCustomButton {
     border: solid orange 0.2px;
     background-color: white; 
