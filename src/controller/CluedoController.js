@@ -9,6 +9,7 @@
         LogService.write("ntm");*/
         let g = new Grid();
         let p = new CardPack(ListCard);
+        p.shuffle();
         let hugo = new Player(1,"hugo",p.getManyCards(3));
         console.log(hugo.getCard())
         g.placePlayer(1,1,1);
