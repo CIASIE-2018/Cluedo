@@ -1,134 +1,37 @@
 <div class="i">
-
-
-    <div class="g" id="tableau">
-        <div class="suspect" id="suspect">
-            <h1 class="titre">
-                Suspect
-            </h1>
-            <div class="ui checkbox">
-                <input type="checkbox" name="example">
-                <label id="label">bobo - 1</label>
-            </div>
-            </br>
-            <div class="ui checkbox">
-                <input type="checkbox" name="example">
-                <label id="label">bobo - 2</label>
-            </div>
-            </br>
-            <div class="ui checkbox">
-                <input type="checkbox" name="example">
-                <label id="label">bobo - 3</label>
-            </div>
-            </br>
-            <div class="ui checkbox">
-                <input type="checkbox" name="example">
-                <label id="label">bobo - 4</label>
-            </div>
-            </br>
-            <div class="ui checkbox">
-                <input type="checkbox" name="example">
-                <label id="label">bobo - 5</label>
-            </div>
-            </br>
-            <div class="ui checkbox">
-                <input type="checkbox" name="example">
-                <label id="label">bobo - 6</label>
-            </div>
-        </div>
-
-        <div class="armes" id="armes">
-            <h1 class="titre">
-                Armes
-            </h1>
-            <p>
-                <div class="ui checkbox">
-                    <input type="checkbox" name="example">
-                    <label id="label">arme - 1</label>
-                </div>
-                </br>
-                <div class="ui checkbox">
-                    <input type="checkbox" name="example">
-                    <label id="label">arme - 2</label>
-                </div>
-                </br>
-                <div class="ui checkbox">
-                    <input type="checkbox" name="example">
-                    <label id="label">arme - 3</label>
-                </div>
-                </br>
-                <div class="ui checkbox">
-                    <input type="checkbox" name="example">
-                    <label id="label">arme - 4</label>
-                </div>
-                </br>
-                <div class="ui checkbox">
-                    <input type="checkbox" name="example">
-                    <label id="label">arme - 5</label>
-                </div>
-                </br>
-                <div class="ui checkbox">
-                    <input type="checkbox" name="example">
-                    <label id="label">arme - 6</label>
-                </div>
-        </div>
-
-        <div class="lieux" id="lieux">
-            <h1 class="titre">
-                Lieux
-            </h1>
-            <div class="ui checkbox">
-                <input type="checkbox" name="example">
-                <label id="label">lieux - 1</label>
-            </div>
-            </br>
-            <div class="ui checkbox">
-                <input type="checkbox" name="example">
-                <label id="label">lieux - 2</label>
-            </div>
-            </br>
-            <div class="ui checkbox">
-                <input type="checkbox" name="example">
-                <label id="label">lieux - 3</label>
-            </div></br>
-            <div class="ui checkbox">
-                <input type="checkbox" name="example">
-                <label id="label">lieux - 4</label></div> 
-                </br>
-            <div class="ui checkbox">
-                <input type="checkbox" name="example">
-                <label id="label">lieux - 5</label> 
-            </div>
-            </br>
-            <div class="ui checkbox"> 
-                <input type="checkbox" name="example"> 
-                <label id="label">lieux - 6</label>
-            </div>
-            </br>
-            <div class="ui checkbox"> 
-                <input type="checkbox" name="example"> 
-                <label id="label">lieux - 7</label>
-            </div>
-            </br>
-            <div class="ui checkbox"> 
-                <input type="checkbox" name="example"> 
-                <label id="label">lieux - 8</label>
-            </div>
-            </br>
-            <div class="ui checkbox"> 
-                <input type="checkbox" name="example"> 
-                <label id="label">lieux - 9</label>
-            </div>
-        </div>
+    <div class="g" id="carte">
+        {% include 'container-option-player/carte.twig' %}
+    </div>
+    <div class="g" id="tableau" style="display : none">
+        {% include 'container-option-player/tableau.twig' %}
+    </div>
+    <div class="g" id="accuse" style="display : none">
+        {% include 'container-option-player/accuse.twig' %}
+    </div>
+    <div class="g" id="accuse_fin" style="display : none">
+        {% include 'container-option-player/accuse_fin.twig' %}
     </div>
 </div>
 <script>
-    function myFunction() {
-        var f = document.getElementById("tableau");
-        if (f.style.visibility === "visible") {
-            f.style.visibility = "hidden";
-        } else {
-            f.style.visibility = "visible";
+    function myFunction(type) {
+        var carte = document.getElementById("carte");
+        var tableau = document.getElementById("tableau");
+        var accuse = document.getElementById("accuse");
+        var accuse_fin = document.getElementById("accuse_fin");
+
+        carte.style.display = "none"; 
+        tableau.style.display = "none";
+        accuse.style.display = "none";
+        accuse_fin.style.display = "none";
+
+        if (type === "carte") {
+            carte.style.display = "block";
+        } else if (type === "tableau") {
+            tableau.style.display = "block";
+        } else if (type === "accuse") {
+            accuse.style.display = "block";
+        } else if (type === "accuse_fin") {
+            accuse_fin.style.display = "block";
         }
     }
 </script>
