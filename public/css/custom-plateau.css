@@ -2,11 +2,27 @@
     margin: 0;
 }
 
+#MyCustomButton-carte {
+    background-color: white;
+}
+
+#MyCustomButton-tableau {
+    background-color: white;
+}
+
+#MyCustomButton-accuse {
+    background-color: white;
+}
+
+#MyCustomButton-accuse-fin {
+    background-color: white;
+}
+
 #MyCustomButton {
     border: solid orange 0.2px;
     background-color: white; 
-    height: 31px;
-    width: 31px;
+    height: 100%;
+    width: calc(100% / 25);
     margin-right: -4px;
     box-sizing: border-box;
 }
@@ -37,7 +53,7 @@
     width: 25%;
     height: calc(31px * 25);
     padding: 5px;
-    /* background-color: red; */
+    background-color: red;
     border-radius: 50px 0 0 50px;
     overflow-y: scroll;
 }
