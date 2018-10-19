@@ -28,7 +28,7 @@ class CardPack {
     return this.pack.pop();
   }
 
-  // Renvoie plusieurs cartes
+  // Pioche et renvoie plusieurs cartes !! Ne pas utiliser pour generer les cartes du début => VOIR getHiddenCards() !!
   getManyCards(how) {
     let cards = [];
     for (let i = 0; i < how; i++) {
