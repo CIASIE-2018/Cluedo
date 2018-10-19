@@ -14,7 +14,7 @@ const cards = require("./cards.json");
 let app = express();
 
 // On créer un paquet de cartes pour la partie
-let paquet = new CardPack(cards.cards);
+let paquet = new CardPack(cards);
 // On récupère une carte de chaque type (cartes à découvrir)
 let hiddenCards = paquet.getHiddenCards();
 if (config.app.debugMode) {
