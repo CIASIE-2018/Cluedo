@@ -22,17 +22,12 @@ app.use(cookieSession({ secret: config.app.secretSession }));
 app.use(session);
 
 // ---------  Pour tester le fcontionnement des cartes
-// let paquet = new CardPack(cards.cards);
-// let cartes = paquet.getManyCards(3);
-// for (let i in cartes) {
-//   console.log(cartes[i]); //cartes[i].getImagePath() pour obtenir l'url de l'image
-// }
-
-// ---------  Pour tester le fcontionnement des cartes
+// On créer un paquet
 let paquet = new CardPack(cards.cards);
-let cartes = paquet.getManyCards(3);
-for (let i in cartes) {
-  console.log(cartes[i]); //cartes[i].getImagePath() pour obtenir l'url de l'image
+// On récupère une carte de chaque type (cartes à découvrir)
+let hiddenCards = paquet.getHiddenCards();
+for (let i in hiddenCards) {
+  console.log(hiddenCards[i]); //hiddenCards[i].getImagePath() pour obtenir l'url de l'image
 }
 
 app.get("/", (request, response) => {
@@ -43,7 +38,7 @@ app.get("/cluedo", (request, response) => {
   //Test grille insjection en HTML
   var grid = new Grid().grid;
 
-  //Test cartes insjection en HTML 
+  //Test cartes insjection en HTML
   let paquet = new CardPack(cards.cards);
   let cartes = paquet.getManyCards(3);
   Cluedo.start();
