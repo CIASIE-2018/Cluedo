@@ -41,7 +41,7 @@ class CardPack {
   getHiddenCards() {
     var hiddenCharacter, hiddenWeapon, hiddenRoom;
     for (let i in this.pack) {
-      // On récupère une carte de chaque type dans le paquet
+      // On retire et récupère une carte de chaque type dans le paquet
       let card = this.pack[i];
       if (hiddenCharacter === undefined && card.getType() === "character") {
         hiddenCharacter = this.pack.splice(i, 1);
@@ -51,7 +51,7 @@ class CardPack {
         hiddenWeapon = this.pack.splice(i, 1);
       }
 
-      // Si une carte de chaque type est prise, les renvoier
+      // Si une carte de chaque type est prise, les renvoier sous forme de tableau
       if (
         hiddenWeapon != undefined &&
         hiddenCharacter != undefined &&
