@@ -39,7 +39,7 @@ class CardPack {
 
   // Retire du paquet et renvoie une carte de chaque type pour le début de partie
   getHiddenCards() {
-    let hiddenCharacter, hiddenWeapon, hiddenRoom;
+    var hiddenCharacter, hiddenWeapon, hiddenRoom;
     for (let i in this.pack) {
       // On récupère une carte de chaque type dans le paquet
       let card = this.pack[i];
@@ -53,11 +53,11 @@ class CardPack {
 
       // Si une carte de chaque type est prise, les renvoier
       if (
-        hiddenCards != undefined &&
+        hiddenWeapon != undefined &&
         hiddenCharacter != undefined &&
         hiddenRoom != undefined
       ) {
-        return hiddenCharacter + hiddenRoom + hiddenWeapon;
+        return [hiddenCharacter, hiddenRoom, hiddenWeapon];
       }
     }
   }
