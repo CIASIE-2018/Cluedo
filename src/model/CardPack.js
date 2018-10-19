@@ -57,7 +57,7 @@ class CardPack {
         hiddenCharacter != undefined &&
         hiddenRoom != undefined
       ) {
-        return [hiddenCharacter, hiddenRoom, hiddenWeapon];
+        return [hiddenCharacter[0], hiddenRoom[0], hiddenWeapon[0]];
       }
     }
   }
