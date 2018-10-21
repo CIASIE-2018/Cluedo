@@ -19,7 +19,7 @@ let paquet = new CardPack(cards);
 let hiddenCards = paquet.getHiddenCards();
 if (config.app.debugMode) {
   for (let i in hiddenCards) {
-    console.log(hiddenCards[i]); //hiddenCards[i].getImagePath() pour obtenir l'url de l'image
+    //console.log(hiddenCards[i]); //hiddenCards[i].getImagePath() pour obtenir l'url de l'image
   }
 }
 
@@ -41,12 +41,14 @@ app.get("/cluedo", (request, response) => {
 
   //Test cartes insjection en HTML
   let paquet = new CardPack(cards);
+  let ListOfAllCards = new CardPack(cards);
+
   let cartes = paquet.getManyCards(3);
-  console.log(cartes);
+  //console.log(cartes);
 
   
   Cluedo.start();
-  response.render("cluedo", { grid, cartes });
+  response.render("cluedo", { grid, ListOfAllCards, cartes });
 });
 
 app.listen(config.app.port);
