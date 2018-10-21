@@ -1,24 +1,30 @@
 <h1 class="titre">Hypothèse</h1>
 <form>
-    <select name="character" size="1">
+    <select name="character" id="character" size="1">
         {% for paque_carte_character in ListOfAllCards.pack %}
             {% if paque_carte_character.type == "character" %}
-            <OPTION>{{ paque_carte_character.label }}</option>
+                <OPTION>{{ paque_carte_character.label }}</option>
             {% endif %}
         {% endfor %}
     </select>
-    <select name="weapon" size="1">
+    <select name="weapon" id="weapon" size="1">
         {% for paque_carte_weapon in ListOfAllCards.pack %}
             {% if paque_carte_weapon.type == "weapon" %}
-            <OPTION>{{ paque_carte_weapon.label }}</option>
+                <OPTION>{{ paque_carte_weapon.label }}</option>
             {% endif %}
         {% endfor %}
     </select>
-    <select name="room" size="1">
+    <select name="room" id="room" size="1">
         {% for paque_carte_room in ListOfAllCards.pack %}
             {% if paque_carte_room.type == "room" %}
-            <OPTION>{{ paque_carte_room.label }}</option>
+                <OPTION>{{ paque_carte_room.label }}</option>
             {% endif %}
         {% endfor %}
     </select>
+    <a href="#">
+        <button class="ui right labeled icon button" onclick="HypoCall()">
+            <i class="right arrow icon"></i>
+            Formuler cette hypothèse
+        </button>
+    </a>
 </form>
