@@ -3,6 +3,10 @@
     margin-left: 5%
 }
 
+.flex {
+    display: flex;
+}
+
 .lieux{
     margin-top:3%;
 }
@@ -15,6 +19,13 @@ p {
     font-size: 20px;
     margin-top:-10px;
     margin-bottom: -5px;
+}
+
+.margin-top {
+    margin-top : 50px;
+}
+.margin-left {
+    margin-left: 10%;
 }
 
 .g {
@@ -33,7 +44,7 @@ p {
     position: relative;
     z-index : 1;
   }
-  
+
   .titre:before {
     content : "";
     position: absolute;
