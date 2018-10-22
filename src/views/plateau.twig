@@ -1,16 +1,11 @@
 {% for i in 0..24 %}
     <div id="ligne">
     {% for j in 0..24 %}
-        <button id="MyCustomButton">{{ grid[i][j] }}</button>
+        <button id="MyCustomButton">{{ grid.grid[i][j] }}</button>
     {% endfor %}
     </div> 
 {% endfor %}
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script>$( "button" ).click(function() {
-  
 $(window).load(location.href + window);
-console.log("mdr")
-
-
-
 });</script>

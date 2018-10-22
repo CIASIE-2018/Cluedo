@@ -37,8 +37,7 @@ app.get("/", (request, response) => {
 
 app.get("/cluedo", (request, response) => {
   //Test grille insjection en HTML
-  var grid = new Grid().grid;
-  console.log(grid)
+  var grid = new Grid();
   //Test cartes insjection en HTML
   let paquet = new CardPack(cards.cards);
   let cartes = paquet.getManyCards(3);

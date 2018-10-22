@@ -25,7 +25,7 @@ class GridController {
        return this.grid;
    }
    placePlayer(id,x,y){
-    this.grid[x][y]=id;
+    this.grid[x][y]=this.grid[x][y]+id;
 }
     toString(){
         this.grid.forEach(element => {
