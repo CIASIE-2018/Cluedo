@@ -12,8 +12,7 @@
         let hugo = new Player(1,"hugo",pack.getManyCards(3));
         console.log(hugo.getCard())
         grid.placePlayer(1,1,1);
-        console.log(grid)
-        
+        // console.log(grid)
     }
 
 

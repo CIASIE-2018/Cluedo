@@ -1,121 +1,38 @@
+<div class="suspect" id="suspect">
+    <h1 class="titre">Suspect</h1>
+    {% for paque_carte_character in ListOfAllCards.pack %}
+        {% if paque_carte_character.type == "character" %}
+            <div class="ui checkbox">
+                <input type="checkbox">
+                <label id="label">{{ paque_carte_character.label }}</label>
+            </div>
+            </br>
+        {% endif %}
+    {% endfor %}
+</div>
 
-        <div class="suspect" id="suspect">
-            <h1 class="titre">
-                Suspect
-            </h1>
+<div class="armes" id="armes">
+    <h1 class="titre">Armes</h1>
+    {% for paque_carte_weapon in ListOfAllCards.pack %}
+        {% if paque_carte_weapon.type == "weapon" %}
             <div class="ui checkbox">
-                <input type="checkbox" name="example">
-                <label id="label">Colonel Moutarde</label>
+                <input type="checkbox">
+                <label id="label">{{ paque_carte_weapon.label }}</label>
             </div>
             </br>
-            <div class="ui checkbox">
-                <input type="checkbox" name="example">
-                <label id="label">Professeur Violet</label>
-            </div>
-            </br>
-            <div class="ui checkbox">
-                <input type="checkbox" name="example">
-                <label id="label">Reverant Olive</label>
-            </div>
-            </br>
-            <div class="ui checkbox">
-                <input type="checkbox" name="example">
-                <label id="label">Mlle Rose</label>
-            </div>
-            </br>
-            <div class="ui checkbox">
-                <input type="checkbox" name="example">
-                <label id="label">Mme Pervenche</label>
-            </div>
-            </br>
-            <div class="ui checkbox">
-                <input type="checkbox" name="example">
-                <label id="label">Mme leblanc</label>
-            </div>
-        </div>
+        {% endif %}
+    {% endfor %}
+</div>
 
-        <div class="armes" id="armes">
-            <h1 class="titre">
-                Armes
-            </h1>
-            <p>
-                <div class="ui checkbox">
-                    <input type="checkbox" name="example">
-                    <label id="label">Chandelier</label>
-                </div>
-                </br>
-                <div class="ui checkbox">
-                    <input type="checkbox" name="example">
-                    <label id="label">clef à molette</label>
-                </div>
-                </br>
-                <div class="ui checkbox">
-                    <input type="checkbox" name="example">
-                    <label id="label">corde</label>
-                </div>
-                </br>
-                <div class="ui checkbox">
-                    <input type="checkbox" name="example">
-                    <label id="label">matraque</label>
-                </div>
-                </br>
-                <div class="ui checkbox">
-                    <input type="checkbox" name="example">
-                    <label id="label">poignard</label>
-                </div>
-                </br>
-                <div class="ui checkbox">
-                    <input type="checkbox" name="example">
-                    <label id="label">revolver</label>
-                </div>
-        </div>
-
-        <div class="lieux" id="lieux">
-            <h1 class="titre">
-                Lieux
-            </h1>
+<div class="lieux" id="lieux">
+    <h1 class="titre">Lieux</h1>
+    {% for paque_carte_room in ListOfAllCards.pack %}
+        {% if paque_carte_room.type == "room" %}
             <div class="ui checkbox">
-                <input type="checkbox" name="example">
-                <label id="label">Bibliothèque</label>
+                <input type="checkbox">
+                <label id="label">{{ paque_carte_room.label }}</label>
             </div>
             </br>
-            <div class="ui checkbox">
-                <input type="checkbox" name="example">
-                <label id="label">Bureau</label>
-            </div>
-            </br>
-            <div class="ui checkbox">
-                <input type="checkbox" name="example">
-                <label id="label">Cuisine</label>
-            </div></br>
-            <div class="ui checkbox">
-                <input type="checkbox" name="example">
-                <label id="label">Hall</label></div> 
-                </br>
-            <div class="ui checkbox">
-                <input type="checkbox" name="example">
-                <label id="label">Salle à manger</label> 
-            </div>
-            </br>
-            <div class="ui checkbox"> 
-                <input type="checkbox" name="example"> 
-                <label id="label">Salle de bal</label>
-            </div>
-            </br>
-            <div class="ui checkbox"> 
-                <input type="checkbox" name="example"> 
-                <label id="label">Salle de billard</label>
-            </div>
-            </br>
-            <div class="ui checkbox"> 
-                <input type="checkbox" name="example"> 
-                <label id="label">Salon</label>
-            </div>
-            </br>
-            <div class="ui checkbox"> 
-                <input type="checkbox" name="example"> 
-                <label id="label">Serre</label>
-            </div>
-        </div>
-
-        
+        {% endif %}
+    {% endfor %}
+</div>

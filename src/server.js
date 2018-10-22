@@ -17,6 +17,14 @@ let app = express();
 
 let game = new Game([], null);
 // On créer un paquet de cartes pour la partie
+let paquet = new CardPack(cards);
+// On récupère une carte de chaque type (cartes à découvrir)
+let hiddenCards = paquet.getHiddenCards();
+if (config.app.debugMode) {
+  for (let i in hiddenCards) {
+    //console.log(hiddenCards[i]); //hiddenCards[i].getImagePath() pour obtenir l'url de l'image
+  }
+}
 game.setCardPack(new CardPack(cards));
 
 app.set("view engine", "twig");
@@ -61,10 +69,13 @@ app.get("/cluedo", (request, response) => {
   //Test grille insjection en HTML
   var grid = new Grid();
   //Test cartes insjection en HTML
-  let paquet = new CardPack(cards.cards);
+  let paquet = new CardPack(cards);
+  let ListOfAllCards = new CardPack(cards);
+
   let cartes = paquet.getManyCards(3);
+  //console.log(cartes);  
   Cluedo.start(grid);
-  response.render("cluedo", { grid, cartes });
+  response.render("cluedo", { grid, ListOfAllCards, cartes });
 });
 
 app.listen(config.app.port);
