@@ -37,7 +37,6 @@ class GridController {
             }
         }
     }
-<<<<<<< HEAD
 
     movePlayer(id, x, y) {
         let player = this.getPositionPlayer(id);
@@ -82,17 +81,7 @@ class GridController {
         let somme = d1 + d2;
         return { somme }
     }
-
-    toString() {
-=======
-   getGrid(){
-       return this.grid;
-   }
-   placePlayer(id,x,y){
-    this.grid[x][y]=this.grid[x][y]+id;
-}
     toString(){
->>>>>>> 00101fa0f36c70ee47db44748b6557abfdd272b0
         this.grid.forEach(element => {
             console.log(element.toString())
         });
