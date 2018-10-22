@@ -40,27 +40,38 @@ class GridController {
 
     movePlayer(id, x, y) {
         let player = this.getPositionPlayer(id);
-        if (player.x + 1 == x) {
+        if (player.x + 1 == x && this.grid[player.x+1][player.y]!='m') {
             this.grid[player.x][player.y]=this.grid[player.x][player.y].charAt(0);
             this.grid[player.x+1][player.y]=this.grid[player.x+1][player.y]+id;
 
+        }else{
+            this.fdp;
         }
-        if (player.x - 1 == x) {
+        if (player.x - 1 == x && this.grid[player.x-1][player.y]!='m') {
             this.grid[player.x][player.y]=this.grid[player.x][player.y].charAt(0);
             this.grid[player.x-1][player.y]=this.grid[player.x-1][player.y]+id;
 
+        }else{
+            this.fdp;
         }
-        if (player.y + 1 == y) {
+        if (player.y + 1 == y && this.grid[player.x][player.y+1]!='m') {
             this.grid[player.x][player.y]=this.grid[player.x][player.y].charAt(0);
             this.grid[player.x][player.y+1]=this.grid[player.x][player.y+1]+id;
 
+        }else{
+            this.fdp;
         }
-        if (player.y - 1 == y) {
-
+        if (player.y - 1 == y && this.grid[player.x][player.y-1]!='m') {
             this.grid[player.x][player.y]=this.grid[player.x][player.y].charAt(0);
             this.grid[player.x+1][player.y]=this.grid[player.x+1][player.y]+id;
 
+        }else{
+            this.fdp;
         }
+    }
+
+    fdp(){
+        console.log("gros fdp");
     }
 
     //methode pour un lancer deux dés a 6 faces
