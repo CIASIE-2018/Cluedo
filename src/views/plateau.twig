@@ -2,14 +2,18 @@
     <div id="ligne">
     {% for j in 0..24 %}
         {% if grid[i][j] == "v" %}
-        <button id="MyCustomButton" style="visibility: hidden">{{ grid[i][j] }}</button>
+        <button id="MyCustomButton" style="visibility: hidden">{{ grid.grid[i][j] }}</button>
         {% elseif grid[i][j] == "m" %}
-        <button id="MyCustomButton" style="background-color: orange">{{ grid[i][j] }}</button>
+        <button id="MyCustomButton" style="background-color: orange">{{ gridgrid[i][j] }}</button>
         {% elseif grid[i][j] == "e" %}
-        <button id="MyCustomButton" style="background-color: lightgreen">{{ grid[i][j] }}</button>
+        <button id="MyCustomButton" style="background-color: lightgreen">{{ gridgrid[i][j] }}</button>
         {% else %}
-        <button id="MyCustomButton">{{ grid[i][j] }}</button>
+        <button id="MyCustomButton">{{ gridgrid[i][j] }}</button>
         {% endif %}
     {% endfor %}
     </div> 
 {% endfor %}
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script>$( "button" ).click(function() {
+$(window).load(location.href + window);
+});</script>
