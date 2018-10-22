@@ -79,7 +79,7 @@
   },
   {
     "name": "salle_de_bal",
-    "label": "12",
+    "label": "Salle de bal",
     "type": "room",
     "image": "/rooms/salle_de_bal.jpg"
   },

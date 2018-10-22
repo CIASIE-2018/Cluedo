@@ -1,5 +1,5 @@
 class Player {
-  constructor(uid, name) {
+  constructor({ uid = null, name = null }) {
     this.uid = uid;
     this.name = name;
   }

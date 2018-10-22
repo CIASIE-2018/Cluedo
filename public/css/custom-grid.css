@@ -17,6 +17,13 @@ p {
     margin-bottom: -5px;
 }
 
+.margin-top {
+    margin-top : 50px;
+}
+.margin-left {
+    margin-left: 10%;
+}
+
 .g {
     color: white;
 }
@@ -33,7 +40,7 @@ p {
     position: relative;
     z-index : 1;
   }
-  
+
   .titre:before {
     content : "";
     position: absolute;
