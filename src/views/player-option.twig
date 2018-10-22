@@ -11,6 +11,9 @@
     <div class="g" id="accuse_fin" style="display : none">
         {% include 'container-option-player/accuse_fin.twig' %}
     </div>
+    <div class="g" id="des" style="display : none">
+        {% include 'container-option-player/des.twig' %}
+    </div>
 </div>
 <script>
     function myFunction(type) {
@@ -18,6 +21,7 @@
         var tableau = document.getElementById("tableau");
         var accuse = document.getElementById("accuse");
         var accuse_fin = document.getElementById("accuse_fin");
+        var des = document.getElementById("des");
 
         carte.style.display = "none"; 
         tableau.style.display = "none";
@@ -32,6 +36,8 @@
             accuse.style.display = "block";
         } else if (type === "accuse_fin") {
             accuse_fin.style.display = "block";
+        } else if (type === "des") {
+            des.style.display = "block";
         }
     }
 
