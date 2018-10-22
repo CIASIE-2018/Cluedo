@@ -1,0 +1,16 @@
+{
+  "app": {
+    "baseUrl": "localhost",
+    "port": 8080,
+    "secretSession": "x0165qsd4f1MLKJd4ddq1s3d4fq1s",
+    "debugMode": true
+  },
+  "ressources": {
+    "staticFilesRootPath": "/assets",
+    "imagesPath": "/images",
+    "stylePath": "/css"
+  },
+  "settings": {
+    "maxPlayer": 4
+  }
+}

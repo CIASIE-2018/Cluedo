@@ -1,23 +1,49 @@
-let Cluedo = require('./controller/CluedoController');
-let express = require('express')
+// Modules
+let express = require("express");
+let Cluedo = require("./controller/CluedoController");
+let Grid = require("./controller/GridController");
+let session = require("./service/session");
+let cookieSession = require("cookie-session");
+let Card = require("./model/CardModel");
+let CardPack = require("./model/CardPack");
 
-let app = express()
+// Data
+const config = require("./config.json");
+const cards = require("./cards.json");
 
-app.set('view engine', 'twig');
+let app = express();
+
+// On créer un paquet de cartes pour la partie
+let paquet = new CardPack(cards);
+// On récupère une carte de chaque type (cartes à découvrir)
+let hiddenCards = paquet.getHiddenCards();
+if (config.app.debugMode) {
+  for (let i in hiddenCards) {
+    console.log(hiddenCards[i]); //hiddenCards[i].getImagePath() pour obtenir l'url de l'image
+  }
+}
+
+app.set("view engine", "twig");
 app.set("views", "./src/views");
 
-app.use('/assets', express.static('public'))
+app.use(config.ressources.staticFilesRootPath, express.static("public"));
+// Paramètre le système de session (voir session.js)
+app.use(cookieSession({ secret: config.app.secretSession }));
+app.use(session);
 
-app.get('/', (request, response) => {
-    response.render('index', { test: 'Salut' })
-})
+app.get("/", (request, response) => {
+  response.render("index");
+});
 
-app.get('/cluedo', (request, response) => {
-    response.render('cluedo')
-    Cluedo.start();
-    
+app.get("/cluedo", (request, response) => {
+  //Test grille insjection en HTML
+  var grid = new Grid().grid;
 
-})
+  //Test cartes insjection en HTML
+  let paquet = new CardPack(cards.cards);
+  let cartes = paquet.getManyCards(3);
+  Cluedo.start();
+  response.render("cluedo", { grid, cartes });
+});
 
-
-app.listen(8080)
+app.listen(config.app.port);

@@ -1,0 +1,37 @@
+<div class="i">
+    <div class="g" id="carte">
+        {% include 'container-option-player/carte.twig' %}
+    </div>
+    <div class="g" id="tableau" style="display : none">
+        {% include 'container-option-player/tableau.twig' %}
+    </div>
+    <div class="g" id="accuse" style="display : none">
+        {% include 'container-option-player/accuse.twig' %}
+    </div>
+    <div class="g" id="accuse_fin" style="display : none">
+        {% include 'container-option-player/accuse_fin.twig' %}
+    </div>
+</div>
+<script>
+    function myFunction(type) {
+        var carte = document.getElementById("carte");
+        var tableau = document.getElementById("tableau");
+        var accuse = document.getElementById("accuse");
+        var accuse_fin = document.getElementById("accuse_fin");
+
+        carte.style.display = "none"; 
+        tableau.style.display = "none";
+        accuse.style.display = "none";
+        accuse_fin.style.display = "none";
+
+        if (type === "carte") {
+            carte.style.display = "block";
+        } else if (type === "tableau") {
+            tableau.style.display = "block";
+        } else if (type === "accuse") {
+            accuse.style.display = "block";
+        } else if (type === "accuse_fin") {
+            accuse_fin.style.display = "block";
+        }
+    }
+</script>

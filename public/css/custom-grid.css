@@ -1,0 +1,52 @@
+.suspect .armes .lieux {
+    width: 35%;
+    margin-left: 5%
+}
+
+.lieux{
+    margin-top:3%;
+}
+
+.titre {
+    text-align: center;
+}
+
+p {
+    font-size: 20px;
+    margin-top:-10px;
+    margin-bottom: -5px;
+}
+
+.g {
+    color: white;
+}
+
+.i {
+    margin-left: calc( 25% / 2 );
+    margin-top: calc( 25% / 3 );
+}
+
+
+.titre {
+    width   : 200px;
+    height  : 50px;   
+    position: relative;
+    z-index : 1;
+  }
+  
+  .titre:before {
+    content : "";
+    position: absolute;
+    left    : 0;
+    bottom  : 0;
+    height  : 1px;
+    width   : 100%;  /* or 100px */
+    border-bottom:1px solid white;
+  }
+
+  #label {
+      color: white;
+  }
+
+
+
