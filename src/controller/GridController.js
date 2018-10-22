@@ -25,13 +25,13 @@ class GridController {
         return this.grid;
     }
     placePlayer(id, x, y) {
-        this.grid[x][y] = id;
+        this.grid[x][y]=this.grid[x][y]+id;
     }
-    getPositionPlayeur(id) {
+    getPositionPlayer(id) {
         let grille = this.getGrid();
         for (let i = 0; i <= 24; i++) {
             for (let j = 0; j <= 24; j++) {
-                if (grille[i][j] == id) {
+                if(grille[i][j].length == 2 && grille[i][j].charAt(1) == id){
                     return { x: i, y: j };
                 }
             }
@@ -39,26 +39,26 @@ class GridController {
     }
 
     movePlayer(id, x, y) {
-        let player = this.getPositionPlayeur(id);
-        let grid = this.getGrid();
+        let player = this.getPositionPlayer(id);
         if (player.x + 1 == x) {
-            grid[player.x][player.y]="x";
-            grid[player.x+1][player.y]=x+id;
+            this.grid[player.x][player.y]=this.grid[player.x][player.y].charAt(0);
+            this.grid[player.x+1][player.y]=this.grid[player.x+1][player.y]+id;
 
         }
         if (player.x - 1 == x) {
-            grid[player.x][player.y]="x";
-            grid[player.x-1][player.y]=x+id;
+            this.grid[player.x][player.y]=this.grid[player.x][player.y].charAt(0);
+            this.grid[player.x-1][player.y]=this.grid[player.x-1][player.y]+id;
 
         }
         if (player.y + 1 == y) {
-            grid[player.x][player.y]="x";
-            grid[player.x][player.y+1]=x+id;
+            this.grid[player.x][player.y]=this.grid[player.x][player.y].charAt(0);
+            this.grid[player.x][player.y+1]=this.grid[player.x][player.y+1]+id;
 
         }
         if (player.y - 1 == y) {
-            grid[player.x][player.y]="x";
-            grid[player.x+1][player.y]="x"+id;
+
+            this.grid[player.x][player.y]=this.grid[player.x][player.y].charAt(0);
+            this.grid[player.x+1][player.y]=this.grid[player.x+1][player.y]+id;
 
         }
     }
