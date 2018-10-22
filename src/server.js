@@ -47,7 +47,7 @@ app.get("/join", (request, response) => {
     error: null
   };
   // Si la partie peut acceuilir encore un joueur
-  if (game.getPlayers().length < config.settings.maxPlayer) {
+  if (game.getPlayers().length < config.settings.maxPlayers) {
     // Si le joueur n'est pas déja dans la partie
     if (!game.containsPlayer(request.session.player.uid)) {
       // On ajoute le joueur à la partie et on forme la réponse JSON
@@ -73,11 +73,9 @@ app.get("/cluedo", (request, response) => {
   let ListOfAllCards = new CardPack(cards);
 
   let cartes = paquet.getManyCards(3);
-  //console.log(cartes);  
+  //console.log(cartes);
   Cluedo.start(grid);
   response.render("cluedo", { grid, ListOfAllCards, cartes });
 });
 
 app.listen(config.app.port);
-
-
