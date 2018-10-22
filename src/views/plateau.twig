@@ -1,7 +1,15 @@
 {% for i in 0..24 %}
     <div id="ligne">
     {% for j in 0..24 %}
+        {% if grid[i][j] == "v" %}
+        <button id="MyCustomButton" style="visibility: hidden">{{ grid[i][j] }}</button>
+        {% elseif grid[i][j] == "m" %}
+        <button id="MyCustomButton" style="background-color: orange">{{ grid[i][j] }}</button>
+        {% elseif grid[i][j] == "e" %}
+        <button id="MyCustomButton" style="background-color: lightgreen">{{ grid[i][j] }}</button>
+        {% else %}
         <button id="MyCustomButton">{{ grid[i][j] }}</button>
+        {% endif %}
     {% endfor %}
     </div> 
 {% endfor %}
