@@ -31,13 +31,18 @@ app.get("/", (request, response) => {
   response.render("index");
 });
 
+// Route pour rejoindre une partie (appelée quand appuyé sur bouton "jouer")
 app.get("/join", (request, response) => {
+  // Création d'un objet de réponse pour tester
   let jsonResponse = {
     gameStatus: null,
     error: null
   };
+  // Si la partie peut acceuilir encore un joueur
   if (game.getPlayers().length < config.settings.maxPlayer) {
+    // Si le joueur n'est pas déja dans la partie
     if (!game.containsPlayer(request.session.player.uid)) {
+      // On ajoute le joueur à la partie et on forme la réponse JSON
       game.addPlayer(request.session.player);
       jsonResponse.gameStatus = "Game sucessfully joined";
     } else {
@@ -48,6 +53,7 @@ app.get("/join", (request, response) => {
     jsonResponse.gameStatus = "Game not joined";
     jsonResponse.error = "Error: lobby is full";
   }
+  // Dans tous les cas envoi de la réponse
   response.json(jsonResponse);
 });
 
