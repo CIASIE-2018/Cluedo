@@ -1,1 +1,9 @@
-<h1>Carte</h1>
+<h1 class="titre">Vos Cartes</h1>
+{% for card in cartes %}
+    <img src="/assets/images{{card.imagePath}}" style="padding : 2px">
+{% endfor %}
+<br/>
+<br/>
+{% for card in cartes %}
+    <li>{{ card.label }}</li>
+{% endfor %}

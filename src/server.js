@@ -2,8 +2,10 @@
 let express = require("express");
 let Cluedo = require("./controller/CluedoController");
 let Grid = require("./controller/GridController");
-const Card = require("./model/CardModel");
-const CardPack = require("./model/CardPack");
+let session = require("./service/session");
+let cookieSession = require("cookie-session");
+let Card = require("./model/CardModel");
+let CardPack = require("./model/CardPack");
 
 // Data
 const config = require("./config.json");
@@ -11,26 +13,37 @@ const cards = require("./cards.json");
 
 let app = express();
 
+// On créer un paquet de cartes pour la partie
+let paquet = new CardPack(cards);
+// On récupère une carte de chaque type (cartes à découvrir)
+let hiddenCards = paquet.getHiddenCards();
+if (config.app.debugMode) {
+  for (let i in hiddenCards) {
+    console.log(hiddenCards[i]); //hiddenCards[i].getImagePath() pour obtenir l'url de l'image
+  }
+}
+
 app.set("view engine", "twig");
 app.set("views", "./src/views");
 
 app.use(config.ressources.staticFilesRootPath, express.static("public"));
-
-// ---------  Pour tester le fcontionnement des cartes
-let paquet = new CardPack(cards.cards);
-let cartes = paquet.getManyCards(3);
-for (let i in cartes) {
-  console.log(cartes[i]); //cartes[i].getImagePath() pour obtenir l'url de l'image
-}
+// Paramètre le système de session (voir session.js)
+app.use(cookieSession({ secret: config.app.secretSession }));
+app.use(session);
 
 app.get("/", (request, response) => {
   response.render("index");
 });
 
 app.get("/cluedo", (request, response) => {
+  //Test grille insjection en HTML
   var grid = new Grid().grid;
+
+  //Test cartes insjection en HTML
+  let paquet = new CardPack(cards.cards);
+  let cartes = paquet.getManyCards(3);
   Cluedo.start();
-  response.render("cluedo", { grid });
+  response.render("cluedo", { grid, cartes });
 });
 
 app.listen(config.app.port);
