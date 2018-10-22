@@ -4,7 +4,6 @@ class PlayerController {
         this.id=id;
         this.pseudo=pseudo;
         this.cartes=cartes;
-        //this.grille=new Grille();
     }
 
     getCard(){
