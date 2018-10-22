@@ -3,10 +3,6 @@
     margin-left: 5%
 }
 
-.lieux{
-    margin-top:3%;
-}
-
 .titre {
     text-align: center;
 }
@@ -29,8 +25,7 @@ p {
 }
 
 .i {
-    margin-left: calc( 25% / 2 );
-    margin-top: calc( 25% / 3 );
+    margin: calc( 25% / 2 );
 }
 
 
@@ -53,6 +48,11 @@ p {
 
   #label {
       color: white;
+  }
+
+  .notes {
+    height:150px;
+    width: 100%;
   }
 
 

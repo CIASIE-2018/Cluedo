@@ -1,4 +1,5 @@
-<div class="suspect" id="suspect">
+<div class="center">
+<div class="suspect">
     <h1 class="titre">Suspect</h1>
     {% for paque_carte_character in ListOfAllCards.pack %}
         {% if paque_carte_character.type == "character" %}
@@ -11,7 +12,7 @@
     {% endfor %}
 </div>
 
-<div class="armes" id="armes">
+<div class="armes">
     <h1 class="titre">Armes</h1>
     {% for paque_carte_weapon in ListOfAllCards.pack %}
         {% if paque_carte_weapon.type == "weapon" %}
@@ -24,7 +25,7 @@
     {% endfor %}
 </div>
 
-<div class="lieux" id="lieux">
+<div class="lieux">
     <h1 class="titre">Lieux</h1>
     {% for paque_carte_room in ListOfAllCards.pack %}
         {% if paque_carte_room.type == "room" %}
@@ -36,3 +37,9 @@
         {% endif %}
     {% endfor %}
 </div>
+
+    <h1 class="titre">Notes</h1>
+        <div class="ui input notes">
+        <input placeholder="" type="text">
+        </div>
+        </div>
