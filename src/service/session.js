@@ -4,7 +4,7 @@ var session = (req, res, next) => {
 
   // si le navigateur n'a pas de session, on lui crée une session contenant le player
   if (req.session.player === undefined) {
-    let player = new Player(uuidv4(), null);
+    let player = new Player({ uid: uuidv4() });
     req.session.player = player;
     console.log("New player : " + player.getUid());
   }
