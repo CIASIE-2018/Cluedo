@@ -11,6 +11,7 @@
     "stylePath": "/css"
   },
   "settings": {
-    "maxPlayer": 6
+    "minPlayers": 3,
+    "maxPlayers": 6
   }
 }
