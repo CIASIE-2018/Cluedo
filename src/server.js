@@ -74,7 +74,7 @@ app.get("/cluedo", (request, response) => {
 
   let cartes = paquet.getManyCards(3);
   //console.log(cartes);  
-  Cluedo.start();
+  Cluedo.start(grid);
   response.render("cluedo", { grid, ListOfAllCards, cartes });
 });
 
