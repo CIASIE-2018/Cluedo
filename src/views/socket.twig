@@ -16,7 +16,7 @@
     <script>
         var socket = io.connect('http://localhost:8080');
         socket.on('connect',(data) => {
-            socket.emit('join',"Hello world from front");
+            socket.emit('message',"Hello world from front");
         });
     </script>
 </html>
