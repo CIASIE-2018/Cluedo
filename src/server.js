@@ -15,6 +15,7 @@ const Game = require("./model/Game");
 const config = require("./config.json");
 const cards = require("./cards.json");
 
+// Instanciation du serveur HTTP et de la websocket
 let app = express();
 let server = http.createServer(app);
 let serverSocket = socketIO(server);
@@ -34,11 +35,13 @@ let serverSocket = socketIO(server);
 app.set("view engine", "twig");
 app.set("views", "./src/views");
 
+// MIDDLEWARES
 app.use(config.ressources.staticFilesRootPath, express.static("public"));
 // Paramètre le système de session (voir session.js)
 app.use(cookieSession({ secret: config.app.secretSession }));
 app.use(session);
 
+// ROUTES
 app.get("/", (request, response) => {
   response.render("index");
 });
@@ -87,11 +90,15 @@ app.get("/cluedo", (request, response) => {
   response.render("cluedo", { grid, ListOfAllCards, cartes });
 });
 
+// SOCKET
 serverSocket.on("connection", clientSocket => {
+  // Lorsque un client se connecte
   console.log("Client connected");
   clientSocket.on("disconnect", () => {
     console.log("Client disconnected");
   });
+
+  // Lorsque un client nous envoie un évenemment "message"
   clientSocket.on("message", msg => {
     console.log("New message: " + msg);
   });
