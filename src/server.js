@@ -87,6 +87,16 @@ app.get("/cluedo", (request, response) => {
   response.render("cluedo", { grid, ListOfAllCards, cartes });
 });
 
+serverSocket.on("connection", clientSocket => {
+  console.log("Client connected");
+  clientSocket.on("disconnect", () => {
+    console.log("Client disconnected");
+  });
+  clientSocket.on("message", msg => {
+    console.log("New message: " + msg);
+  });
+});
+
 server.listen(config.app.port, () => {
   console.log(
     "Server running at http://" + config.app.baseUrl + ":" + config.app.port
