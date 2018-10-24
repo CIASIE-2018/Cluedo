@@ -94,16 +94,18 @@ app.get("/cluedo", (request, response) => {
 serverSocket.on("connection", clientSocket => {
   // Lorsque un client se connecte
   console.log("Client connected");
-  clientSocket.on("disconnect", () => {
-    console.log("Client disconnected");
-  });
 
   // Lorsque un client nous envoie un évenemment "message"
-  clientSocket.on("message", msg => {
-      let d1 = Math.floor(Math.random() * 6) + 1;
-      let d2 = Math.floor(Math.random() * 6) + 1;
-      let somme = d1 + d2;
-      console.log(somme);
+  clientSocket.on("rollTheDice", msg => {
+    let d1 = Math.floor(Math.random() * 6) + 1;
+    let d2 = Math.floor(Math.random() * 6) + 1;
+    let somme = d1 + " : " + d2 + " = " + (d1 + d2);
+    clientSocket.emit("somme", somme).disconnect();
+  });
+
+
+  clientSocket.on("disconnect", () => {
+    console.log("Client disconnected");
   });
 });
 
