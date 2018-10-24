@@ -10,7 +10,8 @@
         pack.shuffle();
         let hugo = new Player(1,"hugo",pack.getManyCards(3));
         console.log(hugo.getCard())
-        grid.placePlayer(1,1,1);
+        grid.placePlayer(1,4,6);
+        grid.movePlayer(1,3,6);
         // console.log(grid)
     }
 
