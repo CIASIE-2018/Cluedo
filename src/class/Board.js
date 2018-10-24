@@ -26,7 +26,7 @@ class Board {
     }
     placePlayer(id, x, y) {
 
-        this.board[x][y]=this.board[x][y]+id;
+        this.board[x][y] = this.board[x][y] + id;
     }
     getPositionPlayer(id) {
         let grille = this.getGrid();
@@ -56,7 +56,7 @@ class Board {
         }
         if (player.x - 1 == x && this.grid[player.x - 1][player.y] != 'm') {
             this.grid[player.x][player.y] = this.grid[player.x][player.y].charAt(0);
-            if ( reg.test(this.grid[player.x - 1][player.y])) {
+            if (reg.test(this.grid[player.x - 1][player.y])) {
                 this.placementRoom(id, player.x - 1, player.y);
             } else {
                 this.grid[player.x - 1][player.y] = this.grid[player.x - 1][player.y] + id;
@@ -66,9 +66,9 @@ class Board {
         }
         if (player.y + 1 == y && this.grid[player.x][player.y + 1] != 'm') {
             this.grid[player.x][player.y] = this.grid[player.x][player.y].charAt(0);
-            if (reg.test(this.grid[player.x][player.y+1])) {
+            if (reg.test(this.grid[player.x][player.y + 1])) {
                 this.placementRoom(id, player.x, player.y + 1);
-            }else{
+            } else {
                 this.grid[player.x][player.y + 1] = this.grid[player.x][player.y + 1] + id;
             }
 
@@ -79,9 +79,9 @@ class Board {
 
         if (player.y - 1 == y && this.grid[player.x][player.y - 1] != 'm') {
             this.grid[player.x][player.y] = this.grid[player.x][player.y].charAt(0);
-            if (reg.test(this.grid[player.x][player.y-1])) {
+            if (reg.test(this.grid[player.x][player.y - 1])) {
                 this.placementRoom(id, playeur.x, player.y - 1);
-            }else{
+            } else {
                 this.grid[player.x + 1][player.y] = this.grid[player.x + 1][player.y] + id;
             }
         } else {
@@ -93,207 +93,55 @@ class Board {
     // methode qui place les joueurs dans une salle
 
     placementRoom(id, x, y) {
-        if (this.grid[x][y] === 'A') {
-            if (id === 1) {
-                this.grid[0][0] = this.grid[0][0] + id;
-            }
-            if (id === 2) {
-                this.grid[0][1] = this.grid[0][1] + id;
-            }
-            if (id === 3) {
-                this.grid[0][2] = this.grid[0][2] + id;
-            }
-            if (id === 4) {
-                this.grid[0][3] = this.grid[0][3] + id;
-            }
-            if (id === 5) {
-                this.grid[0][4] = this.grid[0][4] + id;
-            }
-            if (id === 6) {
-                this.grid[0][5] = this.grid[0][5] + id;
-            }
-        }
-        if (this.grid[x][y] === 'B') {
-            if (id === 1) {
-                this.grid[0][10] = this.grid[0][10] + id;
-            }
-            if (id === 2) {
-                this.grid[1][10] = this.grid[1][10] + id;
-            }
-            if (id === 3) {
-                this.grid[2][10] = this.grid[2][10] + id;
-            }
-            if (id === 4) {
-                this.grid[3][10] = this.grid[3][10] + id;
-            }
-            if (id === 5) {
-                this.grid[4][10] = this.grid[4][10] + id;
-            }
-            if (id === 6) {
-                this.grid[5][10] = this.grid[5][10] + id;
-            }
-        }
-        if (this.grid[x][y] === 'C') {
-            if (id === 1) {
-                this.grid[0][19] = this.grid[0][19] + id;
-            }
-            if (id === 2) {
-                this.grid[1][19] = this.grid[1][19] + id;
-            }
-            if (id === 3) {
-                this.grid[2][19] = this.grid[2][19] + id;
-            }
-            if (id === 4) {
-                this.grid[3][19] = this.grid[3][19] + id;
-            }
-            if (id === 5) {
-                this.grid[4][19] = this.grid[4][19] + id;
-            }
-            if (id === 6) {
-                this.grid[5][19] = this.grid[5][19] + id;
-            }
-        }
-        if (this.grid[x][y] === 'D') {
-            if (id === 1) {
-                this.grid[9][19] = this.grid[9][19] + id;
-            }
-            if (id === 2) {
-                this.grid[10][19] = this.grid[10][19] + id;
-            }
-            if (id === 3) {
-                this.grid[11][19] = this.grid[11][19] + id;
-            }
-            if (id === 4) {
-                this.grid[12][19] = this.grid[12][19] + id;
-            }
-            if (id === 5) {
-                this.grid[13][19] = this.grid[14][19] + id;
-            }
-            if (id === 6) {
-                this.grid[14][19] = this.grid[14][19] + id;
-            }
-        }
-        if (this.grid[x][y] === 'E') {
-            if (id === 1) {
-                this.grid[19][20] = this.grid[19][20] + id;
-            }
-            if (id === 2) {
-                this.grid[20][20] = this.grid[20][20] + id;
-            }
-            if (id === 3) {
-                this.grid[21][20] = this.grid[21][20] + id;
-            }
-            if (id === 4) {
-                this.grid[22][20] = this.grid[22][20] + id;
-            }
-            if (id === 5) {
-                this.grid[23][20] = this.grid[23][20] + id;
-            }
-            if (id === 6) {
-                this.grid[24][20] = this.grid[24][20] + id;
-            }
-        }
-        if (this.grid[x][y] === 'F') {
-            if (id === 1) {
-                this.grid[17][12] = this.grid[17][12] + id;
-            }
-            if (id === 2) {
-                this.grid[18][12] = this.grid[18][12] + id;
-            }
-            if (id === 3) {
-                this.grid[19][12] = this.grid[19][12] + id;
-            }
-            if (id === 4) {
-                this.grid[20][12] = this.grid[20][12] + id;
-            }
-            if (id === 5) {
-                this.grid[21][12] = this.grid[21][12] + id;
-            }
-            if (id === 6) {
-                this.grid[22][12] = this.grid[22][12] + id;
-            }
-        }
-        if (this.grid[x][y] === 'G') {
-            if (id === 1) {
-                this.grid[3][19] = this.grid[3][19] + id;
-            }
-            if (id === 2) {
-                this.grid[4][19] = this.grid[4][19] + id;
-            }
-            if (id === 3) {
-                this.grid[5][19] = this.grid[5][19] + id;
-            }
-            if (id === 4) {
-                this.grid[6][19] = this.grid[6][19] + id;
-            }
-            if (id === 5) {
-                this.grid[7][19] = this.grid[7][19] + id;
-            }
-            if (id === 6) {
-                this.grid[8][19] = this.grid[8][19] + id;
-            }
-        }
-        if (this.grid[x][y] === 'H') {
-            if (id === 1) {
-                this.grid[3][12] = this.grid[3][12] + id;
-            }
-            if (id === 2) {
-                this.grid[4][12] = this.grid[4][12] + id;
-            }
-            if (id === 3) {
-                this.grid[5][12] = this.grid[5][12] + id;
-            }
-            if (id === 4) {
-                this.grid[6][12] = this.grid[6][12] + id;
-            }
-            if (id === 5) {
-                this.grid[7][12] = this.grid[7][12] + id;
-            }
-            if (id === 6) {
-                this.grid[8][12] = this.grid[8][12] + id;
-            }
-        }
-        if (this.grid[x][y] === 'B') {
-            if (id === 1) {
-                this.grid[3][6] = this.grid[3][6] + id;
-            }
-            if (id === 2) {
-                this.grid[4][6] = this.grid[4][6] + id;
-            }
-            if (id === 3) {
-                this.grid[5][6] = this.grid[5][6] + id;
-            }
-            if (id === 4) {
-                this.grid[6][6] = this.grid[6][6] + id;
-            }
-            if (id === 5) {
-                this.grid[7][6] = this.grid[7][6] + id;
-            }
-            if (id === 6) {
-                this.grid[8][6] = this.grid[8][6] + id;
+        switch (this.grid[x][y]) {
+            case ('A'):
+                this.grid[0][id - 1] = this.grid[0][id - 1] + id;
+                break;
+            case ('B'):
+                this.grid[id - 1][10] = this.grid[id - 1][10] + id;
+                break;
+            case ('C'):
+                this.grid[id - 1][19] = this.grid[id - 1][19] + id;
+                break;
+            case ('D'):
+                this.grid[8 + id][19] = this.grid[9][19] + id;
+                break;
+            case ('E'):
+                this.grid[18 + id][20] = this.grid[18 + id][20] + id;
+                break;
+            case ('F'):
+                this.grid[16 + id][12] = this.grid[16 + id][12] + id;
+                break;
+            case ('G'):
+                this.grid[2 + id][19] = this.grid[2 + id][19] + id;
+                break;
+            case ('H'):
+                this.grid[2 + id][12] = this.grid[2 + id][12] + id;
+                break;
+            case ('I'):
+                this.grid[2 + id][6] = this.grid[2 + id][6] + id;
+                break;
+
             }
         }
 
 
+        fdp() {
+            console.log("gros fdp");
+        }
+
+        //methode pour un lancer deux dés a 6 faces
+        rollTheDice() {
+            let d1 = Math.floor(Math.random() * 6) + 1;
+            let d2 = Math.floor(Math.random() * 6) + 1;
+            let somme = d1 + d2;
+            return { somme }
+        }
+
+        toString(){
+            this.board.forEach(element => {
+                console.log(element.toString())
+            });
+        }
     }
-
-
-    fdp() {
-        console.log("gros fdp");
-    }
-
-    //methode pour un lancer deux dés a 6 faces
-    rollTheDice() {
-        let d1 = Math.floor(Math.random() * 6) + 1;
-        let d2 = Math.floor(Math.random() * 6) + 1;
-        let somme = d1 + d2;
-        return { somme }
-    }
-
-    toString(){
-        this.board.forEach(element => {
-            console.log(element.toString())
-        });
-    }
-}
 module.exports = Board;
