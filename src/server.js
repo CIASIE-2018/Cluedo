@@ -2,14 +2,14 @@
 const express = require("express");
 const http = require("http");
 const socketIO = require("socket.io");
-const Cluedo = require("./controller/CluedoController");
-const Grid = require("./controller/GridController");
+const Cluedo = require("./class/Cluedo");
+const Board = require("./class/Board");
 const session = require("./service/session");
 const cookieSession = require("cookie-session");
-const Card = require("./model/CardModel");
-const CardPack = require("./model/CardPack");
-const Player = require("./model/PlayerModel");
-const Game = require("./model/Game");
+const Card = require("./class/Card");
+const CardPack = require("./class/CardPack");
+const PlayerSession = require("./class/PlayerSession");
+const game = require("./class/GameSession");
 
 // Data
 const config = require("./config.json");
@@ -21,9 +21,9 @@ let server = http.createServer(app);
 let serverSocket = socketIO(server);
 
 // let game = new Game([], null);
-// // On créer un paquet de cartes pour la partie
+// // On créer un paquet de cards pour la partie
 // let paquet = new CardPack(cards);
-// // On récupère une carte de chaque type (cartes à découvrir)
+// // On récupère une carte de chaque type (cards à découvrir)
 // let hiddenCards = paquet.getHiddenCards();
 // if (config.app.debugMode) {
 //   for (let i in hiddenCards) {
@@ -79,15 +79,15 @@ app.get("/join", (request, response) => {
 
 app.get("/cluedo", (request, response) => {
   //Test grille insjection en HTML
-  var grid = new Grid();
-  //Test cartes insjection en HTML
-  let paquet = new CardPack(cards);
+  var board = new Board();
+  //Test cards insjection en HTML
+  let pack = new CardPack(cards);
   let ListOfAllCards = new CardPack(cards);
 
-  let cartes = paquet.getManyCards(3);
-  //console.log(cartes);
-  Cluedo.start(grid);
-  response.render("cluedo", { grid, ListOfAllCards, cartes });
+  let cardPack = pack.getManyCards(3);
+  //console.log(cards);
+  Cluedo.start(board);
+  response.render("cluedo", { board, ListOfAllCards, cardPack });
 });
 
 // SOCKET
