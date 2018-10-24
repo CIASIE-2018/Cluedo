@@ -1,9 +1,9 @@
 const arrayShuffle = require("array-shuffle");
-const Card = require("./CardModel");
+const Card = require("./Card");
 
-// Définit un paquet de cartes
+// Définit un paquet de cards
 class CardPack {
-  // prend en paramètre un array contenant des cartes
+  // prend en paramètre un array contenant des cards
   constructor(cardsPack) {
     this.pack = [];
     for (let i in cardsPack) {
@@ -28,7 +28,7 @@ class CardPack {
     return this.pack.pop();
   }
 
-  // Pioche et renvoie plusieurs cartes !! Ne pas utiliser pour generer les cartes du début => VOIR getHiddenCards() !!
+  // Pioche et renvoie plusieurs cards !! Ne pas utiliser pour generer les cards du début => VOIR getHiddenCards() !!
   getManyCards(how) {
     let cards = [];
     for (let i = 0; i < how; i++) {

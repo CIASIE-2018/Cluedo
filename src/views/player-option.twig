@@ -1,44 +1,44 @@
-<div class="i">
-    <div class="g" id="carte">
-        {% include 'container-option-player/carte.twig' %}
+<div class="buttons">
+    <div id="hypothesis" style="display : none">
+        {% include 'container-option-player/hypothesis.twig' %}
     </div>
-    <div class="g" id="tableau" style="display : none">
-        {% include 'container-option-player/tableau.twig' %}
+    <div id="accused" style="display : none">
+        {% include 'container-option-player/accused.twig' %}
     </div>
-    <div class="g" id="accuse" style="display : none">
-        {% include 'container-option-player/accuse.twig' %}
+    <div id="dice" style="display : none">
+        {% include 'container-option-player/dice.twig' %}
     </div>
-    <div class="g" id="accuse_fin" style="display : none">
-        {% include 'container-option-player/accuse_fin.twig' %}
+    <div id="card">
+        {% include 'container-option-player/card.twig' %}
     </div>
-    <div class="g" id="des" style="display : none">
-        {% include 'container-option-player/des.twig' %}
+    <div id="grid" style="display : none">
+        {% include 'container-option-player/grid.twig' %}
     </div>
 </div>
 <script>
     function myFunction(type) {
-        var carte = document.getElementById("carte");
-        var tableau = document.getElementById("tableau");
-        var accuse = document.getElementById("accuse");
-        var accuse_fin = document.getElementById("accuse_fin");
-        var des = document.getElementById("des");
+        var card = document.getElementById("card");
+        var grid = document.getElementById("grid");
+        var hypothesis = document.getElementById("hypothesis");
+        var accused = document.getElementById("accused");
+        var dice = document.getElementById("dice");
 
-        carte.style.display = "none"; 
-        tableau.style.display = "none";
-        accuse.style.display = "none";
-        accuse_fin.style.display = "none";
-        des.style.display = "none";
+        card.style.display = "none"; 
+        grid.style.display = "none";
+        hypothesis.style.display = "none";
+        accused.style.display = "none";
+        dice.style.display = "none";
 
-        if (type === "carte") {
-            carte.style.display = "block";
-        } else if (type === "tableau") {
-            tableau.style.display = "block";
-        } else if (type === "accuse") {
-            accuse.style.display = "block";
-        } else if (type === "accuse_fin") {
-            accuse_fin.style.display = "block";
-        } else if (type === "des") {
-            des.style.display = "block";
+        if (type === "card") {
+            card.style.display = "block";
+        } else if (type === "grid") {
+            grid.style.display = "block";
+        } else if (type === "hypothesis") {
+            hypothesis.style.display = "block";
+        } else if (type === "accused") {
+            accused.style.display = "block";
+        } else if (type === "dice") {
+            dice.style.display = "block";
         }
     }
 
