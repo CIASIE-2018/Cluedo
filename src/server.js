@@ -32,7 +32,7 @@ app.use(session);
 // serveur de fichier statiques
 app.use(
   config.ressources.staticFilesRootPath,
-  express.static(__dirname + "/public")
+  express.static(__dirname + "/.." + "/public")
 );
 
 // WEBSOCKET
@@ -46,11 +46,21 @@ serverSocket.use(
 
 // lorsqu'un client se connecte à la socket
 serverSocket.on("connection", clientSocket => {
-  // on stocke les infos du joueur
+  // si c'est un nouveau client
   clientSocket.handshake.session.userData = {
     uid: uuid(),
     name: null
   };
+  // envoi des infos au joueur
+  clientSocket.emit("get-player-data", clientSocket.handshake.session.userData);
+
+  // si le client demande une reconnexion
+  clientSocket.on("resume-connection", uid => {
+    clientSocket.handshake.session.userData = {
+      uid: uid,
+      name: null
+    };
+  });
 
   // écoute des évènements
   clientSocket.on("join-game", () => {
