@@ -20,12 +20,9 @@ p {
     margin-left: 10%;
 }
 
-.g {
-    color: white;
-}
-
-.i {
+.buttons {
     margin: calc( 25% / 2 );
+    color: white;
 }
 
 
