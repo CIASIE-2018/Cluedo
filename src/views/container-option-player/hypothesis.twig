@@ -27,9 +27,26 @@
 </div>
 <div class="margin-top">
     <a href="#" style="height : 100%;">
-        <button class="ui left labeled icon button" onclick="HypoCall()">
+        <button class="ui left labeled icon button" onclick="CallHypothesis()">
             <i class="right arrow icon"></i>
             Formuler cette hypothèse
         </button>
     </a>
 </div>
+
+<script src="../socket.io/socket.io.js"></script>
+<script>
+    function CallHypothesis() {
+        var socket = io.connect('http://localhost:8080');
+        var HypoCallGetChar = document.getElementById("character");
+        var HypoCallGetWeapon = document.getElementById("weapon");
+        var HypoCallGetRoom = document.getElementById("room");
+
+        var text_character = HypoCallGetChar.options[HypoCallGetChar.selectedIndex].text;
+        var text_weapon = HypoCallGetWeapon.options[HypoCallGetChar.selectedIndex].text;
+        var text_room = HypoCallGetRoom.options[HypoCallGetChar.selectedIndex].text;
+        socket.on('connect', (data) => {
+            socket.emit('Hypothesis', [text_character, text_weapon, text_room]);
+        });
+    }
+</script>

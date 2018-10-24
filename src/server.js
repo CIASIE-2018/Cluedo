@@ -103,6 +103,11 @@ serverSocket.on("connection", clientSocket => {
     clientSocket.emit("sum", sum).disconnect();
   });
 
+  clientSocket.on("Hypothesis", msg => {
+    console.log(msg[0] + "\n" + msg[1] + "\n" + msg[2]);
+    clientSocket.disconnect();
+  });
+
 
   clientSocket.on("disconnect", () => {
     console.log("Client disconnected");
