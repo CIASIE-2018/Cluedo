@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title></title>
+        <link rel="stylesheet" href="/assets/semantic/semantic.min.css">
+   </head>
+    <body>
+        <div class="ui equal width center aligned padded grid">
+            <div class="row">
+                <div class="column">
+                </div>
+            </div>
+        </div>
+        
+    </body>
+    <script src="../socket.io/socket.io.js"></script>
+    <script>
+        var socket = io.connect('http://localhost:8080');
+        socket.on('connect',(data) => {
+            socket.emit('message',"Hello world from front");
+        });
+    </script>
+</html>
