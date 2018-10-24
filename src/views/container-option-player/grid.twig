@@ -1,12 +1,12 @@
 <div class="center">
-<div class="suspect">
-    <h1 class="titre">Suspect</h1>
-    {% for paque_carte_character in ListOfAllCards.pack %}
-        {% if paque_carte_character.type == "character" %}
-            <div class="ui checkbox">
-                <input type="checkbox">
-                <label id="label">{{ paque_carte_character.label }}</label>
-            </div>
+    <div class="suspect">
+        <h1 class="titre">Suspect</h1>
+        {% for pack_card_character in ListOfAllCards.pack %}
+            {% if pack_card_character.type == "character" %}
+                <div class="ui checkbox">
+                    <input type="checkbox">
+                    <label id="label">{{ pack_card_character.label }}</label>
+                </div>
             </br>
         {% endif %}
     {% endfor %}
@@ -14,30 +14,29 @@
 
 <div class="armes">
     <h1 class="titre">Armes</h1>
-    {% for paque_carte_weapon in ListOfAllCards.pack %}
-        {% if paque_carte_weapon.type == "weapon" %}
+    {% for pack_card_weapon in ListOfAllCards.pack %}
+        {% if pack_card_weapon.type == "weapon" %}
             <div class="ui checkbox">
                 <input type="checkbox">
-                <label id="label">{{ paque_carte_weapon.label }}</label>
+                <label id="label">{{ pack_card_weapon.label }}</label>
             </div>
-            </br>
-        {% endif %}
-    {% endfor %}
+        </br>
+    {% endif %}
+{% endfor %}
 </div>
 
 <div class="lieux">
-    <h1 class="titre">Lieux</h1>
-    {% for paque_carte_room in ListOfAllCards.pack %}
-        {% if paque_carte_room.type == "room" %}
-            <div class="ui checkbox">
-                <input type="checkbox">
-                <label id="label">{{ paque_carte_room.label }}</label>
-            </div>
-            </br>
-        {% endif %}
-    {% endfor %}
+<h1 class="titre">Lieux</h1>
+{% for pack_card_room in ListOfAllCards.pack %}
+    {% if pack_card_room.type == "room" %}
+        <div class="ui checkbox">
+            <input type="checkbox">
+            <label id="label">{{ pack_card_room.label }}</label>
+        </div>
+    </br>
+{% endif %}
+{% endfor %}
 </div>
-
     <h1 class="titre">Notes</h1>
         <div class="ui form">
             <div class="field">
