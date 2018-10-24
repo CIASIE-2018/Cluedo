@@ -13,7 +13,7 @@
     </body>
     <script src="../socket.io/socket.io.js"></script>
     <script>
-        var socket = io.connect('http://localhost:8080');
+        var socket = io.connect('http://localhost:8080/cluedo');
         socket.on('connect', (data) => {
             socket.emit("join-game");
         });
