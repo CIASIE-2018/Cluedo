@@ -1,35 +1,51 @@
 <h1 class="titre">Accusation</h1>
 <div>
     <h3>Personnages</h3>
-    <select name="character" id="character" size="1" class="margin-left">
-        {% for paque_carte_character in ListOfAllCards.pack %}
-            {% if paque_carte_character.type == "character" %}
-                <OPTION>{{ paque_carte_character.label }}</option>
+    <select id="Accused_character" size="1" class="margin-left">
+        {% for pack_card_character in ListOfAllCards.pack %}
+            {% if pack_card_character.type == "character" %}
+                <OPTION>{{ pack_card_character.label }}</option>
             {% endif %}
         {% endfor %}
     </select>
     <h3>Armes</h3>
-    <select name="weapon" id="weapon" size="1" class="margin-left">
-        {% for paque_carte_weapon in ListOfAllCards.pack %}
-            {% if paque_carte_weapon.type == "weapon" %}
-                <OPTION>{{ paque_carte_weapon.label }}</option>
+    <select id="Accused_weapon" size="1" class="margin-left">
+        {% for pack_card_weapon in ListOfAllCards.pack %}
+            {% if pack_card_weapon.type == "weapon" %}
+                <OPTION>{{ pack_card_weapon.label }}</option>
             {% endif %}
         {% endfor %}
     </select>
     <h3>Lieux</h3>
-    <select name="room" id="room" size="1" class="margin-left">
-        {% for paque_carte_room in ListOfAllCards.pack %}
-            {% if paque_carte_room.type == "room" %}
-                <OPTION>{{ paque_carte_room.label }}</option>
+    <select id="Accused_room" size="1" class="margin-left">
+        {% for pack_card_room in ListOfAllCards.pack %}
+            {% if pack_card_room.type == "room" %}
+                <OPTION>{{ pack_card_room.label }}</option>
             {% endif %}
         {% endfor %}
     </select>
 </div>
 <div class="margin-top">
     <a href="#" style="height : 100%;">
-        <button class="ui right negative labeled icon button" onclick="AccuCall()">
+        <button class="ui right negative labeled icon button" onclick="CallAccused()">
             <i class="right arrow icon"></i>
             Formuler cette accusation
         </button>
     </a>
 </div>
+<script src="../socket.io/socket.io.js"></script>
+<script>
+    function CallAccused() {
+        var socket = io.connect('http://localhost:8080');
+        var AccusedCallGetChar = document.getElementById("Accused_character");
+        var AccusedCallGetWeapon = document.getElementById("Accused_weapon");
+        var AccusedCallGetRoom = document.getElementById("Accused_room");
+
+        var Accused_character = AccusedCallGetChar.options[AccusedCallGetChar.selectedIndex].text;
+        var Accused_weapon = AccusedCallGetWeapon.options[AccusedCallGetWeapon.selectedIndex].text;
+        var Accused_room = AccusedCallGetRoom.options[AccusedCallGetRoom.selectedIndex].text;
+        socket.on('connect', (data) => {
+            socket.emit('Accused', [Accused_character, Accused_weapon, Accused_room]);
+        });
+    }
+</script>

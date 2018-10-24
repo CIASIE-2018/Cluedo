@@ -102,12 +102,16 @@ serverSocket.on("connection", clientSocket => {
     let sum = firstRoll + " : " + SecondRoll + " = " + (firstRoll + SecondRoll);
     clientSocket.emit("sum", sum).disconnect();
   });
-
+  
   clientSocket.on("Hypothesis", msg => {
-    console.log(msg[0] + "\n" + msg[1] + "\n" + msg[2]);
+    console.log("Hypothesis : "+ msg[0] + ", " + msg[1] + ", " + msg[2]);
     clientSocket.disconnect();
   });
-
+  
+  clientSocket.on("Accused", msg2 => {
+    console.log("Accused : "+ msg2[0] + ", " + msg2[1] + ", " + msg2[2]);
+    clientSocket.disconnect();
+  });
 
   clientSocket.on("disconnect", () => {
     console.log("Client disconnected");
