@@ -1,7 +1,7 @@
 <h1 class="titre">Hypothèse</h1>
 <div>
     <h3>Personnages</h3>
-    <select name="character" id="character" size="1" class="margin-left">
+    <select id="Hypothesis_character" size="1" class="margin-left">
         {% for pack_carte_character in ListOfAllCards.pack %}
             {% if pack_carte_character.type == "character" %}
                 <OPTION>{{ pack_carte_character.label }}</option>
@@ -9,7 +9,7 @@
         {% endfor %}
     </select>
     <h3>Armes</h3>
-    <select name="weapon" id="weapon" size="1" class="margin-left">
+    <select id="Hypothesis_weapon" size="1" class="margin-left">
         {% for pack_carte_weapon in ListOfAllCards.pack %}
             {% if pack_carte_weapon.type == "weapon" %}
                 <OPTION>{{ pack_carte_weapon.label }}</option>
@@ -17,7 +17,7 @@
         {% endfor %}
     </select>
     <h3>Lieux</h3>
-    <select name="room" id="room" size="1" class="margin-left">
+    <select id="Hypothesis_room" size="1" class="margin-left">
         {% for pack_carte_room in ListOfAllCards.pack %}
             {% if pack_carte_room.type == "room" %}
                 <OPTION>{{ pack_carte_room.label }}</option>
@@ -25,6 +25,7 @@
         {% endfor %}
     </select>
 </div>
+
 <div class="margin-top">
     <a href="#" style="height : 100%;">
         <button class="ui left labeled icon button" onclick="CallHypothesis()">
@@ -38,15 +39,16 @@
 <script>
     function CallHypothesis() {
         var socket = io.connect('http://localhost:8080');
-        var HypoCallGetChar = document.getElementById("character");
-        var HypoCallGetWeapon = document.getElementById("weapon");
-        var HypoCallGetRoom = document.getElementById("room");
+        var HypothesisCallGetChar = document.getElementById("Hypothesis_character");
+        var HypothesisCallGetWeapon = document.getElementById("Hypothesis_weapon");
+        var HypothesisCallGetRoom = document.getElementById("Hypothesis_room");
 
-        var text_character = HypoCallGetChar.options[HypoCallGetChar.selectedIndex].text;
-        var text_weapon = HypoCallGetWeapon.options[HypoCallGetChar.selectedIndex].text;
-        var text_room = HypoCallGetRoom.options[HypoCallGetChar.selectedIndex].text;
+        var Hypothesis_character = HypothesisCallGetChar.options[HypothesisCallGetChar.selectedIndex].text;
+        var Hypothesis_weapon = HypothesisCallGetWeapon.options[HypothesisCallGetWeapon.selectedIndex].text;
+        var Hypothesis_room = HypothesisCallGetRoom.options[HypothesisCallGetRoom.selectedIndex].text;
+
         socket.on('connect', (data) => {
-            socket.emit('Hypothesis', [text_character, text_weapon, text_room]);
+            socket.emit('Hypothesis', [Hypothesis_character, Hypothesis_weapon, Hypothesis_room]);
         });
     }
 </script>
