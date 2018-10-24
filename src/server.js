@@ -100,7 +100,10 @@ serverSocket.on("connection", clientSocket => {
 
   // Lorsque un client nous envoie un évenemment "message"
   clientSocket.on("message", msg => {
-    console.log("New message: " + msg);
+      let d1 = Math.floor(Math.random() * 6) + 1;
+      let d2 = Math.floor(Math.random() * 6) + 1;
+      let somme = d1 + d2;
+      console.log(somme);
   });
 });
 

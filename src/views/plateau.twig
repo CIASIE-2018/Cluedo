@@ -5,7 +5,7 @@
         <button id="MyCustomButton" style="visibility: hidden">{{ grid.grid[i][j] }}</button>
         {% elseif grid.grid[i][j] == "m" %}
         <button id="MyCustomButton" style="background-color: orange">{{ grid.grid[i][j] }}</button>
-        {% elseif grid.grid[i][j] == "e" %}
+        {% elseif grid.grid[i][j] == "A" or grid.grid[i][j] == "B" or grid.grid[i][j] == "C" or grid.grid[i][j] == "D" or grid.grid[i][j] == "E" or grid.grid[i][j] == "F" or grid.grid[i][j] == "G" or grid.grid[i][j] == "H" or grid.grid[i][j] == "I" %}
         <button id="MyCustomButton" style="background-color: lightgreen">{{ grid.grid[i][j] }}</button>
         {% else %}
         <button id="MyCustomButton">{{ grid.grid[i][j] }}</button>
