@@ -1,9 +1,7 @@
 <h1 class="titre">Dés</h1>
-<h3 id="somme">
+<h3 id="sum">
     0 : 0
 </h3>
-
-<section ></section>
 
 <div class="margin-top">
     <a href="#" style="height : 100%;">
@@ -20,8 +18,8 @@
         var socket = io.connect('http://localhost:8080');
         socket.on('connect', (data) => {
             socket.emit('rollTheDice');
-            socket.on("somme", somme => {
-                $('#somme').empty().prepend(somme);
+            socket.on("sum", sum => {
+                $('#sum').empty().prepend(sum);
             });
         });
     }
