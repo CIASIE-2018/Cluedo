@@ -1,42 +1,54 @@
 // Modules
-let express = require("express");
-let Cluedo = require("./controller/CluedoController");
-let Grid = require("./controller/GridController");
-let session = require("./service/session");
-let cookieSession = require("cookie-session");
-let Card = require("./model/CardModel");
-let CardPack = require("./model/CardPack");
-let Player = require("./model/PlayerModel");
-let Game = require("./model/Game");
+const express = require("express");
+const http = require("http");
+const socketIO = require("socket.io");
+const Cluedo = require("./controller/CluedoController");
+const Grid = require("./controller/GridController");
+const session = require("./service/session");
+const cookieSession = require("cookie-session");
+const Card = require("./model/CardModel");
+const CardPack = require("./model/CardPack");
+const Player = require("./model/PlayerModel");
+const Game = require("./model/Game");
 
 // Data
 const config = require("./config.json");
 const cards = require("./cards.json");
 
+// Instanciation du serveur HTTP et de la websocket
 let app = express();
+let server = http.createServer(app);
+let serverSocket = socketIO(server);
 
-let game = new Game([], null);
-// On créer un paquet de cartes pour la partie
-let paquet = new CardPack(cards);
-// On récupère une carte de chaque type (cartes à découvrir)
-let hiddenCards = paquet.getHiddenCards();
-if (config.app.debugMode) {
-  for (let i in hiddenCards) {
-    //console.log(hiddenCards[i]); //hiddenCards[i].getImagePath() pour obtenir l'url de l'image
-  }
-}
-game.setCardPack(new CardPack(cards));
+// let game = new Game([], null);
+// // On créer un paquet de cartes pour la partie
+// let paquet = new CardPack(cards);
+// // On récupère une carte de chaque type (cartes à découvrir)
+// let hiddenCards = paquet.getHiddenCards();
+// if (config.app.debugMode) {
+//   for (let i in hiddenCards) {
+//     //console.log(hiddenCards[i]); //hiddenCards[i].getImagePath() pour obtenir l'url de l'image
+//   }
+// }
+// game.setCardPack(new CardPack(cards));
 
 app.set("view engine", "twig");
 app.set("views", "./src/views");
 
+// MIDDLEWARES
 app.use(config.ressources.staticFilesRootPath, express.static("public"));
 // Paramètre le système de session (voir session.js)
 app.use(cookieSession({ secret: config.app.secretSession }));
 app.use(session);
 
+// ROUTES
 app.get("/", (request, response) => {
   response.render("index");
+});
+
+// Test de la websocket
+app.get("/socket", (request, response) => {
+  response.render("socket");
 });
 
 // Route pour rejoindre une partie (appelée quand appuyé sur bouton "jouer")
@@ -78,4 +90,22 @@ app.get("/cluedo", (request, response) => {
   response.render("cluedo", { grid, ListOfAllCards, cartes });
 });
 
-app.listen(config.app.port);
+// SOCKET
+serverSocket.on("connection", clientSocket => {
+  // Lorsque un client se connecte
+  console.log("Client connected");
+  clientSocket.on("disconnect", () => {
+    console.log("Client disconnected");
+  });
+
+  // Lorsque un client nous envoie un évenemment "message"
+  clientSocket.on("message", msg => {
+    console.log("New message: " + msg);
+  });
+});
+
+server.listen(config.app.port, () => {
+  console.log(
+    "Server running at http://" + config.app.baseUrl + ":" + config.app.port
+  );
+});
