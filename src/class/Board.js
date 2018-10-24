@@ -1,31 +1,31 @@
-class GridController {
+class Board {
 
     //constuit le plateau à partir d'un txt
     constructor() {
         const fs = require("fs");
-        var contents = fs.readFileSync("src/controller/grid.txt", 'utf8');
+        var contents = fs.readFileSync("src/board.txt", 'utf8');
         let i = 0;
         let x = 0;
         let y = 0;
-        this.grid = new Array(25);
-        this.grid[y] = new Array(25)
+        this.board = new Array(25);
+        this.board[y] = new Array(25)
         while (i < contents.length) {
             if (contents[i] == '\n') {
                 y++;
-                this.grid[y] = new Array(x)
+                this.board[y] = new Array(x)
                 x = 0;
             } else {
-                this.grid[y][x] = contents[i];
+                this.board[y][x] = contents[i];
                 x++;
             }
             i++;
         }
     }
     getGrid() {
-        return this.grid;
+        return this.board;
     }
     placePlayer(id, x, y) {
-        this.grid[x][y]=this.grid[x][y]+id;
+        this.board[x][y]=this.board[x][y]+id;
     }
     getPositionPlayer(id) {
         let grille = this.getGrid();
@@ -40,37 +40,37 @@ class GridController {
 
     movePlayer(id, x, y) {
         let player = this.getPositionPlayer(id);
-        if (player.x + 1 == x && this.grid[player.x+1][player.y]!='m') {
-            this.grid[player.x][player.y]=this.grid[player.x][player.y].charAt(0);
-            this.grid[player.x+1][player.y]=this.grid[player.x+1][player.y]+id;
+        if (player.x + 1 == x && this.board[player.x+1][player.y]!='m') {
+            this.board[player.x][player.y]=this.board[player.x][player.y].charAt(0);
+            this.board[player.x+1][player.y]=this.board[player.x+1][player.y]+id;
 
         }else{
             this.fdp;
         }
-        if (player.x - 1 == x && this.grid[player.x-1][player.y]!='m') {
-            this.grid[player.x][player.y]=this.grid[player.x][player.y].charAt(0);
-            this.grid[player.x-1][player.y]=this.grid[player.x-1][player.y]+id;
+        if (player.x - 1 == x && this.board[player.x-1][player.y]!='m') {
+            this.board[player.x][player.y]=this.board[player.x][player.y].charAt(0);
+            this.board[player.x-1][player.y]=this.board[player.x-1][player.y]+id;
 
         }else{
             this.fdp;
         }
-        if (player.y + 1 == y && this.grid[player.x][player.y+1]!='m') {
-            this.grid[player.x][player.y]=this.grid[player.x][player.y].charAt(0);
-            this.grid[player.x][player.y+1]=this.grid[player.x][player.y+1]+id;
+        if (player.y + 1 == y && this.board[player.x][player.y+1]!='m') {
+            this.board[player.x][player.y]=this.board[player.x][player.y].charAt(0);
+            this.board[player.x][player.y+1]=this.board[player.x][player.y+1]+id;
 
         }else{
             this.fdp;
         }
-        if (player.y - 1 == y && this.grid[player.x][player.y-1]!='m') {
-            this.grid[player.x][player.y]=this.grid[player.x][player.y].charAt(0);
-            this.grid[player.x+1][player.y]=this.grid[player.x+1][player.y]+id;
+        if (player.y - 1 == y && this.board[player.x][player.y-1]!='m') {
+            this.board[player.x][player.y]=this.board[player.x][player.y].charAt(0);
+            this.board[player.x+1][player.y]=this.board[player.x+1][player.y]+id;
 
         }else{
             this.fdp;
         }
     }
 
-    fdp(){
+    fdp(){module
         console.log("gros fdp");
     }
 
@@ -82,9 +82,9 @@ class GridController {
         return { somme }
     }
     toString(){
-        this.grid.forEach(element => {
+        this.board.forEach(element => {
             console.log(element.toString())
         });
     }
 }
-module.exports = GridController;
+module.exports = Board;

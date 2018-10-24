@@ -1,17 +1,17 @@
-    let Player = require('./PlayerController');
-    let CardPack = require('../model/CardPack')
+    let Player = require('./Player');
+    let CardPack = require('./CardPack')
     let ListCard = require('../cards.json')
-    //let grid = new Grid();
+    //let board = new Grid();
     //initialise la partie
-    const start = function(grid) {
+    const start = function(board) {
         /*let LogService = require('../service/logService');
         LogService.write("ntm");*/       
         let pack = new CardPack(ListCard);
         pack.shuffle();
         let hugo = new Player(1,"hugo",pack.getManyCards(3));
         console.log(hugo.getCard())
-        grid.placePlayer(1,1,1);
-        // console.log(grid)
+        board.placePlayer(1,1,1);
+        // console.log(board)
     }
 
 

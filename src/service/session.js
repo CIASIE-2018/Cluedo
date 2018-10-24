@@ -1,5 +1,5 @@
 var session = (req, res, next) => {
-  const Player = require("../model/PlayerModel");
+  const Player = require("../class/PlayerSession");
   const uuidv4 = require("uuid/v4");
 
   // si le navigateur n'a pas de session, on lui crée une session contenant le player

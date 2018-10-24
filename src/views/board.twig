@@ -1,0 +1,19 @@
+{% for i in 0..24 %}
+    <div id="ligne">
+    {% for j in 0..24 %}
+        {% if board.board[i][j] == "v" %}
+        <button id="MyCustomButton" style="visibility: hidden">{{ board.board[i][j] }}</button>
+        {% elseif board.board[i][j] == "m" %}
+        <button id="MyCustomButton" style="background-color: orange">{{ board.board[i][j] }}</button>
+        {% elseif board.board[i][j] == "A" or board.board[i][j] == "B" or board.board[i][j] == "C" or board.board[i][j] == "D" or board.board[i][j] == "E" or board.board[i][j] == "F" or board.board[i][j] == "G" or board.board[i][j] == "H" or board.board[i][j] == "I" %}
+        <button id="MyCustomButton" style="background-color: lightgreen">{{ board.board[i][j] }}</button>
+        {% else %}
+        <button id="MyCustomButton">{{ board.board[i][j] }}</button>
+        {% endif %}
+    {% endfor %}
+    </div> 
+{% endfor %}
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script>$( "button" ).click(function() {
+$(window).load(location.href + window);
+});</script>

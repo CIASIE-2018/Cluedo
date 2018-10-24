@@ -1,4 +1,4 @@
-class Game {
+class GameSession {
   constructor(players, cardPack) {
     this.players = players;
     this.cardPack = cardPack;
@@ -30,4 +30,4 @@ class Game {
   }
 }
 
-module.exports = Game;
+module.exports = GameSession;

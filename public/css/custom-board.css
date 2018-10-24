@@ -2,19 +2,19 @@
     margin: 0;
 }
 
-#MyCustomButton-carte {
+#MyCustomButton-card {
     background-color: white;
 }
-#MyCustomButton-tableau {
+#MyCustomButton-grid {
     background-color: white;
 }
-#MyCustomButton-accuse {
+#MyCustomButton-hypothesis {
     background-color: white;
 }
-#MyCustomButton-accuse-fin {
+#MyCustomButton-accused {
     background-color: white;
 }
-#MyCustomButton-des {
+#MyCustomButton-dice {
     background-color: white;
 }
 
@@ -32,20 +32,20 @@
     width: calc(31px * 25);
 }
 
-#plateau {
+#board {
     margin-top : 30px;
     margin-left: 30px;
     line-height: 100%;
 }
 
-#width-plateau {
+#width-board {
     width: 75%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-#div-plateau {
+#div-board {
     width: calc(31px * 25);
 }
 

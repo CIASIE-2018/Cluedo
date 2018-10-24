@@ -1,4 +1,4 @@
-class Player {
+class PlayerSession {
   constructor({ uid = null, name = null }) {
     this.uid = uid;
     this.name = name;
@@ -17,4 +17,4 @@ class Player {
   }
 }
 
-module.exports = Player;
+module.exports = PlayerSession;
