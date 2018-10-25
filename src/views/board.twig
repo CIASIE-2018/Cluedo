@@ -6,13 +6,19 @@
                     <p style="visibility : hidden">{{ board.board[i][j] }}</p>
                 </button>
             {% elseif "m" in board.board[i][j] %}
-                <button id="MyCustomButton" class="image_{{i}}_{{j}}" style="background-color: orange; border: none;">
+                <button id="MyCustomButton" class="image_{{i}}_{{j}}" style="border: none;">
                     <p style="visibility : hidden">
                         {{ board.board[i][j] }}
                     </p>
                 </button>
             {% elseif board.board[i][j] == "A" or board.board[i][j] == "B" or board.board[i][j] == "C" or board.board[i][j] == "D" or board.board[i][j] == "E" or board.board[i][j] == "F" or board.board[i][j] == "G" or board.board[i][j] == "H" or board.board[i][j] == "I" %}
                 <button id="MyCustomButton" class="image_{{i}}_{{j}}" style="background-color: lightgreen; border: none;">
+                    <p style="visibility : hidden">
+                        {{ board.board[i][j] }}
+                    </p>
+                </button>
+            {% elseif board.board[i][j] == "S" %}
+                <button id="MyCustomButton" style="background-color: orange; border: none;">
                     <p style="visibility : hidden">
                         {{ board.board[i][j] }}
                     </p>
