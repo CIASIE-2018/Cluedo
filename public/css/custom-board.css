@@ -19,7 +19,8 @@
 }
 
 #MyCustomButton {
-    border: solid orange 0.2px;
+    /* border: solid orange 0.2px; */
+    border: solid black 0.2px;
     height: 100%;
     width: calc(100% / 25);
     margin-right: -4px;
