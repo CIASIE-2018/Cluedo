@@ -19,14 +19,12 @@
 }
 
 #MyCustomButton {
-    /* border: solid orange 0.2px; */
-    /* background-color: white;  */
+    border: solid orange 0.2px;
     height: 100%;
     width: calc(100% / 25);
     margin-right: -4px;
-    box-sizing: border-box;
+    box-sizing : border-box;
     padding: 0;
-    border: none;
 }
 
 #ligne {
