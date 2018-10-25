@@ -2,13 +2,27 @@
     <div id="ligne">
         {% for j in 0..24 %}
             {% if board.board[i][j] == "v" %}
-                <button id="MyCustomButton" style="visibility: hidden">{{ board.board[i][j] }}</button>
+                <button id="MyCustomButton" style="visibility: hidden">
+                    <p style="visibility : hidden">{{ board.board[i][j] }}</p>
+                </button>
             {% elseif board.board[i][j] == "m" %}
-                <button id="MyCustomButton" style="background-color: orange">{{ board.board[i][j] }}</button>
+                <button id="MyCustomButton" class="image_{{i}}_{{j}} image" style="background-color: orange">
+                    <p style="visibility : hidden">
+                        {{ board.board[i][j] }}
+                    </p>
+                </button>
             {% elseif board.board[i][j] == "A" or board.board[i][j] == "B" or board.board[i][j] == "C" or board.board[i][j] == "D" or board.board[i][j] == "E" or board.board[i][j] == "F" or board.board[i][j] == "G" or board.board[i][j] == "H" or board.board[i][j] == "I" %}
-                <button id="MyCustomButton" style="background-color: lightgreen">{{ board.board[i][j] }}</button>
+                <button id="MyCustomButton" class="image_{{i}}_{{j}} image" style="background-color: lightgreen">
+                    <p style="visibility : hidden">
+                        {{ board.board[i][j] }}
+                    </p>
+                </button>
             {% else %}
-                <button id="MyCustomButton">{{ board.board[i][j] }}</button>
+                <button id="MyCustomButton">
+                    <p style="visibility : hidden">
+                        {{ board.board[i][j] }}
+                    </p>
+                </button>
             {% endif %}
         {% endfor %}
     </div>
