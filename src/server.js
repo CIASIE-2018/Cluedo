@@ -104,12 +104,12 @@ serverSocket.on("connection", clientSocket => {
   });
   
   clientSocket.on("Hypothesis", msg => {
-    console.log("Hypothesis : "+ msg[0] + ", " + msg[1] + ", " + msg[2]);
+    console.log("Hypothesis : "+ msg.join(", "));
     clientSocket.disconnect();
   });
   
-  clientSocket.on("Accused", msg2 => {
-    console.log("Accused : "+ msg2[0] + ", " + msg2[1] + ", " + msg2[2]);
+  clientSocket.on("Accused", msg => {
+    console.log("Accused : "+ msg.join(", "));
     clientSocket.disconnect();
   });
 
