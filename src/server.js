@@ -52,7 +52,7 @@ serverSocket.on("connection", clientSocket => {
     name: null
   };
   // envoi des infos au joueur
-  clientSocket.emit("get-player-data", clientSocket.handshake.session.userData);
+  clientSocket.emit("get-new-uid", clientSocket.handshake.session.userData.uid);
 
   // si le client demande une reconnexion
   clientSocket.on("resume-connection", uid => {
