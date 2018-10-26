@@ -5,7 +5,7 @@
                 <button id="MyCustomButton" style="visibility: hidden">
                     <p style="visibility : hidden">{{ board.board[i][j] }}</p>
                 </button>
-            {% elseif "m1" in board.board[i][j] %}
+            {% elseif board.board[i][j][1:] in ['1','2','3','4','5','6']  %}
                 <button id="MyCustomButton" class="image_{{i}}_{{j}}" style="border: none;">
                     <p style="visibility : visible; color: yellow;">
                         {{ board.board[i][j] }}
