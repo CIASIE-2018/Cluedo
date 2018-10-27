@@ -46,13 +46,13 @@ app.use(session);
 
 //Tableau de sauvegarde des players
 let table_multi = new Array();
-//Nombre Max de joueurs dans la partie
 let PlayerMax = 0;
 
 app.get("/", (request, response) => {
     //Sauvergarde des joueurs
     let MyUuiD = request.session.player.uid;
 
+    //Si l'Uuid n'existe pas && Nombre Max de joueurs dans la partie
     if ((table_multi.indexOf(MyUuiD) == -1) && (PlayerMax < 6)) {  //Premiere connexion du joueur
       table_multi.push(MyUuiD);
       PlayerMax++; 
