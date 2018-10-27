@@ -84,6 +84,8 @@ app.get("/cluedo", (request, response) => {
   let pack = new CardPack(cards);
   let ListOfAllCards = new CardPack(cards);
 
+  console.log(request.session.player.uid);
+
   let cardPack = pack.getManyCards(3);
   //console.log(cards);
   Cluedo.start(board);
