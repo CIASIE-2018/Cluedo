@@ -77,6 +77,9 @@ app.get("/join", (request, response) => {
   response.json(jsonResponse);
 });
 
+//Tableau de sauvegarde des players
+let table_multi = new Array();
+
 app.get("/cluedo", (request, response) => {
   //Test grille insjection en HTML
   var board = new Board();
@@ -84,7 +87,13 @@ app.get("/cluedo", (request, response) => {
   let pack = new CardPack(cards);
   let ListOfAllCards = new CardPack(cards);
 
-  console.log(request.session.player.uid);
+  //Sauvergarde de tous les players, affectation d'un name
+  if (table_multi.indexOf(request.session.player) == -1) {
+    request.session.player.name = "Player "+ (table_multi.length+1);
+    table_multi.push(request.session.player);
+    console.log(table_multi);
+  }
+
 
   let cardPack = pack.getManyCards(3);
   //console.log(cards);
