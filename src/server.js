@@ -46,14 +46,23 @@ app.use(session);
 
 //Tableau de sauvegarde des players
 let table_multi = new Array();
+let PlayerMax = 0;
 app.get("/", (request, response) => {
   //Sauvergarde de tous les players, affectation d'un name
-  if (table_multi.indexOf(request.session.player.uid) == -1) {  //
     //request.session.player.name = "Player " + (table_multi.length + 1); //Name Player i
-    table_multi.push(request.session.player.uid);
-    console.log(table_multi);
-  }
-  response.render("index", {table_multi});
+
+    //Sauvergarde des joueurs
+    if ((table_multi.indexOf(request.session.player.uid) == -1) && (PlayerMax < 6)) {
+      table_multi.push(request.session.player.uid);
+      PlayerMax += 1; 
+      console.log(table_multi);
+      console.log(PlayerMax);
+      response.render("index", { table_multi });
+    } else if (table_multi.includes(request.session.player.uid)) {
+      response.render("index", { table_multi });
+    } else {
+      throw 'TooManyConnection';
+    }
 });
 
 // Test de la websocket
