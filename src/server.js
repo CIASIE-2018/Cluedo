@@ -88,9 +88,9 @@ app.get("/cluedo", (request, response) => {
   let ListOfAllCards = new CardPack(cards);
 
   //Sauvergarde de tous les players, affectation d'un name
-  if (table_multi.indexOf(request.session.player) == -1) {
+  if (table_multi.indexOf(request.session.player.uid) == -1) {
     request.session.player.name = "Player "+ (table_multi.length+1);
-    table_multi.push(request.session.player);
+    table_multi.push(request.session.player.uid);
     console.log(table_multi);
   }
 
