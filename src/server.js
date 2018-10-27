@@ -46,21 +46,20 @@ app.use(session);
 
 //Tableau de sauvegarde des players
 let table_multi = new Array();
+//Nombre Max de joueurs dans la partie
 let PlayerMax = 0;
-app.get("/", (request, response) => {
-  //Sauvergarde de tous les players, affectation d'un name
-    //request.session.player.name = "Player " + (table_multi.length + 1); //Name Player i
 
+app.get("/", (request, response) => {
     //Sauvergarde des joueurs
-    if ((table_multi.indexOf(request.session.player.uid) == -1) && (PlayerMax < 6)) {
+    if ((table_multi.indexOf(request.session.player.uid) == -1) && (PlayerMax < 6)) {  //Premiere connexion du joueur
       table_multi.push(request.session.player.uid);
-      PlayerMax += 1; 
+      PlayerMax++; 
       console.log(table_multi);
       console.log(PlayerMax);
       response.render("index", { table_multi });
-    } else if (table_multi.includes(request.session.player.uid)) {
+    } else if (table_multi.includes(request.session.player.uid)) { //Le joueur est déjà dans le lobby 
       response.render("index", { table_multi });
-    } else {
+    } else { //Trop de joueurs connectés
       throw 'TooManyConnection';
     }
 });
