@@ -42,8 +42,18 @@ app.use(cookieSession({ secret: config.app.secretSession }));
 app.use(session);
 
 // ROUTES
+
+
+//Tableau de sauvegarde des players
+let table_multi = new Array();
 app.get("/", (request, response) => {
-  response.render("index");
+  //Sauvergarde de tous les players, affectation d'un name
+  if (table_multi.indexOf(request.session.player.uid) == -1) {  //
+    //request.session.player.name = "Player " + (table_multi.length + 1); //Name Player i
+    table_multi.push(request.session.player.uid);
+    console.log(table_multi);
+  }
+  response.render("index", {table_multi});
 });
 
 // Test de la websocket
@@ -77,23 +87,12 @@ app.get("/join", (request, response) => {
   response.json(jsonResponse);
 });
 
-//Tableau de sauvegarde des players
-let table_multi = new Array();
-
 app.get("/cluedo", (request, response) => {
   //Test grille insjection en HTML
   var board = new Board();
   //Test cards insjection en HTML
   let pack = new CardPack(cards);
   let ListOfAllCards = new CardPack(cards);
-
-  //Sauvergarde de tous les players, affectation d'un name
-  if (table_multi.indexOf(request.session.player.uid) == -1) {
-    request.session.player.name = "Player "+ (table_multi.length+1);
-    table_multi.push(request.session.player.uid);
-    console.log(table_multi);
-  }
-
 
   let cardPack = pack.getManyCards(3);
   //console.log(cards);
@@ -113,14 +112,14 @@ serverSocket.on("connection", clientSocket => {
     let sum = firstRoll + " : " + SecondRoll + " = " + (firstRoll + SecondRoll);
     clientSocket.emit("sum", sum).disconnect();
   });
-  
+
   clientSocket.on("Hypothesis", msg => {
-    console.log("Hypothesis : "+ msg.join(", "));
+    console.log("Hypothesis : " + msg.join(", "));
     clientSocket.disconnect();
   });
-  
+
   clientSocket.on("Accused", msg => {
-    console.log("Accused : "+ msg.join(", "));
+    console.log("Accused : " + msg.join(", "));
     clientSocket.disconnect();
   });
 

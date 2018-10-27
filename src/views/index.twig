@@ -1,8 +1,16 @@
 <html>
     <head>
-        <title></title>
+        <title>LOBBY</title>
         <link rel="stylesheet" href="/assets/semantic/semantic.min.css">
-   </head>
+        <script>
+
+            //Actualisation de la page toutes les  5 secondes
+            function timedRefresh(timeoutPeriod) {
+                setTimeout("location.reload(true);", timeoutPeriod);
+            }
+            window.onload = timedRefresh(5000);
+        </script>
+    </head>
     <body>
         <div class="ui equal width center aligned padded grid">
             <div class="row">
@@ -12,9 +20,15 @@
                             <h1>JOUER</h1>
                         </button>
                     </a>
+                    <h1 class="titre">Joueurs :</h1>
+                    <ul id="ListPlayers" style="list-style : none;">
+                        {% for ListOfPlayer in table_multi %}
+                            <li>{{ ListOfPlayer }}</li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
         </div>
-        
+
     </body>
 </html>
