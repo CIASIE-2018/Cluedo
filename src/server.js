@@ -51,14 +51,16 @@ let PlayerMax = 0;
 
 app.get("/", (request, response) => {
     //Sauvergarde des joueurs
-    if ((table_multi.indexOf(request.session.player.uid) == -1) && (PlayerMax < 6)) {  //Premiere connexion du joueur
-      table_multi.push(request.session.player.uid);
+    let MyUuiD = request.session.player.uid;
+
+    if ((table_multi.indexOf(MyUuiD) == -1) && (PlayerMax < 6)) {  //Premiere connexion du joueur
+      table_multi.push(MyUuiD);
       PlayerMax++; 
       console.log(table_multi);
       console.log(PlayerMax);
-      response.render("index", { table_multi });
-    } else if (table_multi.includes(request.session.player.uid)) { //Le joueur est déjà dans le lobby 
-      response.render("index", { table_multi });
+      response.render("index", { table_multi , MyUuiD });
+    } else if (table_multi.includes(MyUuiD)) { //Le joueur est déjà dans le lobby 
+      response.render("index", { table_multi , MyUuiD });
     } else { //Trop de joueurs connectés
       throw 'TooManyConnection';
     }
