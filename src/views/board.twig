@@ -23,7 +23,7 @@
                         {{ board.board[i][j] }}
                     </p>
                 </button>
-            {% elseif board.board[i][j] == "S" %}
+            {% elseif board.board[i][j] == "J" or board.board[i][j] == "K" or board.board[i][j] == "L" or board.board[i][j] == "M" or board.board[i][j] == "N" or board.board[i][j] == "O" %}
                 <button id="MyCustomButton" style="background-color: orange; border: none;">
                     <p style="visibility : hidden">
                         {{ board.board[i][j] }}
