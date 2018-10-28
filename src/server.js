@@ -61,18 +61,28 @@ app.get("/", (request, response) => {
 var board = new Board(); //Grille insjection en HTML
 let pack = new CardPack(cards); //Pack du jeu
 let hidden = pack.getHiddenCards(); //Retour des cartes à découvrir
+let ListOfAllCards = new CardPack(cards); // All cards insjection en HTML pour du visuel
 
-//Différent tour : RollDice, Move, Offer 
+//Différent tour :
+//  RollDice : lance les dés
+//  Move : déplacement du joueur
+//  Offer : propose une hypothese ou une accusation
 let PlayTurnOfPlayer = {
   TurnIdPlayer: null,
   Action: "RollDice"
 };
 let RollDicePlayer = null;
+let Offer = {
+  Status: false, //Offre effectuer(true) ou non (false) 
+  Log: "" //Offre save for logerror
+};
 
-let ListOfAllCards = new CardPack(cards); // All cards insjection en HTML pour du visuel
+
+
+
 
 //Nombre de Cartes en fonction du nombre de joueurs
-// NB de cartes total 21 - 3 = 18
+// NB de carte total 21 - 3 = 18
 let NumberOfCardPlayers = [[18], [9, 9], [6, 6, 6], [5, 5, 4, 4], [4, 4, 4, 3, 3], [3, 3, 3, 3, 3, 3]];
 
 app.get("/cluedo", (request, response) => {
@@ -100,30 +110,69 @@ serverSocket.on("connection", clientSocket => {
 
   clientSocket.on("rollTheDice", msg => {
     if (msg == PlayTurnOfPlayer.TurnIdPlayer) {
-      if ( PlayTurnOfPlayer.Action == "RollDice") {
+      if (PlayTurnOfPlayer.Action == "RollDice") {
         let firstRoll = Math.floor(Math.random() * 6) + 1;
         let SecondRoll = Math.floor(Math.random() * 6) + 1;
         RollDicePlayer = (firstRoll + SecondRoll);
         let sum = firstRoll + " : " + SecondRoll + " = " + RollDicePlayer;
         clientSocket.emit("sum", sum).disconnect();
-        PlayTurnOfPlayer.Action = "Move";
+        //PlayTurnOfPlayer.Action = "Move";
+        PlayTurnOfPlayer.Action = "Offer"; //Le temps que le Move soit pret
       } else {
-        error = "Tu as déjà lancé les dés.</br>Tu as obtenu "+RollDicePlayer+".";
+        error = "Tu as déjà lancé les dés.</br>Tu as obtenu " + RollDicePlayer + ".";
         clientSocket.emit('sum', error).disconnect();
       }
     } else {
-      error = "Ce n'est pas toi de jouer";
+      error = "Ce n'est pas à toi de jouer";
       clientSocket.emit('sum', error).disconnect();
     }
   });
 
+  clientSocket.on("Move", msg => {
+    //Try Response of Move player
+  });
+
   clientSocket.on("Hypothesis", msg => {
-    console.log("Hypothesis : " + msg.join(", "));
+    if (msg[0] == PlayTurnOfPlayer.TurnIdPlayer) {
+      if (PlayTurnOfPlayer.Action == "Offer") {
+        if (Offer.Status == false) {
+          console.log("Hypothesis : " + msg[1].join(", "));
+          Offer.Log = "Hypothesis : " + msg[1].join(", ");
+
+          //Hypothese action
+
+          Offer.Status = true;
+        } else {
+          error = "Tu as déja fais une hypothèse :</br>" + Offer.Log + "</br> Attend de recevoir les cartes.";
+          clientSocket.emit('LogErrorHypo', error).disconnect();
+        }
+      } else {
+        error = "Tu dois jouer avant de faire une hypothèse.";
+        clientSocket.emit('LogErrorHypo', error).disconnect();
+      }
+    } else {
+      error = "Ce n'est pas à toi de jouer";
+      clientSocket.emit('LogErrorHypo', error).disconnect();
+    }
     clientSocket.disconnect();
   });
 
   clientSocket.on("Accused", msg => {
-    console.log("Accused : " + msg.join(", "));
+    if (msg[0] == PlayTurnOfPlayer.TurnIdPlayer) {
+      if (PlayTurnOfPlayer.Action == "Offer") {
+          console.log("Accused : " + msg[1].join(", "));
+
+          //Accusation action
+          //Fin de partie ou exclusion du joueur
+
+      } else {
+        error = "Tu dois jouer avant de faire une accusation.";
+        clientSocket.emit('LogErrorAccu', error).disconnect();
+      }
+    } else {
+      error = "Ce n'est pas à toi de jouer";
+      clientSocket.emit('LogErrorAccu', error).disconnect();
+    }
     clientSocket.disconnect();
   });
 

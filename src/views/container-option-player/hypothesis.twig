@@ -28,17 +28,18 @@
 
 <div class="margin-top">
     <a href="#" style="height : 100%;">
-        <button class="ui left labeled icon button" onclick="CallHypothesis()">
+        <button class="ui left labeled icon button" onclick="CallHypothesis('{{MyUuiD}}')">
             <i class="right arrow icon"></i>
             Formuler cette hypothèse
         </button>
     </a>
 </div>
+<h3 id="LogErrorHypo"></h3>
 
 <script src="../socket.io/socket.io.js"></script>
 <script>
-    function CallHypothesis() {
-        var socket = io.connect('http://localhost:8080');
+    function CallHypothesis(MyUuiD) {
+        var socket = io.connect('http://192.168.1.45:8080');
         var HypothesisCallGetChar = document.getElementById("Hypothesis_character");
         var HypothesisCallGetWeapon = document.getElementById("Hypothesis_weapon");
         var HypothesisCallGetRoom = document.getElementById("Hypothesis_room");
@@ -48,7 +49,10 @@
         var Hypothesis_room = HypothesisCallGetRoom.options[HypothesisCallGetRoom.selectedIndex].text;
 
         socket.on('connect', (data) => {
-            socket.emit('Hypothesis', [Hypothesis_character, Hypothesis_weapon, Hypothesis_room]);
+            socket.emit('Hypothesis', [[MyUuiD], [Hypothesis_character, Hypothesis_weapon, Hypothesis_room]]);
+            socket.on("LogErrorHypo", error => {
+                $('#LogErrorHypo').empty().prepend(error);
+            });
         });
     }
 </script>

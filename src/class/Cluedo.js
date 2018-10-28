@@ -5,7 +5,7 @@
     //initialise la partie
     const start = function(board, MyID, MyCard) {
         let hugo = new Player(MyID,"hugo",MyCard);
-        console.log(hugo);
+        //console.log(hugo);
         board.placePlayer(1,1,1);
     }
 
