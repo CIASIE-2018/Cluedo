@@ -81,8 +81,8 @@ app.get("/cluedo", (request, response) => {
   } else {
     PlayTurnOfPlayer.TurnIdPlayer = TableOFPlayer[0]; //Premier joueur qui va jouer
     let MyUuiD = request.session.player.uid;
-    let cardPack = pack.getManyCards(NumberOfCardPlayers[PlayerMax - 1][TableOFPlayer.indexOf(request.session.player.uid)]);
-    Cluedo.start(board, request.session.player.uid, cardPack);
+    let cardPack = pack.getManyCards(NumberOfCardPlayers[PlayerMax - 1][TableOFPlayer.indexOf(MyUuiD)]);
+    Cluedo.start(board, MyUuiD, cardPack);
     response.render("cluedo", { board, ListOfAllCards, cardPack, MyUuiD });
   }
 });
@@ -97,16 +97,22 @@ serverSocket.on("connection", clientSocket => {
   // Lorsque un client se connecte
   //console.log("Client connected");
 
-  
+
   clientSocket.on("rollTheDice", msg => {
     if (msg == PlayTurnOfPlayer.TurnIdPlayer) {
-      let firstRoll = Math.floor(Math.random() * 6) + 1;
-      let SecondRoll = Math.floor(Math.random() * 6) + 1;
-      let sum = firstRoll + " : " + SecondRoll + " = " + (firstRoll + SecondRoll);
-      clientSocket.emit("sum", sum).disconnect();
-      PlayTurnOfPlayer[1] = "Move";
+      if ( PlayTurnOfPlayer.Action == "RollDice") {
+        let firstRoll = Math.floor(Math.random() * 6) + 1;
+        let SecondRoll = Math.floor(Math.random() * 6) + 1;
+        RollDicePlayer = (firstRoll + SecondRoll);
+        let sum = firstRoll + " : " + SecondRoll + " = " + RollDicePlayer;
+        clientSocket.emit("sum", sum).disconnect();
+        PlayTurnOfPlayer.Action = "Move";
+      } else {
+        error = "Tu as déjà lancé les dés.</br>Tu as obtenu "+RollDicePlayer+".";
+        clientSocket.emit('sum', error).disconnect();
+      }
     } else {
-      error = "NotYourTurnToPlay";
+      error = "Ce n'est pas toi de jouer";
       clientSocket.emit('sum', error).disconnect();
     }
   });
