@@ -34,7 +34,7 @@ app.use(session);
 
 
 //Tableau de sauvegarde des players
-let table_multi = new Array();
+let TableOFPlayer = new Array();
 let PlayerMax = 0;
 
 app.get("/", (request, response) => {
@@ -42,14 +42,12 @@ app.get("/", (request, response) => {
   let MyUuiD = request.session.player.uid;
 
   //Si l'Uuid n'existe pas && Nombre Max de joueurs dans la partie
-  if ((table_multi.indexOf(MyUuiD) == -1) && (PlayerMax < 6)) {  //Premiere connexion du joueur
-    table_multi.push(MyUuiD);
+  if ((TableOFPlayer.indexOf(MyUuiD) == -1) && (PlayerMax < 6)) {  //Premiere connexion du joueur
+    TableOFPlayer.push(MyUuiD);
     PlayerMax++;
-    console.log(table_multi);
-    console.log(PlayerMax);
-    response.render("index", { table_multi, MyUuiD });
-  } else if (table_multi.includes(MyUuiD)) { //Le joueur est déjà dans le lobby 
-    response.render("index", { table_multi, MyUuiD });
+    response.render("index", { TableOFPlayer, MyUuiD });
+  } else if (TableOFPlayer.includes(MyUuiD)) { //Le joueur est déjà dans le lobby 
+    response.render("index", { TableOFPlayer, MyUuiD });
   } else { //Trop de joueurs connectés
     throw 'TooManyConnection';
   }
@@ -62,9 +60,14 @@ app.get("/", (request, response) => {
 //Variables ne doivent etre chargées qu'une seule fois
 var board = new Board(); //Grille insjection en HTML
 let pack = new CardPack(cards); //Pack du jeu
-console.log(pack.toString());
-let hidden = pack.getHiddenCards();
-console.log(hidden);
+let hidden = pack.getHiddenCards(); //Retour des cartes à découvrir
+
+//Différent tour : RollDice, Move, Offer 
+let PlayTurnOfPlayer = {
+  TurnIdPlayer: null,
+  Action: "RollDice"
+};
+let RollDicePlayer = null;
 
 let ListOfAllCards = new CardPack(cards); // All cards insjection en HTML pour du visuel
 
@@ -73,14 +76,15 @@ let ListOfAllCards = new CardPack(cards); // All cards insjection en HTML pour d
 let NumberOfCardPlayers = [[18], [9, 9], [6, 6, 6], [5, 5, 4, 4], [4, 4, 4, 3, 3], [3, 3, 3, 3, 3, 3]];
 
 app.get("/cluedo", (request, response) => {
-  //if (PlayerMax == 1) {
-  //  throw 'Nombre de joueurs insuffisant';
-  //}
-
-  let cardPack = pack.getManyCards(NumberOfCardPlayers[PlayerMax-1][table_multi.indexOf(request.session.player.uid)]);
-  console.log(pack.toString());
-  Cluedo.start(board);
-  response.render("cluedo", { board, ListOfAllCards, cardPack });
+  if (PlayerMax == 1) {
+    throw 'Nombre de joueurs insuffisant';
+  } else {
+    PlayTurnOfPlayer.TurnIdPlayer = TableOFPlayer[0]; //Premier joueur qui va jouer
+    let MyUuiD = request.session.player.uid;
+    let cardPack = pack.getManyCards(NumberOfCardPlayers[PlayerMax - 1][TableOFPlayer.indexOf(request.session.player.uid)]);
+    Cluedo.start(board, request.session.player.uid, cardPack);
+    response.render("cluedo", { board, ListOfAllCards, cardPack, MyUuiD });
+  }
 });
 
 
@@ -91,14 +95,20 @@ app.get("/cluedo", (request, response) => {
 // SOCKET
 serverSocket.on("connection", clientSocket => {
   // Lorsque un client se connecte
-  console.log("Client connected");
+  //console.log("Client connected");
 
-  // Lorsque un client nous envoie un évenemment "message"
+  
   clientSocket.on("rollTheDice", msg => {
-    let firstRoll = Math.floor(Math.random() * 6) + 1;
-    let SecondRoll = Math.floor(Math.random() * 6) + 1;
-    let sum = firstRoll + " : " + SecondRoll + " = " + (firstRoll + SecondRoll);
-    clientSocket.emit("sum", sum).disconnect();
+    if (msg == PlayTurnOfPlayer.TurnIdPlayer) {
+      let firstRoll = Math.floor(Math.random() * 6) + 1;
+      let SecondRoll = Math.floor(Math.random() * 6) + 1;
+      let sum = firstRoll + " : " + SecondRoll + " = " + (firstRoll + SecondRoll);
+      clientSocket.emit("sum", sum).disconnect();
+      PlayTurnOfPlayer[1] = "Move";
+    } else {
+      error = "NotYourTurnToPlay";
+      clientSocket.emit('sum', error).disconnect();
+    }
   });
 
   clientSocket.on("Hypothesis", msg => {
@@ -112,7 +122,7 @@ serverSocket.on("connection", clientSocket => {
   });
 
   clientSocket.on("disconnect", () => {
-    console.log("Client disconnected");
+    //console.log("Client disconnected");
   });
 });
 
