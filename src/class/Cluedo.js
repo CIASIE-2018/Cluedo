@@ -3,10 +3,9 @@
     let ListCard = require('../cards.json')
     //let board = new Grid();
     //initialise la partie
-    const start = function(board, MyID, MyCard) {
+    const start = function(board, MyID, MyCard,Place) {
         let hugo = new Player(MyID,"hugo",MyCard);
-        //console.log(hugo);
-        board.placePlayer(1,1,1);
+        board.placePlayer(MyID,Place[0],Place[1]);
     }
 
 

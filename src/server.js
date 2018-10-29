@@ -42,7 +42,7 @@ app.get("/", (request, response) => {
   let MyUuiD = request.session.player.uid;
 
   //Si l'Uuid n'existe pas && Nombre Max de joueurs dans la partie
-  if ((TableOFPlayer.indexOf(MyUuiD) == -1) && (PlayerMax < 6)) {  //Premiere connexion du joueur
+  if ((TableOFPlayer.indexOf(MyUuiD) === -1) && (PlayerMax < 6)) {  //Premiere connexion du joueur
     TableOFPlayer.push(MyUuiD);
     PlayerMax++;
     response.render("index", { TableOFPlayer, MyUuiD });
@@ -84,15 +84,16 @@ let Offer = {
 //Nombre de Cartes en fonction du nombre de joueurs
 // NB de carte total 21 - 3 = 18
 let NumberOfCardPlayers = [[18], [9, 9], [6, 6, 6], [5, 5, 4, 4], [4, 4, 4, 3, 3], [3, 3, 3, 3, 3, 3]];
+let PlaceStart = [[5,0],[18,0],[24,9],[24,14],[7,23],[0,16]];
 
 app.get("/cluedo", (request, response) => {
-  if (PlayerMax == 1) {
+  if (PlayerMax === 1) {
     throw 'Nombre de joueurs insuffisant';
   } else {
     PlayTurnOfPlayer.TurnIdPlayer = TableOFPlayer[0]; //Premier joueur qui va jouer
     let MyUuiD = request.session.player.uid;
     let cardPack = pack.getManyCards(NumberOfCardPlayers[PlayerMax - 1][TableOFPlayer.indexOf(MyUuiD)]);
-    Cluedo.start(board, MyUuiD, cardPack);
+    Cluedo.start(board, TableOFPlayer.indexOf(MyUuiD)+1, cardPack, PlaceStart[TableOFPlayer.indexOf(MyUuiD)]);
     response.render("cluedo", { board, ListOfAllCards, cardPack, MyUuiD });
   }
 });
@@ -109,8 +110,8 @@ serverSocket.on("connection", clientSocket => {
 
 
   clientSocket.on("rollTheDice", msg => {
-    if (msg == PlayTurnOfPlayer.TurnIdPlayer) {
-      if (PlayTurnOfPlayer.Action == "RollDice") {
+    if (msg === PlayTurnOfPlayer.TurnIdPlayer) {
+      if (PlayTurnOfPlayer.Action === "RollDice") {
         let firstRoll = Math.floor(Math.random() * 6) + 1;
         let SecondRoll = Math.floor(Math.random() * 6) + 1;
         RollDicePlayer = (firstRoll + SecondRoll);
@@ -134,8 +135,8 @@ serverSocket.on("connection", clientSocket => {
 
   clientSocket.on("Hypothesis", msg => {
     if (msg[0] == PlayTurnOfPlayer.TurnIdPlayer) {
-      if (PlayTurnOfPlayer.Action == "Offer") {
-        if (Offer.Status == false) {
+      if (PlayTurnOfPlayer.Action === "Offer") {
+        if (Offer.Status === false) {
           console.log("Hypothesis : " + msg[1].join(", "));
           Offer.Log = "Hypothesis : " + msg[1].join(", ");
 
@@ -159,7 +160,7 @@ serverSocket.on("connection", clientSocket => {
 
   clientSocket.on("Accused", msg => {
     if (msg[0] == PlayTurnOfPlayer.TurnIdPlayer) {
-      if (PlayTurnOfPlayer.Action == "Offer") {
+      if (PlayTurnOfPlayer.Action === "Offer") {
           console.log("Accused : " + msg[1].join(", "));
 
           //Accusation action
@@ -186,39 +187,3 @@ server.listen(config.app.port, () => {
     "Server running at http://" + config.app.baseUrl + ":" + config.app.port
   );
 });
-
-
-
-
-
-
-// Test de la websocket
-//app.get("/socket", (request, response) => {
-//  response.render("socket");
-//});
-//
-//// Route pour rejoindre une partie (appelée quand appuyé sur bouton "jouer")
-//app.get("/join", (request, response) => {
-//  // Création d'un objet de réponse pour tester
-//  let jsonResponse = {
-//    gameStatus: null,
-//    error: null
-//  };
-//  // Si la partie peut acceuilir encore un joueur
-//  if (game.getPlayers().length < config.settings.maxPlayers) {
-//    // Si le joueur n'est pas déja dans la partie
-//    if (!game.containsPlayer(request.session.player.uid)) {
-//      // On ajoute le joueur à la partie et on forme la réponse JSON
-//      game.addPlayer(request.session.player);
-//      jsonResponse.gameStatus = "Game sucessfully joined";
-//    } else {
-//      jsonResponse.gameStatus = "Game not joined";
-//      jsonResponse.error = "Error: you are already in this game";
-//    }
-//  } else {
-//    jsonResponse.gameStatus = "Game not joined";
-//    jsonResponse.error = "Error: lobby is full";
-//  }
-//  // Dans tous les cas envoi de la réponse
-//  response.json(jsonResponse);
-//});

@@ -5,7 +5,7 @@
                 <button id="MyCustomButton" style="visibility: hidden">
                     <p style="visibility : hidden">{{ board.board[i][j] }}</p>
                 </button>
-            {% elseif board.board[i][j][1:] in ['1','2','3','4','5','6']  %}
+            {% elseif board.board[i][j] in ['S1','S2','S3','S4','S5','S6'] %}
                 <button id="MyCustomButton" class="image_{{i}}_{{j}}" style="border: none;">
                     <p style="visibility : visible; color: #7FFF00;">
                         {{ board.board[i][j] }}
@@ -17,14 +17,14 @@
                         {{ board.board[i][j] }}
                     </p>
                 </button>
-            {% elseif board.board[i][j] == "A" or board.board[i][j] == "B" or board.board[i][j] == "C" or board.board[i][j] == "D" or board.board[i][j] == "E" or board.board[i][j] == "F" or board.board[i][j] == "G" or board.board[i][j] == "H" or board.board[i][j] == "I" %}
+            {% elseif board.board[i][j] in ['A','B','C','D','E','F','G','H','I'] %}
                 <button id="MyCustomButton" class="image_{{i}}_{{j}}" style="border: solid 1px #7FFF00;">
                     <p style="visibility : hidden">
                         {{ board.board[i][j] }}
                     </p>
                 </button>
-            {% elseif board.board[i][j] == "J" or board.board[i][j] == "K" or board.board[i][j] == "L" or board.board[i][j] == "M" or board.board[i][j] == "N" or board.board[i][j] == "O" %}
-                <button id="MyCustomButton" style="background-color: orange; border: none;">
+            {% elseif board.board[i][j] == "S" %}
+                <button id="MyCustomButton">
                     <p style="visibility : hidden">
                         {{ board.board[i][j] }}
                     </p>
