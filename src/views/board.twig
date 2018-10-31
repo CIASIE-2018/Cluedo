@@ -5,8 +5,8 @@
                 <button id="MyCustomButton" style="visibility: hidden">
                     <p style="visibility : hidden">{{ board.board[i][j] }}</p>
                 </button>
-            {% elseif board.board[i][j] in ['S1','S2','S3','S4','S5','S6'] %}
-                <button id="MyCustomButton" onclick="MovePlayer('{{MyUuiD}}','{{i}}','{{j}}')" class="image_{{i}}_{{j}}" style="border: none;">
+            {% elseif board.board[i][j][1:] in ['1','2','3','4','5','6'] %}
+                <button id="MyCustomButton" onclick="MovePlayer('{{MyUuiD}}','{{i}}','{{j}}')" class="image_{{i}}_{{j}}">
                     <p style="visibility : visible; color: #7FFF00;">
                         {{ board.board[i][j] }}
                     </p>
@@ -23,14 +23,14 @@
                         {{ board.board[i][j] }}
                     </p>
                 </button>
-            {% elseif board.board[i][j] == "S" %}
-                <button id="MyCustomButton">
+            {% elseif board.board[i][j][0:] == "S" %}
+                <button id="MyCustomButton" style="border: solid #EF3B36 0.2px; background-color: orange;">
                     <p style="visibility : hidden">
                         {{ board.board[i][j] }}
                     </p>
                 </button>
             {% else %}
-                <button id="MyCustomButton" onclick="MovePlayer('{{MyUuiD}}','{{i}}','{{j}}')" style="background: radial-gradient(circle, #FFFFFF 40%, #EF3B36);">
+                <button id="MyCustomButton" onclick="MovePlayer('{{MyUuiD}}','{{i}}','{{j}}')" style="border: solid #EF3B36 0.2px; background: radial-gradient(circle, #FFFFFF 40%, #EF3B36);">
                     <p style="visibility : hidden">
                         {{ board.board[i][j] }}
                     </p>
@@ -41,7 +41,7 @@
 {% endfor %}
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
-    $("button").click(function () {
+    $("#MyCustomButton").click(function () {
         $(window).load(location.href + window);
     });
 
@@ -49,7 +49,7 @@
         var socket = io.connect('http://192.168.1.52:8080');
 
         socket.on('connect', (data) => {
-            socket.emit('Move', [[MyUuiD], [i], [j]]);
+            socket.emit('Move', [MyUuiD, i, j]);
 
             //socket.on("LogErrorHypo", error => {
             //    $('#LogErrorHypo').empty().prepend(error);

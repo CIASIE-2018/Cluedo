@@ -152,10 +152,12 @@ serverSocket.on("connection", clientSocket => {
     }
   });
 
+
   clientSocket.on("Move", msg => {
-    let IdNumOfPlayer = TableOFPlayer.indexOf(msg[0]);
-    board.movePlayer(IdNumOfPlayer, msg[1],msg[2])
+    let IdNumOfPlayer = TableOFPlayer.indexOf(msg[0]) + 1;
+    board.movePlayer(IdNumOfPlayer,msg[1],msg[2]);
   });
+
 
   clientSocket.on("Hypothesis", msg => {
     if (msg[0] == PlayTurnOfPlayer.TurnIdPlayer) {
