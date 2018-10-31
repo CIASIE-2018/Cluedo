@@ -118,6 +118,7 @@ app.get("/cluedo", (request, response) => {
         let cardPack = Game.PlayerCard[IdNumOfPlayer];
 
         response.render("cluedo", { board, ListOfAllCards, cardPack, MyUuiD });
+        SearchPlayerCard(TableOFPlayer[0]);
     }
 });
 
@@ -182,7 +183,10 @@ serverSocket.on("connection", clientSocket => {
                     console.log("Hypothesis : " + msg[1].join(", "));
                     Offer.Log = "Hypothesis : " + msg[1].join(", ");
 
-                    //Hypothese action
+                    //Condition joueur est dans une pièce.
+
+                    //Recherche du joueur qui possède au moins une des cartes proposé par l'hypothèse.
+                    //SearchPlayerCard(msg[0], TableOFPlayer, Game.PlayerCard, msg[1]); //msg[0]: id J, msg[1]: Hypothse 
 
                     Offer.Status = true;
                 } else {
@@ -229,3 +233,47 @@ server.listen(config.app.port, () => {
         "Server running at http://" + config.app.baseUrl + ":" + config.app.port
     );
 });
+
+
+//function SearchPlayerCard(id, Hypothesis) {
+function SearchPlayerCard(id) {
+    bool = false;
+    //Hypothesis = ["Colonel Moutarde", "Revolver", "Salle de bal"];
+    IndexPlayer = TableOFPlayer.indexOf(id);
+    //console.log(Game.PlayerCard[IndexPlayer]);
+    Proposition = new Array();
+
+    for (var i = 0; i < TableOFPlayer.length; i++) {  //Parcours de la liste des joueurs apres moi meme
+        if (i > IndexPlayer && bool === false) {
+            for (var j = 0; j < Game.PlayerCard[i].length; j++) { //Parcours de la liste des cartes du joueurs
+                if (bool === false) {
+                    Hypothesis.forEach(element => {
+                        if (element === Game.PlayerCard[i][j].label) {
+                            //console.log(Game.PlayerCard[i][j].label + "  " + i);
+                            Proposition.push(Game.PlayerCard[i][j].label + "  " + i);
+                            bool = true;
+                        }
+                    });
+                }
+            }
+        }
+    }
+    if (bool === false) {
+        for (var i = 0; i < TableOFPlayer.length; i++) {  //Parcours de la liste des joueurs avant moi meme
+            if (i < IndexPlayer && bool === false) {
+                for (var j = 0; j < Game.PlayerCard[i].length; j++) { //Parcours de la liste des cartes du joueurs
+                    if (bool === false) {
+                        Hypothesis.forEach(element => {
+                            if (element === Game.PlayerCard[i][j].label) {
+                                //console.log(Game.PlayerCard[i][j].label + "  " + i);
+                                Proposition.push(Game.PlayerCard[i][j].label + "  " + i);
+                                bool = true;
+                            }
+                        });
+                    }
+                }
+            }
+        }
+    }
+    console.log(Proposition);
+}
