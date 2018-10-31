@@ -80,7 +80,7 @@ class Board {
         if (player.y - 1 == y && this.board[player.x][player.y - 1] != 'm') {
             this.board[player.x][player.y] = this.board[player.x][player.y].charAt(0);
             if (reg.test(this.board[player.x][player.y - 1])) {
-                this.placementRoom(id, playeur.x, player.y - 1);
+                this.placementRoom(id, player.x, player.y - 1);
             } else {
                 this.board[player.x + 1][player.y] = this.board[player.x + 1][player.y] + id;
             }
