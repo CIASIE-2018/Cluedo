@@ -6,7 +6,7 @@
                     <p style="visibility : hidden">{{ board.board[i][j] }}</p>
                 </button>
             {% elseif board.board[i][j] in ['S1','S2','S3','S4','S5','S6'] %}
-                <button id="MyCustomButton" class="image_{{i}}_{{j}}" style="border: none;">
+                <button id="MyCustomButton" onclick="MovePlayer('{{MyUuiD}}','{{i}}','{{j}}')" class="image_{{i}}_{{j}}" style="border: none;">
                     <p style="visibility : visible; color: #7FFF00;">
                         {{ board.board[i][j] }}
                     </p>
@@ -18,7 +18,7 @@
                     </p>
                 </button>
             {% elseif board.board[i][j] in ['A','B','C','D','E','F','G','H','I'] %}
-                <button id="MyCustomButton" class="image_{{i}}_{{j}}" style="border: solid 1px #7FFF00;">
+                <button id="MyCustomButton" onclick="MovePlayer('{{MyUuiD}}','{{i}}','{{j}}')" class="image_{{i}}_{{j}}" style="border: solid 1px #7FFF00;">
                     <p style="visibility : hidden">
                         {{ board.board[i][j] }}
                     </p>
@@ -30,7 +30,7 @@
                     </p>
                 </button>
             {% else %}
-                <button id="MyCustomButton" style="background: radial-gradient(circle, #FFFFFF 40%, #EF3B36);">
+                <button id="MyCustomButton" onclick="MovePlayer('{{MyUuiD}}','{{i}}','{{j}}')" style="background: radial-gradient(circle, #FFFFFF 40%, #EF3B36);">
                     <p style="visibility : hidden">
                         {{ board.board[i][j] }}
                     </p>
@@ -44,4 +44,16 @@
     $("button").click(function () {
         $(window).load(location.href + window);
     });
+
+    function MovePlayer(MyUuiD, i, j) {
+        var socket = io.connect('http://192.168.1.52:8080');
+
+        socket.on('connect', (data) => {
+            socket.emit('Move', [[MyUuiD], [i], [j]]);
+
+            //socket.on("LogErrorHypo", error => {
+            //    $('#LogErrorHypo').empty().prepend(error);
+            //});
+        });
+    }
 </script>

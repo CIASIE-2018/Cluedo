@@ -102,14 +102,14 @@ app.get("/cluedo", (request, response) => {
 
     let MyUuiD = request.session.player.uid;
     let IdNumOfPlayer = TableOFPlayer.indexOf(MyUuiD);
-    
+
     //Pour éviter de recharger les parametres.
     if (Game.GameStatus === "load") {
       for (var i = 0; i < PlayerMax; i++) {
         Game.PlayerCard[i] = pack.getManyCards(NumberOfCardPlayers[PlayerMax - 1][i]);
 
-                          //ID Joueurs
-        Cluedo.start(board  , i + 1,    PlaceStart[i]);
+        //ID Joueurs
+        Cluedo.start(board, i + 1, PlaceStart[i]);
       }
       PlayTurnOfPlayer.TurnIdPlayer = TableOFPlayer[0]; //Premier joueur qui va jouer
       Game.GameStatus = "start";
@@ -153,7 +153,8 @@ serverSocket.on("connection", clientSocket => {
   });
 
   clientSocket.on("Move", msg => {
-    //Try Response of Move player
+    let IdNumOfPlayer = TableOFPlayer.indexOf(msg[0]);
+    board.movePlayer(IdNumOfPlayer, msg[1],msg[2])
   });
 
   clientSocket.on("Hypothesis", msg => {
