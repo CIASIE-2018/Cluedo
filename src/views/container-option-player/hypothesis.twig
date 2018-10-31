@@ -50,7 +50,7 @@
         var Hypothesis_room = HypothesisCallGetRoom.options[HypothesisCallGetRoom.selectedIndex].text;
 
         socket.on('connect', (data) => {
-            socket.emit('Hypothesis', [[MyUuiD], [Hypothesis_character, Hypothesis_weapon, Hypothesis_room]]);
+            socket.emit('Hypothesis', [ MyUuiD, [Hypothesis_character, Hypothesis_weapon, Hypothesis_room]]);
             socket.on("LogErrorHypo", error => {
                 $('#LogErrorHypo').empty().prepend(error);
             });

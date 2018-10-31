@@ -55,8 +55,6 @@ app.get("/", (request, response) => {
 
 
 
-
-
 //Variables ne doivent etre chargées qu'une seule fois
 var board = new Board(); //Grille insjection en HTML
 let pack = new CardPack(cards); //Pack du jeu
@@ -118,7 +116,6 @@ app.get("/cluedo", (request, response) => {
         let cardPack = Game.PlayerCard[IdNumOfPlayer];
 
         response.render("cluedo", { board, ListOfAllCards, cardPack, MyUuiD });
-        SearchPlayerCard(TableOFPlayer[0]);
     }
 });
 
@@ -152,7 +149,6 @@ serverSocket.on("connection", clientSocket => {
         }
     });
 
-
     clientSocket.on("Move", msg => {
         let IdNumOfPlayer = TableOFPlayer.indexOf(msg[0]) + 1;
         if (msg[0] == PlayTurnOfPlayer.TurnIdPlayer) {
@@ -175,7 +171,6 @@ serverSocket.on("connection", clientSocket => {
         }
     });
 
-
     clientSocket.on("Hypothesis", msg => {
         if (msg[0] == PlayTurnOfPlayer.TurnIdPlayer) {
             if (PlayTurnOfPlayer.Action === "Offer") {
@@ -186,7 +181,8 @@ serverSocket.on("connection", clientSocket => {
                     //Condition joueur est dans une pièce.
 
                     //Recherche du joueur qui possède au moins une des cartes proposé par l'hypothèse.
-                    //SearchPlayerCard(msg[0], TableOFPlayer, Game.PlayerCard, msg[1]); //msg[0]: id J, msg[1]: Hypothse 
+                    console.log(SearchPlayerCard(msg[0], msg[1])); //msg[0]: id J, msg[1]: Hypothse 
+
 
                     Offer.Status = true;
                 } else {
@@ -235,13 +231,12 @@ server.listen(config.app.port, () => {
 });
 
 
-//function SearchPlayerCard(id, Hypothesis) {
-function SearchPlayerCard(id) {
+function SearchPlayerCard(id, Hypothesis) {
     bool = false;
     //Hypothesis = ["Colonel Moutarde", "Revolver", "Salle de bal"];
     IndexPlayer = TableOFPlayer.indexOf(id);
-    //console.log(Game.PlayerCard[IndexPlayer]);
-    Proposition = new Array();
+    console.log(IndexPlayer);
+    CardFound = new Array();
 
     for (var i = 0; i < TableOFPlayer.length; i++) {  //Parcours de la liste des joueurs apres moi meme
         if (i > IndexPlayer && bool === false) {
@@ -249,8 +244,7 @@ function SearchPlayerCard(id) {
                 if (bool === false) {
                     Hypothesis.forEach(element => {
                         if (element === Game.PlayerCard[i][j].label) {
-                            //console.log(Game.PlayerCard[i][j].label + "  " + i);
-                            Proposition.push(Game.PlayerCard[i][j].label + "  " + i);
+                            CardFound.push(Game.PlayerCard[i][j].label+","+TableOFPlayer[i]+","+i);
                             bool = true;
                         }
                     });
@@ -265,8 +259,7 @@ function SearchPlayerCard(id) {
                     if (bool === false) {
                         Hypothesis.forEach(element => {
                             if (element === Game.PlayerCard[i][j].label) {
-                                //console.log(Game.PlayerCard[i][j].label + "  " + i);
-                                Proposition.push(Game.PlayerCard[i][j].label + "  " + i);
+                                CardFound.push(Game.PlayerCard[i][j].label);
                                 bool = true;
                             }
                         });
@@ -275,5 +268,5 @@ function SearchPlayerCard(id) {
             }
         }
     }
-    console.log(Proposition);
+    return CardFound;
 }
