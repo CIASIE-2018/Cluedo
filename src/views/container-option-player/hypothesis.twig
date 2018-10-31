@@ -39,7 +39,8 @@
 <script src="../socket.io/socket.io.js"></script>
 <script>
     function CallHypothesis(MyUuiD) {
-        var socket = io.connect('http://192.168.1.52:8080');
+        //var socket = io.connect('http://localhost:8080');
+        var socket = io.connect('http://192.168.1.45:8080');
         var HypothesisCallGetChar = document.getElementById("Hypothesis_character");
         var HypothesisCallGetWeapon = document.getElementById("Hypothesis_weapon");
         var HypothesisCallGetRoom = document.getElementById("Hypothesis_room");

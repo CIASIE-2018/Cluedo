@@ -60,7 +60,8 @@
     });
 
     function MovePlayer(MyUuiD, i, j) {
-        var socket = io.connect('http://192.168.1.52:8080');
+        //var socket = io.connect('http://localhost:8080');
+        var socket = io.connect('http://192.168.1.45:8080');
 
         socket.on('connect', (data) => {
             socket.emit('Move', [MyUuiD, i, j]);

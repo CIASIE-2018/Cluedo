@@ -38,19 +38,19 @@ let TableOFPlayer = new Array();
 let PlayerMax = 0;
 
 app.get("/", (request, response) => {
-  //Sauvergarde des joueurs
-  let MyUuiD = request.session.player.uid;
+    //Sauvergarde des joueurs
+    let MyUuiD = request.session.player.uid;
 
-  //Si l'Uuid n'existe pas && Nombre Max de joueurs dans la partie
-  if ((TableOFPlayer.indexOf(MyUuiD) === -1) && (PlayerMax < 6)) {  //Premiere connexion du joueur
-    TableOFPlayer.push(MyUuiD);
-    PlayerMax++;
-    response.render("index", { TableOFPlayer, MyUuiD });
-  } else if (TableOFPlayer.includes(MyUuiD)) { //Le joueur est déjà dans le lobby 
-    response.render("index", { TableOFPlayer, MyUuiD });
-  } else { //Trop de joueurs connectés
-    throw 'TooManyConnection';
-  }
+    //Si l'Uuid n'existe pas && Nombre Max de joueurs dans la partie
+    if ((TableOFPlayer.indexOf(MyUuiD) === -1) && (PlayerMax < 6)) {  //Premiere connexion du joueur
+        TableOFPlayer.push(MyUuiD);
+        PlayerMax++;
+        response.render("index", { TableOFPlayer, MyUuiD });
+    } else if (TableOFPlayer.includes(MyUuiD)) { //Le joueur est déjà dans le lobby 
+        response.render("index", { TableOFPlayer, MyUuiD });
+    } else { //Trop de joueurs connectés
+        throw 'TooManyConnection';
+    }
 });
 
 
@@ -70,21 +70,21 @@ let ListOfAllCards = new CardPack(cards); // All cards insjection en HTML pour d
 //  Move : déplacement du joueur
 //  Offer : propose une hypothese ou une accusation
 let PlayTurnOfPlayer = {
-  TurnIdPlayer: null,
-  Action: "RollDice"
+    TurnIdPlayer: null,
+    Action: "RollDice"
 };
 
 let RollDicePlayer = null;
 
 let Offer = {
-  Status: false, //Offre effectuer(true) ou non (false) 
-  Log: "" //Offre save for logerror
+    Status: false, //Offre effectuer(true) ou non (false) 
+    Log: "" //Offre save for logerror
 };
 
 
 let Game = {
-  GameStatus: "load", //Status de chargement des parametres de jeu
-  PlayerCard: []      //liste des Cartes de chaque joueurs
+    GameStatus: "load", //Status de chargement des parametres de jeu
+    PlayerCard: []      //liste des Cartes de chaque joueurs
 };
 
 
@@ -96,29 +96,29 @@ let NumberOfCardPlayers = [[18], [9, 9], [6, 6, 6], [5, 5, 4, 4], [4, 4, 4, 3, 3
 let PlaceStart = [[5, 0], [18, 0], [24, 9], [24, 14], [7, 23], [0, 16]];
 
 app.get("/cluedo", (request, response) => {
-  if (PlayerMax === 1) {
-    throw 'Nombre de joueurs insuffisant';
-  } else {
+    if (PlayerMax === 1) {
+        throw 'Nombre de joueurs insuffisant';
+    } else {
 
-    let MyUuiD = request.session.player.uid;
-    let IdNumOfPlayer = TableOFPlayer.indexOf(MyUuiD);
+        let MyUuiD = request.session.player.uid;
+        let IdNumOfPlayer = TableOFPlayer.indexOf(MyUuiD);
 
-    //Pour éviter de recharger les parametres.
-    if (Game.GameStatus === "load") {
-      for (var i = 0; i < PlayerMax; i++) {
-        Game.PlayerCard[i] = pack.getManyCards(NumberOfCardPlayers[PlayerMax - 1][i]);
+        //Pour éviter de recharger les parametres.
+        if (Game.GameStatus === "load") {
+            for (var i = 0; i < PlayerMax; i++) {
+                Game.PlayerCard[i] = pack.getManyCards(NumberOfCardPlayers[PlayerMax - 1][i]);
 
-        //ID Joueurs
-        Cluedo.start(board, i + 1, PlaceStart[i]);
-      }
-      PlayTurnOfPlayer.TurnIdPlayer = TableOFPlayer[0]; //Premier joueur qui va jouer
-      Game.GameStatus = "start";
+                //ID Joueurs
+                Cluedo.start(board, i + 1, PlaceStart[i]);
+            }
+            PlayTurnOfPlayer.TurnIdPlayer = TableOFPlayer[0]; //Premier joueur qui va jouer
+            Game.GameStatus = "start";
+        }
+
+        let cardPack = Game.PlayerCard[IdNumOfPlayer];
+
+        response.render("cluedo", { board, ListOfAllCards, cardPack, MyUuiD });
     }
-
-    let cardPack = Game.PlayerCard[IdNumOfPlayer];
-
-    response.render("cluedo", { board, ListOfAllCards, cardPack, MyUuiD });
-  }
 });
 
 
@@ -128,88 +128,104 @@ app.get("/cluedo", (request, response) => {
 
 // SOCKET
 serverSocket.on("connection", clientSocket => {
-  // Lorsque un client se connecte
-  //console.log("Client connected");
+    // Lorsque un client se connecte
+    //console.log("Client connected");
 
 
-  clientSocket.on("rollTheDice", msg => {
-    if (msg === PlayTurnOfPlayer.TurnIdPlayer) {
-      if (PlayTurnOfPlayer.Action === "RollDice") {
-        let firstRoll = Math.floor(Math.random() * 6) + 1;
-        let SecondRoll = Math.floor(Math.random() * 6) + 1;
-        RollDicePlayer = (firstRoll + SecondRoll);
-        let sum = firstRoll + " : " + SecondRoll + " = " + RollDicePlayer;
-        clientSocket.emit("sum", sum).disconnect();
-        //PlayTurnOfPlayer.Action = "Move";
-        PlayTurnOfPlayer.Action = "Offer"; //Le temps que le Move soit pret
-      } else {
-        error = "Tu as déjà lancé les dés.</br>Tu as obtenu " + RollDicePlayer + ".";
-        clientSocket.emit('sum', error).disconnect();
-      }
-    } else {
-      error = "Ce n'est pas à toi de jouer";
-      clientSocket.emit('sum', error).disconnect();
-    }
-  });
-
-
-  clientSocket.on("Move", msg => {
-    let IdNumOfPlayer = TableOFPlayer.indexOf(msg[0]) + 1;
-    board.movePlayer(IdNumOfPlayer,msg[1],msg[2]);
-  });
-
-
-  clientSocket.on("Hypothesis", msg => {
-    if (msg[0] == PlayTurnOfPlayer.TurnIdPlayer) {
-      if (PlayTurnOfPlayer.Action === "Offer") {
-        if (Offer.Status === false) {
-          console.log("Hypothesis : " + msg[1].join(", "));
-          Offer.Log = "Hypothesis : " + msg[1].join(", ");
-
-          //Hypothese action
-
-          Offer.Status = true;
+    clientSocket.on("rollTheDice", msg => {
+        if (msg === PlayTurnOfPlayer.TurnIdPlayer) {
+            if (PlayTurnOfPlayer.Action === "RollDice") {
+                let firstRoll = Math.floor(Math.random() * 6) + 1;
+                let SecondRoll = Math.floor(Math.random() * 6) + 1;
+                RollDicePlayer = (firstRoll + SecondRoll);  //Sauvegarde du résultat pour le Move
+                let sum = firstRoll + " : " + SecondRoll + " = " + RollDicePlayer;
+                clientSocket.emit("sum", sum).disconnect();
+                PlayTurnOfPlayer.Action = "Move";
+            } else {
+                error = "Tu as déjà lancé les dés.</br>Tu as obtenu " + RollDicePlayer + ".";
+                clientSocket.emit('sum', error).disconnect();
+            }
         } else {
-          error = "Tu as déja fais une hypothèse :</br>" + Offer.Log + "</br> Attend de recevoir les cartes.";
-          clientSocket.emit('LogErrorHypo', error).disconnect();
+            error = "Ce n'est pas à toi de jouer";
+            clientSocket.emit('sum', error).disconnect();
         }
-      } else {
-        error = "Tu dois jouer avant de faire une hypothèse.";
-        clientSocket.emit('LogErrorHypo', error).disconnect();
-      }
-    } else {
-      error = "Ce n'est pas à toi de jouer";
-      clientSocket.emit('LogErrorHypo', error).disconnect();
-    }
-    clientSocket.disconnect();
-  });
+    });
 
-  clientSocket.on("Accused", msg => {
-    if (msg[0] == PlayTurnOfPlayer.TurnIdPlayer) {
-      if (PlayTurnOfPlayer.Action === "Offer") {
-        console.log("Accused : " + msg[1].join(", "));
 
-        //Accusation action
-        //Fin de partie ou exclusion du joueur
+    clientSocket.on("Move", msg => {
+        let IdNumOfPlayer = TableOFPlayer.indexOf(msg[0]) + 1;
+        if (msg[0] == PlayTurnOfPlayer.TurnIdPlayer) {
+            if (PlayTurnOfPlayer.Action === "Move") {
+                if (RollDicePlayer > 0) {
+                    RollDicePlayer--;
+                    board.movePlayer(IdNumOfPlayer, msg[1], msg[2]);
+                    if (RollDicePlayer === 0) {   //Ajouter: Ou joueur dans une piece
+                        PlayTurnOfPlayer.Action = "Offer";
+                    }
+                    console.log(RollDicePlayer);
+                }
+            } else if (PlayTurnOfPlayer.Action === "RollDice") {
+                console.log("Tu dois lancer les dés");
+            } else {
+                console.log("Tu ne peux plus te déplacer, fais une hypothèse ou une accusation");
+            }
+        } else {
+            console.log("Ce n'est pas à toi de jouer");
+        }
+    });
 
-      } else {
-        error = "Tu dois jouer avant de faire une accusation.";
-        clientSocket.emit('LogErrorAccu', error).disconnect();
-      }
-    } else {
-      error = "Ce n'est pas à toi de jouer";
-      clientSocket.emit('LogErrorAccu', error).disconnect();
-    }
-    clientSocket.disconnect();
-  });
 
-  clientSocket.on("disconnect", () => {
-    //console.log("Client disconnected");
-  });
+    clientSocket.on("Hypothesis", msg => {
+        if (msg[0] == PlayTurnOfPlayer.TurnIdPlayer) {
+            if (PlayTurnOfPlayer.Action === "Offer") {
+                if (Offer.Status === false) {
+                    console.log("Hypothesis : " + msg[1].join(", "));
+                    Offer.Log = "Hypothesis : " + msg[1].join(", ");
+
+                    //Hypothese action
+
+                    Offer.Status = true;
+                } else {
+                    error = "Tu as déja fais une hypothèse :</br>" + Offer.Log + "</br> Attend de recevoir les cartes.";
+                    clientSocket.emit('LogErrorHypo', error).disconnect();
+                }
+            } else {
+                error = "Tu dois jouer avant de faire une hypothèse.";
+                clientSocket.emit('LogErrorHypo', error).disconnect();
+            }
+        } else {
+            error = "Ce n'est pas à toi de jouer";
+            clientSocket.emit('LogErrorHypo', error).disconnect();
+        }
+        clientSocket.disconnect();
+    });
+
+    clientSocket.on("Accused", msg => {
+        if (msg[0] == PlayTurnOfPlayer.TurnIdPlayer) {
+            if (PlayTurnOfPlayer.Action === "Offer") {
+                console.log("Accused : " + msg[1].join(", "));
+
+                //Accusation action
+                //Fin de partie ou exclusion du joueur
+
+            } else {
+                error = "Tu dois jouer avant de faire une accusation.";
+                clientSocket.emit('LogErrorAccu', error).disconnect();
+            }
+        } else {
+            error = "Ce n'est pas à toi de jouer";
+            clientSocket.emit('LogErrorAccu', error).disconnect();
+        }
+        clientSocket.disconnect();
+    });
+
+    clientSocket.on("disconnect", () => {
+        //console.log("Client disconnected");
+    });
 });
 
 server.listen(config.app.port, () => {
-  console.log(
-    "Server running at http://" + config.app.baseUrl + ":" + config.app.port
-  );
+    console.log(
+        "Server running at http://" + config.app.baseUrl + ":" + config.app.port
+    );
 });
