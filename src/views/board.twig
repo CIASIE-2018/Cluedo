@@ -65,10 +65,6 @@
 
         socket.on('connect', (data) => {
             socket.emit('Move', [MyUuiD, i, j]);
-
-            //socket.on("LogErrorHypo", error => {
-            //    $('#LogErrorHypo').empty().prepend(error);
-            //});
         });
     }
 </script>

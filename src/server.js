@@ -20,6 +20,7 @@ let app = express();
 let server = http.createServer(app);
 let serverSocket = socketIO(server);
 
+
 app.set("view engine", "twig");
 app.set("views", "./src/views");
 
@@ -128,8 +129,6 @@ app.get("/cluedo", (request, response) => {
 serverSocket.on("connection", clientSocket => {
     // Lorsque un client se connecte
     //console.log("Client connected");
-
-
     clientSocket.on("rollTheDice", msg => {
         if (msg === PlayTurnOfPlayer.TurnIdPlayer) {
             if (PlayTurnOfPlayer.Action === "RollDice") {
@@ -181,8 +180,8 @@ serverSocket.on("connection", clientSocket => {
                     //Condition joueur est dans une pièce.
 
                     //Recherche du joueur qui possède au moins une des cartes proposé par l'hypothèse.
-                    console.log(SearchPlayerCard(msg[0], msg[1])); //msg[0]: id J, msg[1]: Hypothse 
-
+                    CardFound = SearchPlayerCard(msg[0], msg[1]); //msg[0]: id J, msg[1]: Hypothèse
+                    clientSocket.broadcast.emit('SearchClient', CardFound[0].split(",")[1]);
 
                     Offer.Status = true;
                 } else {
@@ -235,7 +234,6 @@ function SearchPlayerCard(id, Hypothesis) {
     bool = false;
     //Hypothesis = ["Colonel Moutarde", "Revolver", "Salle de bal"];
     IndexPlayer = TableOFPlayer.indexOf(id);
-    console.log(IndexPlayer);
     CardFound = new Array();
 
     for (var i = 0; i < TableOFPlayer.length; i++) {  //Parcours de la liste des joueurs apres moi meme
@@ -244,7 +242,7 @@ function SearchPlayerCard(id, Hypothesis) {
                 if (bool === false) {
                     Hypothesis.forEach(element => {
                         if (element === Game.PlayerCard[i][j].label) {
-                            CardFound.push(Game.PlayerCard[i][j].label+","+TableOFPlayer[i]+","+i);
+                            CardFound.push(Game.PlayerCard[i][j].label + "," + TableOFPlayer[i] + "," + i);
                             bool = true;
                         }
                     });
