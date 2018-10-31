@@ -63,6 +63,8 @@ let pack = new CardPack(cards); //Pack du jeu
 let hidden = pack.getHiddenCards(); //Retour des cartes à découvrir
 let ListOfAllCards = new CardPack(cards); // All cards insjection en HTML pour du visuel
 
+
+
 //Différent tour :
 //  RollDice : lance les dés
 //  Move : déplacement du joueur
@@ -71,29 +73,50 @@ let PlayTurnOfPlayer = {
   TurnIdPlayer: null,
   Action: "RollDice"
 };
+
 let RollDicePlayer = null;
+
 let Offer = {
   Status: false, //Offre effectuer(true) ou non (false) 
   Log: "" //Offre save for logerror
 };
 
 
+let Game = {
+  GameStatus: "load", //Status de chargement des parametres de jeu
+  PlayerCard: []      //liste des Cartes de chaque joueurs
+};
 
 
 
 //Nombre de Cartes en fonction du nombre de joueurs
 // NB de carte total 21 - 3 = 18
 let NumberOfCardPlayers = [[18], [9, 9], [6, 6, 6], [5, 5, 4, 4], [4, 4, 4, 3, 3], [3, 3, 3, 3, 3, 3]];
-let PlaceStart = [[5,0],[18,0],[24,9],[24,14],[7,23],[0,16]];
+// Placement du joueur en debut de partie
+let PlaceStart = [[5, 0], [18, 0], [24, 9], [24, 14], [7, 23], [0, 16]];
 
 app.get("/cluedo", (request, response) => {
   if (PlayerMax === 1) {
     throw 'Nombre de joueurs insuffisant';
   } else {
-    PlayTurnOfPlayer.TurnIdPlayer = TableOFPlayer[0]; //Premier joueur qui va jouer
+
     let MyUuiD = request.session.player.uid;
-    let cardPack = pack.getManyCards(NumberOfCardPlayers[PlayerMax - 1][TableOFPlayer.indexOf(MyUuiD)]);
-    Cluedo.start(board, TableOFPlayer.indexOf(MyUuiD)+1, cardPack, PlaceStart[TableOFPlayer.indexOf(MyUuiD)]);
+    let IdNumOfPlayer = TableOFPlayer.indexOf(MyUuiD);
+    
+    //Pour éviter de recharger les parametres.
+    if (Game.GameStatus === "load") {
+      for (var i = 0; i < PlayerMax; i++) {
+        Game.PlayerCard[i] = pack.getManyCards(NumberOfCardPlayers[PlayerMax - 1][i]);
+
+                          //ID Joueurs
+        Cluedo.start(board  , i + 1,    PlaceStart[i]);
+      }
+      PlayTurnOfPlayer.TurnIdPlayer = TableOFPlayer[0]; //Premier joueur qui va jouer
+      Game.GameStatus = "start";
+    }
+
+    let cardPack = Game.PlayerCard[IdNumOfPlayer];
+
     response.render("cluedo", { board, ListOfAllCards, cardPack, MyUuiD });
   }
 });
@@ -161,10 +184,10 @@ serverSocket.on("connection", clientSocket => {
   clientSocket.on("Accused", msg => {
     if (msg[0] == PlayTurnOfPlayer.TurnIdPlayer) {
       if (PlayTurnOfPlayer.Action === "Offer") {
-          console.log("Accused : " + msg[1].join(", "));
+        console.log("Accused : " + msg[1].join(", "));
 
-          //Accusation action
-          //Fin de partie ou exclusion du joueur
+        //Accusation action
+        //Fin de partie ou exclusion du joueur
 
       } else {
         error = "Tu dois jouer avant de faire une accusation.";
