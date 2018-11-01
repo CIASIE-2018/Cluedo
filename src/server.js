@@ -139,6 +139,7 @@ serverSocket.on("connection", clientSocket => {
     //console.log("Client connected");
 
 
+
     // SOCKET DES
     clientSocket.on("rollTheDice", msg => {
         if (msg === PlayTurnOfPlayer.TurnIdPlayer) {
@@ -158,6 +159,7 @@ serverSocket.on("connection", clientSocket => {
             clientSocket.emit('sum', error).disconnect();
         }
     });
+
 
 
     // SOCKET DEPLACEMENT
@@ -183,6 +185,8 @@ serverSocket.on("connection", clientSocket => {
         }
     });
 
+
+
     // SOCKET HYPOTHESE
     clientSocket.on("ItsMe", test => {
         clientSocket.emit('CardExchange', CardFound);
@@ -207,16 +211,11 @@ serverSocket.on("connection", clientSocket => {
                     Offer.Status = true;
                     IdPlayerComeBack = msg[0]; //Sauvegarde de l'id du joueur qui demande des cartes
 
-                    console.log("Hypothesis : " + msg[1].join(", "));
                     Offer.Log = "Hypothesis : " + msg[1].join(", ");
-
 
                     //Recherche du joueur qui possède au moins une des cartes proposé par l'hypothèse.
                     CardFound = SearchPlayerCard(msg[0], msg[1]); //msg[0]: id J, msg[1]: Hypothèse
-                    console.log(CardFound);
                     clientSocket.broadcast.emit('SearchPlayerForDisplaySelectedCards', CardFound[0].split(",")[1]);
-
-                    
                 } else {
                     error = "Tu as déja fais une hypothèse :</br>" + Offer.Log + "</br> Attend de recevoir les cartes.";
                     clientSocket.emit('LogErrorHypo', error).disconnect();
@@ -232,6 +231,9 @@ serverSocket.on("connection", clientSocket => {
         clientSocket.disconnect();
     });
 
+
+
+    // SOCKET ACCUSED
     clientSocket.on("Accused", msg => {
         if (msg[0] == PlayTurnOfPlayer.TurnIdPlayer) {
             if (PlayTurnOfPlayer.Action === "Offer") {
@@ -251,6 +253,7 @@ serverSocket.on("connection", clientSocket => {
         clientSocket.disconnect();
     });
 
+    // SOCKET DISCONNECT
     clientSocket.on("disconnect", () => {
         //console.log("Client disconnected");
     });
