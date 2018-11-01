@@ -175,23 +175,30 @@ serverSocket.on("connection", clientSocket => {
     });
 
     clientSocket.on("ItsMe", test => {
-        clientSocket.emit('CardExchange',CardFound);
+        clientSocket.emit('CardExchange', CardFound);
+    });
+
+    clientSocket.on("SeeCard", test => {
+        console.log(test);
     });
 
     clientSocket.on("Hypothesis", msg => {
         if (msg[0] == PlayTurnOfPlayer.TurnIdPlayer) {
             if (PlayTurnOfPlayer.Action === "Offer") {
                 if (Offer.Status === false) {
+                    //Condition joueur est dans une pièce.
+                    
+                    Offer.Status = true;
                     console.log("Hypothesis : " + msg[1].join(", "));
                     Offer.Log = "Hypothesis : " + msg[1].join(", ");
 
-                    //Condition joueur est dans une pièce.
 
                     //Recherche du joueur qui possède au moins une des cartes proposé par l'hypothèse.
                     CardFound = SearchPlayerCard(msg[0], msg[1]); //msg[0]: id J, msg[1]: Hypothèse
+                    console.log(CardFound);
                     clientSocket.broadcast.emit('SearchClient', CardFound[0].split(",")[1]);
 
-                    Offer.Status = true;
+                    
                 } else {
                     error = "Tu as déja fais une hypothèse :</br>" + Offer.Log + "</br> Attend de recevoir les cartes.";
                     clientSocket.emit('LogErrorHypo', error).disconnect();
@@ -247,14 +254,12 @@ function SearchPlayerCard(id, Hypothesis) {
     for (var i = 0; i < TableOFPlayer.length; i++) {  //Parcours de la liste des joueurs apres moi meme
         if (i > IndexPlayer && bool === false) {
             for (var j = 0; j < Game.PlayerCard[i].length; j++) { //Parcours de la liste des cartes du joueurs
-                if (bool === false) {
-                    Hypothesis.forEach(element => {
-                        if (element === Game.PlayerCard[i][j].label) {
-                            CardFound.push(Game.PlayerCard[i][j].label + "," + TableOFPlayer[i] + "," + i);
-                            bool = true;
-                        }
-                    });
-                }
+                Hypothesis.forEach(element => {
+                    if (element === Game.PlayerCard[i][j].label) {
+                        CardFound.push(Game.PlayerCard[i][j].label + "," + TableOFPlayer[i] + "," + i);
+                        bool = true;
+                    }
+                });
             }
         }
     }
@@ -262,14 +267,12 @@ function SearchPlayerCard(id, Hypothesis) {
         for (var i = 0; i < TableOFPlayer.length; i++) {  //Parcours de la liste des joueurs avant moi meme
             if (i < IndexPlayer && bool === false) {
                 for (var j = 0; j < Game.PlayerCard[i].length; j++) { //Parcours de la liste des cartes du joueurs
-                    if (bool === false) {
-                        Hypothesis.forEach(element => {
-                            if (element === Game.PlayerCard[i][j].label) {
-                                CardFound.push(Game.PlayerCard[i][j].label);
-                                bool = true;
-                            }
-                        });
-                    }
+                    Hypothesis.forEach(element => {
+                        if (element === Game.PlayerCard[i][j].label) {
+                            CardFound.push(Game.PlayerCard[i][j].label);
+                            bool = true;
+                        }
+                    });
                 }
             }
         }

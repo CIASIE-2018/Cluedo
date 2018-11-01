@@ -1,6 +1,8 @@
 <h1 class="titre">Carte reçu</h1>
-
+<div id="TextDisplay"></div>
 <h1 class="titre">Carte à montrer</h1>
+<div id="ButtonDisplay"></div>
+
 
 <script src="../socket.io/socket.io.js"></script>
 <script>
@@ -11,10 +13,23 @@
 
     socket.on('SearchClient', test => {
         if (test == MyUuiD) {
-            socket.emit('ItsMe',test);
+            socket.emit('ItsMe', test);
             socket.on("CardExchange", CardExchange => {
-                console.log(CardExchange);
+                CardExchange.forEach(function (element) {
+                    StrCard = element.split(',')[0];
+                    Carte = "<button class='ui left labeled icon button' onclick='SelectedCardExchange(" + "\"" + StrCard + "\"" + ")'>" +
+                            "   <i class='right arrow icon'></i>" +
+                                StrCard + 
+                            "</button>" +
+                            "<br>";
+                    $('#ButtonDisplay').prepend(Carte);
+                });
             });
         }
     });
+
+    function SelectedCardExchange(element) {
+        socket.emit('SeeCard', element);
+        $('#ButtonDisplay').empty();
+    }
 </script>
