@@ -23,7 +23,7 @@
                                 StrCard + 
                             "</button>" +
                             "<br>";
-                    $('#ButtonDisplay').prepend(Carte);
+                    $('#ButtonDisplay').empty().prepend(Carte);
                 });
             });
         }
@@ -33,13 +33,14 @@
         if (test == MyUuiD) {
             socket.emit('GetCard', test);
             socket.on("SeeCardFromPlayer", SeeCard => {
-                $('#TextDisplay').empty().prepend(SeeCard);
+                //$('#TextDisplay').empty().prepend(SeeCard);
+                $('#TextDisplay').prepend(SeeCard);
             });
         }
     });
 
-    function SelectedCardExchange(element) {
-        socket.emit('SeeCard', element);
+    function SelectedCardExchange(StrCard) {
+        socket.emit('SeeCard', StrCard);
         $('#ButtonDisplay').empty();
     }
 </script>

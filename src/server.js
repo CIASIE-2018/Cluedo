@@ -73,6 +73,9 @@ let PlayTurnOfPlayer = {
     Action: "RollDice"
 };
 
+//Savoir si le joueur peut toujours jouer (S'il n'a pas perdu)
+let PlayerStatusInGame = [];
+
 let RollDicePlayer = null;
 
 let Offer = {
@@ -111,11 +114,11 @@ app.get("/cluedo", (request, response) => {
                 Cluedo.start(board, i + 1, PlaceStart[i]);
             }
             PlayTurnOfPlayer.TurnIdPlayer = TableOFPlayer[0]; //Premier joueur qui va jouer
+            FixePlayerStatusInGame();
             Game.GameStatus = "start";
         }
 
         let cardPack = Game.PlayerCard[IdNumOfPlayer];
-
         response.render("cluedo", { board, ListOfAllCards, cardPack, MyUuiD });
     }
 });
@@ -148,16 +151,17 @@ serverSocket.on("connection", clientSocket => {
                 let SecondRoll = Math.floor(Math.random() * 6) + 1;
                 RollDicePlayer = (firstRoll + SecondRoll);  //Sauvegarde du résultat pour le Move
                 let sum = firstRoll + " : " + SecondRoll + " = " + RollDicePlayer;
-                clientSocket.emit("sum", sum).disconnect();
+                clientSocket.emit("sum", sum);
                 PlayTurnOfPlayer.Action = "Move";
             } else {
-                error = "Tu as déjà lancé les dés.</br>Tu as obtenu " + RollDicePlayer + ".";
-                clientSocket.emit('sum', error).disconnect();
+                error = "Tu as déjà lancé les dés.</br>Tu peux te déplacer de " + RollDicePlayer + " cases.";
+                clientSocket.emit('sum', error);
             }
         } else {
             error = "Ce n'est pas à toi de jouer";
-            clientSocket.emit('sum', error).disconnect();
+            clientSocket.emit('sum', error);
         }
+        clientSocket.disconnect();
     });
 
 
@@ -183,23 +187,27 @@ serverSocket.on("connection", clientSocket => {
         } else {
             console.log("Ce n'est pas à toi de jouer");
         }
+        clientSocket.disconnect();
     });
 
 
 
     // SOCKET HYPOTHESE
-    clientSocket.on("ItsMe", test => {
+    clientSocket.on("ItsMe", msg => {
         clientSocket.emit('CardExchange', CardFound);
+        clientSocket.disconnect();
     });
 
     clientSocket.on("SeeCard", Card => {
         CardFromPlayer = Card;
-        clientSocket.broadcast.emit('SearchPlayerForDisplayCard', IdPlayerComeBack );
+        clientSocket.broadcast.emit('SearchPlayerForDisplayCard', IdPlayerComeBack);
+        clientSocket.disconnect();
     });
 
-    clientSocket.on("GetCard", Card => {
+    clientSocket.on("GetCard", msg => {
         clientSocket.emit('SeeCardFromPlayer', CardFromPlayer);
-        //Fin du tour
+        NextTurnPlayer();
+        clientSocket.disconnect();
     });
 
     clientSocket.on("Hypothesis", msg => {
@@ -214,19 +222,26 @@ serverSocket.on("connection", clientSocket => {
                     Offer.Log = "Hypothesis : " + msg[1].join(", ");
 
                     //Recherche du joueur qui possède au moins une des cartes proposé par l'hypothèse.
+                    console.log(msg[0] + " " + msg[1]);
                     CardFound = SearchPlayerCard(msg[0], msg[1]); //msg[0]: id J, msg[1]: Hypothèse
-                    clientSocket.broadcast.emit('SearchPlayerForDisplaySelectedCards', CardFound[0].split(",")[1]);
+
+                    if (CardFound === null) {
+                        NextTurnPlayer();
+                    } else {
+                        Str = CardFound[0].split(",");
+                        clientSocket.broadcast.emit('SearchPlayerForDisplaySelectedCards', Str[1]);
+                    }
                 } else {
                     error = "Tu as déja fais une hypothèse :</br>" + Offer.Log + "</br> Attend de recevoir les cartes.";
-                    clientSocket.emit('LogErrorHypo', error).disconnect();
+                    clientSocket.emit('LogErrorHypo', error);
                 }
             } else {
                 error = "Tu dois jouer avant de faire une hypothèse.";
-                clientSocket.emit('LogErrorHypo', error).disconnect();
+                clientSocket.emit('LogErrorHypo', error);
             }
         } else {
             error = "Ce n'est pas à toi de jouer";
-            clientSocket.emit('LogErrorHypo', error).disconnect();
+            clientSocket.emit('LogErrorHypo', error);
         }
         clientSocket.disconnect();
     });
@@ -237,18 +252,20 @@ serverSocket.on("connection", clientSocket => {
     clientSocket.on("Accused", msg => {
         if (msg[0] == PlayTurnOfPlayer.TurnIdPlayer) {
             if (PlayTurnOfPlayer.Action === "Offer") {
-                console.log("Accused : " + msg[1].join(", "));
-
-                //Accusation action
-                //Fin de partie ou exclusion du joueur
-
+                if (BoolCorrectAccusation(msg[1]) === true) {
+                    LogAccused = "Le Joueur " + (TableOFPlayer.indexOf(msg[0]) + 1) + " a gagné. Accusé : " + msg[1].join(", ");
+                    clientSocket.broadcast.emit('SetWinningPlayer', LogAccused);
+                } else {
+                    RemovePlayerFromGame(msg[0]);
+                    NextTurnPlayer();
+                }
             } else {
                 error = "Tu dois jouer avant de faire une accusation.";
-                clientSocket.emit('LogErrorAccu', error).disconnect();
+                clientSocket.emit('LogErrorAccu', error);
             }
         } else {
             error = "Ce n'est pas à toi de jouer";
-            clientSocket.emit('LogErrorAccu', error).disconnect();
+            clientSocket.emit('LogErrorAccu', error);
         }
         clientSocket.disconnect();
     });
@@ -268,9 +285,7 @@ server.listen(config.app.port, () => {
         "Server running at http://" + config.app.baseUrl + ":" + config.app.port
     );
 });
-
-
-
+console.log(hidden);
 function SearchPlayerCard(id, Hypothesis) {
     bool = false;
     //Hypothesis = ["Colonel Moutarde", "Revolver", "Salle de bal"];
@@ -295,7 +310,7 @@ function SearchPlayerCard(id, Hypothesis) {
                 for (var j = 0; j < Game.PlayerCard[i].length; j++) { //Parcours de la liste des cartes du joueurs
                     Hypothesis.forEach(element => {
                         if (element === Game.PlayerCard[i][j].label) {
-                            CardFound.push(Game.PlayerCard[i][j].label);
+                            CardFound.push(Game.PlayerCard[i][j].label + "," + TableOFPlayer[i] + "," + i);
                             bool = true;
                         }
                     });
@@ -304,4 +319,61 @@ function SearchPlayerCard(id, Hypothesis) {
         }
     }
     return CardFound;
+}
+
+function BoolCorrectAccusation(Accused) {
+    HiddenCard = new Array();
+    hidden.forEach(function (element) {
+        HiddenCard.push(element.label);
+    });
+    Bool = true;
+    HiddenCard.forEach(function (element) {
+        if (!Accused.includes(element)) {
+            Bool = false;
+        }
+    });
+    return Bool;
+}
+
+function FixePlayerStatusInGame() {
+    TableOFPlayer.forEach(function (element) {
+        PlayerStatusInGame.push([element, "InGame"])
+    });
+}
+
+function NextTurnPlayer() {
+    console.log("Anicen : " + PlayTurnOfPlayer.TurnIdPlayer);
+    let Turn = PlayTurnOfPlayer.TurnIdPlayer;  //Tour du joueur actuel
+    let Status = "NeedToChange";
+
+    for (var i = TableOFPlayer.indexOf(Turn); i < PlayerMax; i++) { //Démarrage de la boucle à partir de l'index du joueur
+        if (PlayerStatusInGame[i][0] == Turn) {
+            if (PlayerStatusInGame[i + 1] == null) { //pour ne pas aller plus loin que la limite du tableau
+                if (PlayerStatusInGame[0][1] != "Lose") {
+                    PlayTurnOfPlayer.TurnIdPlayer = PlayerStatusInGame[0][0];
+                }
+            } else {
+                if (PlayerStatusInGame[i + 1][1] != "Lose") {
+                    PlayTurnOfPlayer.TurnIdPlayer = PlayerStatusInGame[i + 1][0];
+                }
+            }
+            Status = "Change";
+        }
+    }
+
+    //Reset Variable Turn
+    PlayTurnOfPlayer.Action = "RollDice";
+    Offer.Status = false;
+    CardFound = null;
+
+    console.log(Status);
+    console.log("Nouveau : " + PlayTurnOfPlayer.TurnIdPlayer + "\n");
+}
+
+function RemovePlayerFromGame(IdPlayer) {
+    PlayerStatusInGame.forEach(function (element) {
+        if (element[0] === IdPlayer) {
+            element[1] = "Lose";
+        }
+    });
 }

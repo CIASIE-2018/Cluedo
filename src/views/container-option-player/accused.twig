@@ -49,7 +49,7 @@
         var Accused_weapon = AccusedCallGetWeapon.options[AccusedCallGetWeapon.selectedIndex].text;
         var Accused_room = AccusedCallGetRoom.options[AccusedCallGetRoom.selectedIndex].text;
         socket.on('connect', (data) => {
-            socket.emit('Accused', [[MyUuiD], [Accused_character, Accused_weapon, Accused_room]]);
+            socket.emit('Accused', [MyUuiD, [Accused_character, Accused_weapon, Accused_room]]);
             socket.on("LogErrorAccu", error => {
                 $('#LogErrorAccu').empty().prepend(error);
             });
