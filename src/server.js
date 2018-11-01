@@ -127,12 +127,19 @@ app.get("/cluedo", (request, response) => {
 //Variables socket
 
 //Cartes qui seront transmises à un autre joueurs.
-let CardFound = null;
+let CardFound = null;               // SOCKET HYPOTHESE
+//Sauvergade id joueur qui fait une demande
+let IdPlayerComeBack = null;        // SOCKET HYPOTHESE
+//Reçu de la carte choisi par la liste du joueur
+let CardFromPlayer = null;          // SOCKET HYPOTHESE
 
 // SOCKET
 serverSocket.on("connection", clientSocket => {
     // Lorsque un client se connecte
     //console.log("Client connected");
+
+
+    // SOCKET DES
     clientSocket.on("rollTheDice", msg => {
         if (msg === PlayTurnOfPlayer.TurnIdPlayer) {
             if (PlayTurnOfPlayer.Action === "RollDice") {
@@ -152,6 +159,8 @@ serverSocket.on("connection", clientSocket => {
         }
     });
 
+
+    // SOCKET DEPLACEMENT
     clientSocket.on("Move", msg => {
         let IdNumOfPlayer = TableOFPlayer.indexOf(msg[0]) + 1;
         if (msg[0] == PlayTurnOfPlayer.TurnIdPlayer) {
@@ -174,12 +183,19 @@ serverSocket.on("connection", clientSocket => {
         }
     });
 
+    // SOCKET HYPOTHESE
     clientSocket.on("ItsMe", test => {
         clientSocket.emit('CardExchange', CardFound);
     });
 
-    clientSocket.on("SeeCard", test => {
-        console.log(test);
+    clientSocket.on("SeeCard", Card => {
+        CardFromPlayer = Card;
+        clientSocket.broadcast.emit('SearchPlayerForDisplayCard', IdPlayerComeBack );
+    });
+
+    clientSocket.on("GetCard", Card => {
+        clientSocket.emit('SeeCardFromPlayer', CardFromPlayer);
+        //Fin du tour
     });
 
     clientSocket.on("Hypothesis", msg => {
@@ -187,8 +203,10 @@ serverSocket.on("connection", clientSocket => {
             if (PlayTurnOfPlayer.Action === "Offer") {
                 if (Offer.Status === false) {
                     //Condition joueur est dans une pièce.
-                    
+
                     Offer.Status = true;
+                    IdPlayerComeBack = msg[0]; //Sauvegarde de l'id du joueur qui demande des cartes
+
                     console.log("Hypothesis : " + msg[1].join(", "));
                     Offer.Log = "Hypothesis : " + msg[1].join(", ");
 
@@ -196,7 +214,7 @@ serverSocket.on("connection", clientSocket => {
                     //Recherche du joueur qui possède au moins une des cartes proposé par l'hypothèse.
                     CardFound = SearchPlayerCard(msg[0], msg[1]); //msg[0]: id J, msg[1]: Hypothèse
                     console.log(CardFound);
-                    clientSocket.broadcast.emit('SearchClient', CardFound[0].split(",")[1]);
+                    clientSocket.broadcast.emit('SearchPlayerForDisplaySelectedCards', CardFound[0].split(",")[1]);
 
                     
                 } else {
@@ -243,6 +261,8 @@ server.listen(config.app.port, () => {
         "Server running at http://" + config.app.baseUrl + ":" + config.app.port
     );
 });
+
+
 
 
 function SearchPlayerCard(id, Hypothesis) {

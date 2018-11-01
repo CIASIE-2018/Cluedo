@@ -6,12 +6,13 @@
 
 <script src="../socket.io/socket.io.js"></script>
 <script>
+    //var socket = io.connect('http://localhost:8080');
     //var socket = io.connect('http://192.168.1.45:8080');
     var socket = io.connect('http://192.168.1.52:8080');
 
     var MyUuiD = "{{- MyUuiD|escape("js") -}}";
 
-    socket.on('SearchClient', test => {
+    socket.on('SearchPlayerForDisplaySelectedCards', test => {
         if (test == MyUuiD) {
             socket.emit('ItsMe', test);
             socket.on("CardExchange", CardExchange => {
@@ -24,6 +25,15 @@
                             "<br>";
                     $('#ButtonDisplay').prepend(Carte);
                 });
+            });
+        }
+    });
+
+    socket.on('SearchPlayerForDisplayCard', test => {
+        if (test == MyUuiD) {
+            socket.emit('GetCard', test);
+            socket.on("SeeCardFromPlayer", SeeCard => {
+                $('#TextDisplay').empty().prepend(SeeCard);
             });
         }
     });
