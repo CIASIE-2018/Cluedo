@@ -124,6 +124,10 @@ app.get("/cluedo", (request, response) => {
 
 
 
+//Variables socket
+
+//Cartes qui seront transmises à un autre joueurs.
+let CardFound = null;
 
 // SOCKET
 serverSocket.on("connection", clientSocket => {
@@ -168,6 +172,10 @@ serverSocket.on("connection", clientSocket => {
         } else {
             console.log("Ce n'est pas à toi de jouer");
         }
+    });
+
+    clientSocket.on("ItsMe", test => {
+        clientSocket.emit('CardExchange',CardFound);
     });
 
     clientSocket.on("Hypothesis", msg => {
