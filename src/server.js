@@ -253,18 +253,21 @@ serverSocket.on("connection", clientSocket => {
         clientSocket.disconnect();
     });
 
+
+
     // SOCKET DISCONNECT
     clientSocket.on("disconnect", () => {
         //console.log("Client disconnected");
     });
 });
 
+
+
 server.listen(config.app.port, () => {
     console.log(
         "Server running at http://" + config.app.baseUrl + ":" + config.app.port
     );
 });
-
 
 
 
