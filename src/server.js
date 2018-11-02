@@ -178,6 +178,7 @@ serverSocket.on("connection", clientSocket => {
                         PlayTurnOfPlayer.Action = "Offer";
                     }
                     console.log(RollDicePlayer);
+                    clientSocket.emit('Board', board);
                 }
             } else if (PlayTurnOfPlayer.Action === "RollDice") {
                 console.log("Tu dois lancer les dés");

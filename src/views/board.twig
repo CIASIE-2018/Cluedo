@@ -1,51 +1,51 @@
 {% for i in 0..24 %}
-    <div id="ligne">
+    <div id='ligne'>
         {% for j in 0..24 %}
-            {% if board.board[i][j] == "v" %}
-                <button id="MyCustomButton" class="ButtonInvisible">
-                    <p class="PInvisible">{{ board.board[i][j] }}</p>
+            {% if board.board[i][j] == 'v' %}
+                <button id='MyCustomButton' class='ButtonInvisible'>
+                    <p class='PInvisible'>{{ board.board[i][j] }}</p>
                 </button>
             {% elseif board.board[i][j][1:] in ['1','2','3','4','5','6'] %}
-                {% if board.board[i][j][:1] == "m" %}
-                    <button id="MyCustomButton" onclick="MovePlayer('{{MyUuiD}}','{{i}}','{{j}}')" class="image_{{i}}_{{j}} NoneBorder">
-                        <p class="PVisible PlayerTextColor">
-                            {{ board.board[i][j] }}
+                {% if board.board[i][j][:1] == 'm' %}
+                    <button id='MyCustomButton' onclick="MovePlayer('{{MyUuiD}}','{{i}}','{{j}}')" class='image_{{i}}_{{j}} NoneBorder'>
+                        <p class='PVisible PlayerTextColor'>
+                            J{{ board.board[i][j][1:] }}
                         </p>
                     </button>
-                {% elseif board.board[i][j][:1] == "x" %}
-                    <button id="MyCustomButton" onclick="MovePlayer('{{MyUuiD}}','{{i}}','{{j}}')" class="CaseStyle redBorderBox">
-                        <p class="PVisible PlayerTextColor">
-                            {{ board.board[i][j] }}
+                {% elseif board.board[i][j][:1] == 'x' %}
+                    <button id='MyCustomButton' onclick="MovePlayer('{{MyUuiD}}','{{i}}','{{j}}')" class='CaseStyle redBorderBox'>
+                        <p class='PVisible PlayerTextColor'>
+                            J{{ board.board[i][j][1:] }}
                         </p>
                     </button>
-                {% elseif board.board[i][j][:1] == "S" %}
-                    <button id="MyCustomButton" onclick="MovePlayer('{{MyUuiD}}','{{i}}','{{j}}')" class="CaseStartStyle redBorderBox">
-                        <p class="PVisible PlayerTextColor">
-                            {{ board.board[i][j] }}
+                {% elseif board.board[i][j][:1] == 'S' %}
+                    <button id='MyCustomButton' onclick="MovePlayer('{{MyUuiD}}','{{i}}','{{j}}')" class='CaseStartStyle redBorderBox'>
+                        <p class='PVisible PlayerTextColor'>
+                            J{{ board.board[i][j][1:] }}
                         </p>
                     </button>
                 {% endif %}
-            {% elseif "m" in board.board[i][j] %}
-                <button id="MyCustomButton" class="image_{{i}}_{{j}} WallStyle">
-                    <p class="PInvisible">
+            {% elseif 'm' in board.board[i][j] %}
+                <button id='MyCustomButton' class='image_{{i}}_{{j}} WallStyle'>
+                    <p class='PInvisible'>
                         {{ board.board[i][j] }}
                     </p>
                 </button>
             {% elseif board.board[i][j] in ['A','B','C','D','E','F','G','H','I'] %}
-                <button id="MyCustomButton" onclick="MovePlayer('{{MyUuiD}}','{{i}}','{{j}}')" class="image_{{i}}_{{j}} RoomLetterStyle">
-                    <p class="PInvisible">
+                <button id='MyCustomButton' onclick="MovePlayer('{{MyUuiD}}','{{i}}','{{j}}')" class='image_{{i}}_{{j}} RoomLetterStyle'>
+                    <p class='PInvisible'>
                         {{ board.board[i][j] }}
                     </p>
                 </button>
-            {% elseif board.board[i][j][0:] == "S" %}
-                <button id="MyCustomButton" class="CaseStartStyle">
-                    <p class="PInvisible">
+            {% elseif board.board[i][j][0:] == 'S' %}
+                <button id='MyCustomButton' class='CaseStartStyle'>
+                    <p class='PInvisible'>
                         {{ board.board[i][j] }}
                     </p>
                 </button>
             {% else %}
-                <button id="MyCustomButton" onclick="MovePlayer('{{MyUuiD}}','{{i}}','{{j}}')" class="CaseStyle">
-                    <p class="PInvisible">
+                <button id='MyCustomButton' onclick="MovePlayer('{{MyUuiD}}','{{i}}','{{j}}')" class='CaseStyle'>
+                    <p class='PInvisible'>
                         {{ board.board[i][j] }}
                     </p>
                 </button>
@@ -55,10 +55,6 @@
 {% endfor %}
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
-    $("#MyCustomButton").click(function () {
-        $(window).load(location.href + window);
-    });
-
     function MovePlayer(MyUuiD, i, j) {
         //var socket = io.connect('http://localhost:8080');
         //var socket = io.connect('http://192.168.1.45:8080');
@@ -66,6 +62,37 @@
 
         socket.on('connect', (data) => {
             socket.emit('Move', [MyUuiD, i, j]);
+            socket.on("Board", NewBoard => {
+                let number = '1 2 3 4 5 6';
+                let letter = 'A B C D E F H G I';
+                let wall = 'm';
+                let content = "";
+                for(var i = 0 ; i < 25 ; i++ ){
+                    for(var j = 0 ; j < 25 ; j++ ){
+                        if (NewBoard.board[i][j] === "v") {
+                            content += "<button id='MyCustomButton' class='ButtonInvisible'><p class='PInvisible'>"+NewBoard.board[i][j].charAt(0)+"</p></button>";
+                        } else if (NewBoard.board[i][j].charAt(0) === "m") {
+                            content += "<button id='MyCustomButton' class='image_"+i+"_"+j+" WallStyle'><p class='PInvisible'>"+NewBoard.board[i][j].charAt(0)+"</p></button>";
+                        } else if (letter.includes(NewBoard.board[i][j].charAt(0))) {
+                            content += "<button id='MyCustomButton' class='image_"+i+"_"+j+" RoomLetterStyle'><p class='PInvisible'>"+NewBoard.board[i][j].charAt(0)+"</p></button>";
+                        } else if (NewBoard.board[i][j].charAt(0) === "S") {
+                            content += "<button id='MyCustomButton' class='CaseStartStyle'><p class='PInvisible'>"+NewBoard.board[i][j].charAt(0)+"</p></button>";
+                        } else if (number.includes(NewBoard.board[i][j].charAt(1))) {
+                            if (NewBoard.board[i][j].charAt(0) === "m") {
+                                content += "<button id='MyCustomButton' onclick=\"MovePlayer('{{MyUuiD}}','"+i+"','"+j+"')\" class='image_"+i+"_"+j+" NoneBorder'><p class='PVisible PlayerTextColor'>"+NewBoard.board[i][j]+"</p></button>";
+                            } else if (NewBoard.board[i][j].charAt(0) === "x") {
+                                content += "<button id='MyCustomButton' onclick=\"MovePlayer('{{MyUuiD}}','"+i+"','"+j+"')\" class='CaseStyle redBorderBox'><p class='PVisible PlayerTextColor'>"+NewBoard.board[i][j]+"</p></button>";
+                            } else if (NewBoard.board[i][j].charAt(0) === "S") {
+                                content += "<button id='MyCustomButton' onclick=\"MovePlayer('{{MyUuiD}}','"+i+"','"+j+"')\" class='CaseStartStyle redBorderBox'><p class='PVisible PlayerTextColor'>"+NewBoard.board[i][j]+"</p></button>";
+                            }
+                        } else {
+                            content += "<button id='MyCustomButton' class='CaseStyle'><p class='PInvisible'>"+NewBoard.board[i][j].charAt(0)+"</p></button>";
+                        }
+                    }
+                    content += "<br>";
+                }
+                $('#div-board').empty().prepend(content);
+            });
         });
     }
 </script>
