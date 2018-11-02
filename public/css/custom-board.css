@@ -1,0 +1,106 @@
+#margin-button {
+    margin: 0;
+}
+
+#MyCustomButton-card {
+    background-color: white;
+}
+#MyCustomButton-grid {
+    background-color: white;
+}
+#MyCustomButton-hypothesis {
+    background-color: white;
+}
+#MyCustomButton-accused {
+    background-color: white;
+}
+#MyCustomButton-dice {
+    background-color: white;
+}
+#MyCustomButton-card_exchange {
+    background-color: white;
+}
+
+#MyCustomButton {
+    /* border: solid orange 0.2px; */
+    height: 31px;
+    width: 31px;
+    margin-right: -3px;
+    box-sizing : border-box;
+    padding: 0;
+}
+
+
+
+.ButtonInvisible {
+    visibility: hidden;
+}
+.PInvisible {
+    visibility: hidden;
+}
+.PVisible {
+    visibility: visible;
+}
+.PlayerTextColor {
+    color: #7FFF00;
+}
+.RoomLetterStyle {
+    border: solid 0.2px #7FFF00;
+    box-sizing: content-box;
+    /*border: none;*/
+}
+.CaseStyle {
+    border: solid #EF3B36 0.2px; 
+    background: radial-gradient(circle, #FFFFFF 40%, #EF3B36);
+}
+.CaseStartStyle {
+    border: solid #EF3B36 0.2px; 
+    background-color: orange;
+}
+.WallStyle {
+    border: none;
+}
+.NoneBorder {
+    border: none;
+}
+.redBorderBox {
+    border: solid #EF3B36 0.2px;
+}
+
+
+
+#ligne {
+    height: 31px;
+    width: calc(31px * 25);
+}
+
+#board {
+    margin-top : 30px;
+    margin-left: 30px;
+    line-height: 100%;
+}
+
+#width-board {
+    width: 75%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#div-board {
+    width: calc(31px * 25);
+}
+
+#width-option {
+    width: 25%;
+    height: calc(31px * 25);
+    padding: 5px;
+    background-image: linear-gradient(to right,black 5%,  gray );
+    border-radius: 50px 0 0 50px;
+    overflow-y: scroll;
+    box-shadow: -4px 0px 19px 1px rgba(0,0,0,0.75);
+}
+
+#flex {
+    display: flex;
+}

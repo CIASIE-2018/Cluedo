@@ -1,0 +1,46 @@
+<h1 class="titre">Carte reçu</h1>
+<div id="TextDisplay"></div>
+<h1 class="titre">Carte à montrer</h1>
+<div id="ButtonDisplay"></div>
+
+
+<script src="../socket.io/socket.io.js"></script>
+<script>
+    //var socket = io.connect('http://localhost:8080');
+    //var socket = io.connect('http://192.168.1.45:8080');
+    var socket = io.connect('http://192.168.1.52:8080');
+
+    var MyUuiD = "{{- MyUuiD|escape("js") -}}";
+
+    socket.on('SearchPlayerForDisplaySelectedCards', test => {
+        let Card = "";
+        if (test == MyUuiD) {
+            socket.emit('ItsMe', test);
+            socket.on("CardExchange", CardExchange => {
+                CardExchange.forEach(function (element) {
+                    StrCard = element.split(',')[0];
+                    Card += "<button class='ui left labeled icon button' onclick='SelectedCardExchange(" + "\"" + StrCard + "\"" + ")'>" +
+                            "   <i class='right arrow icon'></i>" +
+                                StrCard + 
+                            "</button>" +
+                            "<br>";
+                });
+                $('#ButtonDisplay').empty().prepend(Card);
+            });
+        }
+    });
+
+    socket.on('SearchPlayerForDisplayCard', test => {
+        if (test == MyUuiD) {
+            socket.emit('GetCard', test);
+            socket.on("SeeCardFromPlayer", SeeCard => {
+                $('#TextDisplay').prepend(SeeCard);
+            });
+        }
+    });
+
+    function SelectedCardExchange(StrCard) {
+        socket.emit('SeeCard', StrCard);
+        $('#ButtonDisplay').empty();
+    }
+</script>

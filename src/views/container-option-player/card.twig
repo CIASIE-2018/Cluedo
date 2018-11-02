@@ -1,0 +1,9 @@
+<h1 class="titre">Vos Cartes</h1>
+{% for card in cardPack %}
+    <img src="/assets/images{{card.imagePath}}" style="padding : 2px">
+{% endfor %}
+<br/>
+<br/>
+{% for card in cardPack %}
+    <li>{{ card.label }}</li>
+{% endfor %}

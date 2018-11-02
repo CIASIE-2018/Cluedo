@@ -1,0 +1,67 @@
+{% for i in 0..24 %}
+    <div id='ligne'>
+        {% for j in 0..24 %}
+            {% if board.board[i][j] == 'v' %}
+                <button id='MyCustomButton' class='ButtonInvisible'>
+                    <p class='PInvisible'>{{ board.board[i][j] }}</p>
+                </button>
+            {% elseif board.board[i][j][1:] in ['1','2','3','4','5','6'] %}
+                {% if board.board[i][j][:1] == 'm' %}
+                    <button id='MyCustomButton' onclick="MovePlayer('{{MyUuiD}}','{{i}}','{{j}}')" class='image_{{i}}_{{j}} NoneBorder'>
+                        <p class='PVisible PlayerTextColor'>
+                            J{{ board.board[i][j][1:] }}
+                        </p>
+                    </button>
+                {% elseif board.board[i][j][:1] == 'x' %}
+                    <button id='MyCustomButton' onclick="MovePlayer('{{MyUuiD}}','{{i}}','{{j}}')" class='CaseStyle redBorderBox'>
+                        <p class='PVisible PlayerTextColor'>
+                            J{{ board.board[i][j][1:] }}
+                        </p>
+                    </button>
+                {% elseif board.board[i][j][:1] == 'S' %}
+                    <button id='MyCustomButton' onclick="MovePlayer('{{MyUuiD}}','{{i}}','{{j}}')" class='CaseStartStyle redBorderBox'>
+                        <p class='PVisible PlayerTextColor'>
+                            J{{ board.board[i][j][1:] }}
+                        </p>
+                    </button>
+                {% endif %}
+            {% elseif 'm' in board.board[i][j] %}
+                <button id='MyCustomButton' class='image_{{i}}_{{j}} WallStyle'>
+                    <p class='PInvisible'>
+                        {{ board.board[i][j] }}
+                    </p>
+                </button>
+            {% elseif board.board[i][j] in ['A','B','C','D','E','F','G','H','I'] %}
+                <button id='MyCustomButton' onclick="MovePlayer('{{MyUuiD}}','{{i}}','{{j}}')" class='image_{{i}}_{{j}} RoomLetterStyle'>
+                    <p class='PInvisible'>
+                        {{ board.board[i][j] }}
+                    </p>
+                </button>
+            {% elseif board.board[i][j][0:] == 'S' %}
+                <button id='MyCustomButton' class='CaseStartStyle'>
+                    <p class='PInvisible'>
+                        {{ board.board[i][j] }}
+                    </p>
+                </button>
+            {% else %}
+                <button id='MyCustomButton' onclick="MovePlayer('{{MyUuiD}}','{{i}}','{{j}}')" class='CaseStyle'>
+                    <p class='PInvisible'>
+                        {{ board.board[i][j] }}
+                    </p>
+                </button>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endfor %}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    function MovePlayer(MyUuiD, i, j) {
+        //var socket = io.connect('http://localhost:8080');
+        //var socket = io.connect('http://192.168.1.45:8080');
+        var socket = io.connect('http://192.168.1.52:8080');
+
+        socket.on('connect', (data) => {
+            socket.emit('Move', [MyUuiD, i, j]);
+        });
+    }
+</script>

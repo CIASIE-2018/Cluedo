@@ -1,0 +1,58 @@
+<h1 class="titre">Accusation</h1>
+<div>
+    <h3>Personnages</h3>
+    <select id="Accused_character" size="1" class="margin-left">
+        {% for pack_card_character in ListOfAllCards.pack %}
+            {% if pack_card_character.type == "character" %}
+                <OPTION>{{ pack_card_character.label }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+    <h3>Armes</h3>
+    <select id="Accused_weapon" size="1" class="margin-left">
+        {% for pack_card_weapon in ListOfAllCards.pack %}
+            {% if pack_card_weapon.type == "weapon" %}
+                <OPTION>{{ pack_card_weapon.label }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+    <h3>Lieux</h3>
+    <select id="Accused_room" size="1" class="margin-left">
+        {% for pack_card_room in ListOfAllCards.pack %}
+            {% if pack_card_room.type == "room" %}
+                <OPTION>{{ pack_card_room.label }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+</div>
+<div class="margin-top">
+    <a href="#" style="height : 100%;">
+        <button class="ui right negative labeled icon button" onclick="CallAccused('{{MyUuiD}}')">
+            <i class="right arrow icon"></i>
+            Formuler cette accusation
+        </button>
+    </a>
+</div>
+<h3 id="LogErrorAccu"></h3>
+
+<script src="../socket.io/socket.io.js"></script>
+<script>
+    function CallAccused(MyUuiD) {
+        //var socket = io.connect('http://localhost:8080');
+        //var socket = io.connect('http://192.168.1.45:8080');
+        var socket = io.connect('http://192.168.1.52:8080');
+        var AccusedCallGetChar = document.getElementById("Accused_character");
+        var AccusedCallGetWeapon = document.getElementById("Accused_weapon");
+        var AccusedCallGetRoom = document.getElementById("Accused_room");
+
+        var Accused_character = AccusedCallGetChar.options[AccusedCallGetChar.selectedIndex].text;
+        var Accused_weapon = AccusedCallGetWeapon.options[AccusedCallGetWeapon.selectedIndex].text;
+        var Accused_room = AccusedCallGetRoom.options[AccusedCallGetRoom.selectedIndex].text;
+        socket.on('connect', (data) => {
+            socket.emit('Accused', [MyUuiD, [Accused_character, Accused_weapon, Accused_room]]);
+            socket.on("LogErrorAccu", error => {
+                $('#LogErrorAccu').empty().prepend(error);
+            });
+        });
+    }
+</script>

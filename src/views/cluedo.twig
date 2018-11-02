@@ -3,16 +3,17 @@
         <link rel="stylesheet" href="/assets/semantic/semantic.min.css">
         <link rel="stylesheet" href="/assets/css/custom-header.css">
         <link rel="stylesheet" href="/assets/css/custom-footer.css">
-        <link rel="stylesheet" href="/assets/css/custom-plateau.css">
+        <link rel="stylesheet" href="/assets/css/custom-board.css">
         <link rel="stylesheet" href="/assets/css/custom-grid.css">
+        <link rel="stylesheet" href="/assets/css/images-board.css">
     </head>
     <body>
-        {% include 'header.twig' %}
 
+        {% include 'header.twig' %}
         <div id="flex">
-            <div id="width-plateau">
-                <div id="div-plateau">
-                    {% include 'plateau.twig' %}
+            <div id="width-board">
+                <div id="div-board">
+                    {% include 'board.twig' %}
                 </div>
             </div>
             <div id="width-option">
@@ -21,4 +22,5 @@
         </div>
         {% include 'footer.twig' %}
     </body>
+
 </html>

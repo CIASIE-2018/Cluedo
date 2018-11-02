@@ -1,38 +1,60 @@
-#suspect{
-    border:solid  black 2px;
+.suspect .armes .lieux {
     width: 35%;
     margin-left: 5%
 }
 
-#armes{
-    border:solid  black 2px;
-    width: 35%;
-    margin-left:5%;
-}
-
-#lieux{
-    border:solid  black 2px;
-    width: 35%;
-    margin-left: 5%;
-    margin-top:3%;
-}
-
-h1{
+.titre {
     text-align: center;
-    border-bottom: solid black 2px;
 }
 
-p{
+p {
     font-size: 20px;
     margin-top:-10px;
     margin-bottom: -5px;
 }
 
-.g{
-    display: flex;
-    flex-wrap: wrap; 
+.margin-top {
+    margin-top : 50px;
+}
+.margin-left {
+    margin-left: 10%;
 }
 
+.buttons {
+    margin: calc( 25% / 2 );
+    color: white;
+}
+
+.WidthTextArea {
+    max-width: 300px;
+}
+
+
+.titre {
+    width   : 300px;
+    height  : 50px;   
+    position: relative;
+    z-index : 1;
+  }
+
+  .titre:before {
+    content : "";
+    position: absolute;
+    left    : 0;
+    bottom  : 0;
+    height  : 1px;
+    width   : 100%;  /* or 100px */
+    border-bottom:1px solid white;
+  }
+
+  #label {
+      color: white;
+  }
+
+  .notes {
+    height:150px;
+    width: 100%;
+  }
 
 
 
