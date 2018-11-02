@@ -1,5 +1,14 @@
 <div class="ui segment" id="grey-back">
-  <h3 class="ui center aligned header teal">
-    Cluedo
-  </h3>
+    <h3 id="StatusGame" class="ui center aligned header teal">
+        Cluedo
+    </h3>
 </div>
+
+<script src="../socket.io/socket.io.js"></script>
+<script>
+    var socket = io.connect('http://localhost:8080');
+
+    socket.on('SetWinningPlayer', Winner => {
+        $('#StatusGame').empty().prepend(Winner);
+    });
+</script>

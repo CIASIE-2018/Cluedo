@@ -14,6 +14,9 @@
     <div id="grid" style="display : none">
         {% include 'container-option-player/grid.twig' %}
     </div>
+    <div id="card_exchange" style="display : none">
+        {% include 'container-option-player/card_exchange.twig' %}
+    </div>
 </div>
 <script>
     function ChangeDisplayMenu(type) {
@@ -22,12 +25,14 @@
         var hypothesis = document.getElementById("hypothesis");
         var accused = document.getElementById("accused");
         var dice = document.getElementById("dice");
+        var card_exchange = document.getElementById("card_exchange");
 
         card.style.display = "none"; 
         grid.style.display = "none";
         hypothesis.style.display = "none";
         accused.style.display = "none";
         dice.style.display = "none";
+        card_exchange.style.display = "none";
 
         if (type === "card") {
             card.style.display = "block";
@@ -39,6 +44,8 @@
             accused.style.display = "block";
         } else if (type === "dice") {
             dice.style.display = "block";
+        } else if (type === "card_exchange") {
+            card_exchange.style.display = "block";
         }
     }
 </script>

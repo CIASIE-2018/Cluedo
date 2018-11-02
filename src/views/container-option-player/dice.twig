@@ -5,19 +5,19 @@
 
 <div class="margin-top">
     <a href="#" style="height : 100%;">
-        <button class="ui left labeled icon button" onclick="rollTheDice()">
+        <button class="ui left labeled icon button" onclick="rollTheDice('{{MyUuiD}}')">
             <i class="right arrow icon"></i>
-            Lancer les dés
+            Lancer les dés 
         </button>
     </a>
 </div>
 
 <script src="../socket.io/socket.io.js"></script>
 <script>
-    function rollTheDice() {
+    function rollTheDice(MyUuiD) {
         var socket = io.connect('http://localhost:8080');
         socket.on('connect', (data) => {
-            socket.emit('rollTheDice');
+            socket.emit('rollTheDice', MyUuiD);
             socket.on("sum", sum => {
                 $('#sum').empty().prepend(sum);
             });

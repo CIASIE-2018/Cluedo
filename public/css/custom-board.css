@@ -17,16 +17,57 @@
 #MyCustomButton-dice {
     background-color: white;
 }
+#MyCustomButton-card_exchange {
+    background-color: white;
+}
 
 #MyCustomButton {
     /* border: solid orange 0.2px; */
-    border: solid #EF3B36 0.2px;
-    height: 100%;
-    width: calc(100% / 25);
-    margin-right: -4px;
+    height: 31px;
+    width: 31px;
+    margin-right: -3px;
     box-sizing : border-box;
     padding: 0;
 }
+
+
+
+.ButtonInvisible {
+    visibility: hidden;
+}
+.PInvisible {
+    visibility: hidden;
+}
+.PVisible {
+    visibility: visible;
+}
+.PlayerTextColor {
+    color: #7FFF00;
+}
+.RoomLetterStyle {
+    border: solid 0.2px #7FFF00;
+    box-sizing: content-box;
+    /*border: none;*/
+}
+.CaseStyle {
+    border: solid #EF3B36 0.2px; 
+    background: radial-gradient(circle, #FFFFFF 40%, #EF3B36);
+}
+.CaseStartStyle {
+    border: solid #EF3B36 0.2px; 
+    background-color: orange;
+}
+.WallStyle {
+    border: none;
+}
+.NoneBorder {
+    border: none;
+}
+.redBorderBox {
+    border: solid #EF3B36 0.2px;
+}
+
+
 
 #ligne {
     height: 31px;

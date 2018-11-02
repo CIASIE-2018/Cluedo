@@ -21,7 +21,7 @@ class Board {
             i++;
         }
     }
-    getGrid() {
+    getboard() {
         return this.board;
     }
     placePlayer(id, x, y) {
@@ -29,7 +29,7 @@ class Board {
         this.board[x][y] = this.board[x][y] + id;
     }
     getPositionPlayer(id) {
-        let grille = this.getGrid();
+        let grille = this.getboard();
         for (let i = 0; i <= 24; i++) {
             for (let j = 0; j <= 24; j++) {
                 if (grille[i][j].length == 2 && grille[i][j].charAt(1) == id) {
@@ -42,34 +42,34 @@ class Board {
     movePlayer(id, x, y) {
         let reg = new RegExp('[A-I]');// reg ex pour tester les lettre
         let player = this.getPositionPlayer(id);
-        if (player.x + 1 == x && this.grid[player.x + 1][player.y] != 'm') {
-            this.grid[player.x][player.y] = this.grid[player.x][player.y].charAt(0);
-            if (reg.test(this.grid[player.x + 1][player.y])) {
+        if (player.x + 1 == x && this.board[player.x + 1][player.y] != 'm') {
+            this.board[player.x][player.y] = this.board[player.x][player.y].charAt(0);
+            if (reg.test(this.board[player.x + 1][player.y])) {
                 this.placementRoom(id, player.x + 1, player.y);
             } else {
-                this.grid[player.x + 1][player.y] = this.grid[player.x + 1][player.y] + id;
+                this.board[player.x + 1][player.y] = this.board[player.x + 1][player.y] + id;
             }
         } else {
             this.fdp;
 
 
         }
-        if (player.x - 1 == x && this.grid[player.x - 1][player.y] != 'm') {
-            this.grid[player.x][player.y] = this.grid[player.x][player.y].charAt(0);
-            if (reg.test(this.grid[player.x - 1][player.y])) {
+        if (player.x - 1 == x && this.board[player.x - 1][player.y] != 'm') {
+            this.board[player.x][player.y] = this.board[player.x][player.y].charAt(0);
+            if (reg.test(this.board[player.x - 1][player.y])) {
                 this.placementRoom(id, player.x - 1, player.y);
             } else {
-                this.grid[player.x - 1][player.y] = this.grid[player.x - 1][player.y] + id;
+                this.board[player.x - 1][player.y] = this.board[player.x - 1][player.y] + id;
             }
         } else {
             this.fdp;
         }
-        if (player.y + 1 == y && this.grid[player.x][player.y + 1] != 'm') {
-            this.grid[player.x][player.y] = this.grid[player.x][player.y].charAt(0);
-            if (reg.test(this.grid[player.x][player.y + 1])) {
+        if (player.y + 1 == y && this.board[player.x][player.y + 1] != 'm') {
+            this.board[player.x][player.y] = this.board[player.x][player.y].charAt(0);
+            if (reg.test(this.board[player.x][player.y + 1])) {
                 this.placementRoom(id, player.x, player.y + 1);
             } else {
-                this.grid[player.x][player.y + 1] = this.grid[player.x][player.y + 1] + id;
+                this.board[player.x][player.y + 1] = this.board[player.x][player.y + 1] + id;
             }
 
 
@@ -77,12 +77,12 @@ class Board {
             this.fdp;
         }
 
-        if (player.y - 1 == y && this.grid[player.x][player.y - 1] != 'm') {
-            this.grid[player.x][player.y] = this.grid[player.x][player.y].charAt(0);
-            if (reg.test(this.grid[player.x][player.y - 1])) {
-                this.placementRoom(id, playeur.x, player.y - 1);
+        if (player.y - 1 == y && this.board[player.x][player.y - 1] != 'm') {
+            this.board[player.x][player.y] = this.board[player.x][player.y].charAt(0);
+            if (reg.test(this.board[player.x][player.y - 1])) {
+                this.placementRoom(id, player.x, player.y - 1);
             } else {
-                this.grid[player.x + 1][player.y] = this.grid[player.x + 1][player.y] + id;
+                this.board[player.x + 1][player.y] = this.board[player.x + 1][player.y] + id;
             }
         } else {
             this.fdp;
@@ -93,33 +93,33 @@ class Board {
     // methode qui place les joueurs dans une salle
 
     placementRoom(id, x, y) {
-        switch (this.grid[x][y]) {
+        switch (this.board[x][y]) {
             case ('A'):
-                this.grid[0][id - 1] = this.grid[0][id - 1] + id;
+                this.board[0][id - 1] = this.board[0][id - 1] + id;
                 break;
             case ('B'):
-                this.grid[id - 1][10] = this.grid[id - 1][10] + id;
+                this.board[id - 1][10] = this.board[id - 1][10] + id;
                 break;
             case ('C'):
-                this.grid[id - 1][19] = this.grid[id - 1][19] + id;
+                this.board[id - 1][19] = this.board[id - 1][19] + id;
                 break;
             case ('D'):
-                this.grid[8 + id][19] = this.grid[9][19] + id;
+                this.board[8 + id][19] = this.board[9][19] + id;
                 break;
             case ('E'):
-                this.grid[18 + id][20] = this.grid[18 + id][20] + id;
+                this.board[18 + id][20] = this.board[18 + id][20] + id;
                 break;
             case ('F'):
-                this.grid[16 + id][12] = this.grid[16 + id][12] + id;
+                this.board[16 + id][12] = this.board[16 + id][12] + id;
                 break;
             case ('G'):
-                this.grid[2 + id][19] = this.grid[2 + id][19] + id;
+                this.board[2 + id][19] = this.board[2 + id][19] + id;
                 break;
             case ('H'):
-                this.grid[2 + id][12] = this.grid[2 + id][12] + id;
+                this.board[2 + id][12] = this.board[2 + id][12] + id;
                 break;
             case ('I'):
-                this.grid[2 + id][6] = this.grid[2 + id][6] + id;
+                this.board[2 + id][6] = this.board[2 + id][6] + id;
                 break;
 
         }

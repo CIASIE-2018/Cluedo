@@ -25,9 +25,13 @@ p {
     color: white;
 }
 
+.WidthTextArea {
+    max-width: 300px;
+}
+
 
 .titre {
-    width   : 200px;
+    width   : 300px;
     height  : 50px;   
     position: relative;
     z-index : 1;
