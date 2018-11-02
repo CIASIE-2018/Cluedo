@@ -178,7 +178,6 @@ serverSocket.on("connection", clientSocket => {
                         PlayTurnOfPlayer.Action = "Offer";
                     }
                     console.log(RollDicePlayer);
-                    clientSocket.emit('Board', board);
                 }
             } else if (PlayTurnOfPlayer.Action === "RollDice") {
                 console.log("Tu dois lancer les dés");
@@ -196,19 +195,16 @@ serverSocket.on("connection", clientSocket => {
     // SOCKET HYPOTHESE
     clientSocket.on("ItsMe", msg => {
         clientSocket.emit('CardExchange', CardFound);
-        clientSocket.disconnect();
     });
 
     clientSocket.on("SeeCard", Card => {
         CardFromPlayer = Card;
         clientSocket.broadcast.emit('SearchPlayerForDisplayCard', IdPlayerComeBack);
-        clientSocket.disconnect();
     });
 
     clientSocket.on("GetCard", msg => {
         clientSocket.emit('SeeCardFromPlayer', CardFromPlayer);
         NextTurnPlayer();
-        clientSocket.disconnect();
     });
 
     clientSocket.on("Hypothesis", msg => {
@@ -223,10 +219,11 @@ serverSocket.on("connection", clientSocket => {
                     Offer.Log = "Hypothesis : " + msg[1].join(", ");
 
                     //Recherche du joueur qui possède au moins une des cartes proposé par l'hypothèse.
-                    console.log(msg[0] + " " + msg[1]);
                     CardFound = SearchPlayerCard(msg[0], msg[1]); //msg[0]: id J, msg[1]: Hypothèse
 
-                    if (CardFound === null) {
+                    if (CardFound.length === 0) {
+                        msg = "Pas de cartes reçu";
+                        clientSocket.emit('NoCard', msg );
                         NextTurnPlayer();
                     } else {
                         Str = CardFound[0].split(",");
@@ -286,10 +283,9 @@ server.listen(config.app.port, () => {
         "Server running at http://" + config.app.baseUrl + ":" + config.app.port
     );
 });
-console.log(hidden);
+
 function SearchPlayerCard(id, Hypothesis) {
     bool = false;
-    //Hypothesis = ["Colonel Moutarde", "Revolver", "Salle de bal"];
     IndexPlayer = TableOFPlayer.indexOf(id);
     CardFound = new Array();
 
@@ -343,7 +339,6 @@ function FixePlayerStatusInGame() {
 }
 
 function NextTurnPlayer() {
-    console.log("Anicen : " + PlayTurnOfPlayer.TurnIdPlayer);
     let Turn = PlayTurnOfPlayer.TurnIdPlayer;  //Tour du joueur actuel
     let Status = "NeedToChange";
 
@@ -366,9 +361,6 @@ function NextTurnPlayer() {
     PlayTurnOfPlayer.Action = "RollDice";
     Offer.Status = false;
     CardFound = null;
-
-    console.log(Status);
-    console.log("Nouveau : " + PlayTurnOfPlayer.TurnIdPlayer + "\n");
 }
 
 function RemovePlayerFromGame(IdPlayer) {

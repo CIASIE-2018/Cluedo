@@ -55,6 +55,9 @@
             socket.on("LogErrorHypo", error => {
                 $('#LogErrorHypo').empty().prepend(error);
             });
+            socket.on('NoCard', msg => {
+                $('#TextDisplay').prepend(msg);
+            });
         });
     }
 </script>

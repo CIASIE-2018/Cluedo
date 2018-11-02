@@ -13,18 +13,19 @@
     var MyUuiD = "{{- MyUuiD|escape("js") -}}";
 
     socket.on('SearchPlayerForDisplaySelectedCards', test => {
+        let Card = "";
         if (test == MyUuiD) {
             socket.emit('ItsMe', test);
             socket.on("CardExchange", CardExchange => {
                 CardExchange.forEach(function (element) {
                     StrCard = element.split(',')[0];
-                    Carte = "<button class='ui left labeled icon button' onclick='SelectedCardExchange(" + "\"" + StrCard + "\"" + ")'>" +
+                    Card += "<button class='ui left labeled icon button' onclick='SelectedCardExchange(" + "\"" + StrCard + "\"" + ")'>" +
                             "   <i class='right arrow icon'></i>" +
                                 StrCard + 
                             "</button>" +
                             "<br>";
-                    $('#ButtonDisplay').empty().prepend(Carte);
                 });
+                $('#ButtonDisplay').empty().prepend(Card);
             });
         }
     });
@@ -33,7 +34,6 @@
         if (test == MyUuiD) {
             socket.emit('GetCard', test);
             socket.on("SeeCardFromPlayer", SeeCard => {
-                //$('#TextDisplay').empty().prepend(SeeCard);
                 $('#TextDisplay').prepend(SeeCard);
             });
         }
