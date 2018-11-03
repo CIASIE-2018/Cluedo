@@ -41,29 +41,30 @@ class Board {
 
     movePlayer(id, x, y) {
         let reg = new RegExp('[A-I]');// reg ex pour tester les lettre
+        let idPlayer = "123456";
         let player = this.getPositionPlayer(id);
-        if (player.x + 1 == x && player.y == y && this.board[player.x + 1][player.y] != 'm') {
+        if (player.x + 1 == x && player.y == y && this.board[player.x + 1][player.y] != 'm' && this.board[player.x + 1][player.y].length !== 2) {
             this.board[player.x][player.y] = this.board[player.x][player.y].charAt(0);
             if (reg.test(this.board[player.x + 1][player.y])) {
                 this.placementRoom(id, player.x + 1, player.y);
             } else {
                 this.board[player.x + 1][player.y] = this.board[player.x + 1][player.y] + id;
             }
-        } else if (player.x - 1 == x && player.y == y && this.board[player.x - 1][player.y] != 'm') {
+        } else if (player.x - 1 == x && player.y == y && this.board[player.x - 1][player.y] != 'm' && this.board[player.x - 1][player.y].length !== 2) {
             this.board[player.x][player.y] = this.board[player.x][player.y].charAt(0);
             if (reg.test(this.board[player.x - 1][player.y])) {
                 this.placementRoom(id, player.x - 1, player.y);
             } else {
                 this.board[player.x - 1][player.y] = this.board[player.x - 1][player.y] + id;
             }
-        } else if (player.y + 1 == y && player.x == x && this.board[player.x][player.y + 1] != 'm') {
+        } else if (player.y + 1 == y && player.x == x && this.board[player.x][player.y + 1] != 'm' && this.board[player.x][player.y + 1].length !== 2) {
             this.board[player.x][player.y] = this.board[player.x][player.y].charAt(0);
             if (reg.test(this.board[player.x][player.y + 1])) {
                 this.placementRoom(id, player.x, player.y + 1);
             } else {
                 this.board[player.x][player.y + 1] = this.board[player.x][player.y + 1] + id;
             }
-        } else if (player.y - 1 == y && player.x == x && this.board[player.x][player.y - 1] != 'm') {
+        } else if (player.y - 1 == y && player.x == x && this.board[player.x][player.y - 1] != 'm' && this.board[player.x][player.y - 1].length !== 2) {
             this.board[player.x][player.y] = this.board[player.x][player.y].charAt(0);
             if (reg.test(this.board[player.x][player.y - 1])) {
                 this.placementRoom(id, player.x, player.y - 1);
@@ -82,7 +83,7 @@ class Board {
         let y = new Number(y1);
 
         //condition de sortie d'une piece (Avoir la lettre de la piece(En haut,bas,gauche,droite))
-        if (letter === this.board[x + 1][y].charAt(0) || letter === this.board[x - 1][y].charAt(0) || letter === this.board[x][y + 1].charAt(0) || letter === this.board[x][y - 1].charAt(0)) {
+        if (letter === this.board[x + 1][y].charAt(0) || letter === this.board[x - 1][y].charAt(0) || letter === this.board[x][y + 1].charAt(0) || letter === this.board[x][y - 1].charAt(0) && this.board[x][y].length !== 2) {
             let player = this.getPositionPlayer(id);
             this.board[player.x][player.y] = this.board[player.x][player.y].charAt(0);
             this.placePlayer(id, x, y);

@@ -204,7 +204,6 @@ serverSocket.on("connection", clientSocket => {
                         }
                     }
                     clientSocket.broadcast.emit('NewBoard', board.board);
-                    console.log(RollDicePlayer);
                 }
             } else if (PlayTurnOfPlayer.Action === "RollDice") {
                 console.log("Tu dois lancer les dés");
