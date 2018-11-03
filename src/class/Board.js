@@ -82,7 +82,7 @@ class Board {
             if (reg.test(this.board[player.x][player.y - 1])) {
                 this.placementRoom(id, player.x, player.y - 1);
             } else {
-                this.board[player.x + 1][player.y] = this.board[player.x + 1][player.y] + id;
+                this.board[player.x][player.y - 1] = this.board[player.x][player.y - 1] + id;
             }
         } else {
             this.fdp;
