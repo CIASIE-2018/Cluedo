@@ -106,7 +106,7 @@ class Board {
                 this.board[3][16 + id] = this.board[3][16 + id] + id;
                 break;
             case ('D'):
-                this.board[11][7 + id] = this.board[11][7 + id] + id;
+                this.board[11][16 + id] = this.board[11][16 + id] + id;
                 break;
             case ('E'):
                 this.board[21][17 + id] = this.board[21][17 + id] + id;
