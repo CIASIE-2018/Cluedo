@@ -21,7 +21,7 @@ class Board {
             i++;
         }
     }
-    getboard() {
+    getBoard() {
         return this.board;
     }
     placePlayer(id, x, y) {
@@ -29,7 +29,7 @@ class Board {
         this.board[x][y] = this.board[x][y] + id;
     }
     getPositionPlayer(id) {
-        let grille = this.getboard();
+        let grille = this.getBoard();
         for (let i = 0; i <= 24; i++) {
             for (let j = 0; j <= 24; j++) {
                 if (grille[i][j].length == 2 && grille[i][j].charAt(1) == id) {
@@ -50,10 +50,10 @@ class Board {
                 this.board[player.x + 1][player.y] = this.board[player.x + 1][player.y] + id;
             }
         } else {
-            this.fdp;
-
-
+            this.CantMoveOnWall();
         }
+
+
         if (player.x - 1 == x && this.board[player.x - 1][player.y] != 'm') {
             this.board[player.x][player.y] = this.board[player.x][player.y].charAt(0);
             if (reg.test(this.board[player.x - 1][player.y])) {
@@ -62,8 +62,10 @@ class Board {
                 this.board[player.x - 1][player.y] = this.board[player.x - 1][player.y] + id;
             }
         } else {
-            this.fdp;
+            this.CantMoveOnWall();
         }
+
+
         if (player.y + 1 == y && this.board[player.x][player.y + 1] != 'm') {
             this.board[player.x][player.y] = this.board[player.x][player.y].charAt(0);
             if (reg.test(this.board[player.x][player.y + 1])) {
@@ -71,11 +73,10 @@ class Board {
             } else {
                 this.board[player.x][player.y + 1] = this.board[player.x][player.y + 1] + id;
             }
-
-
         } else {
-            this.fdp;
+            this.CantMoveOnWall();
         }
+
 
         if (player.y - 1 == y && this.board[player.x][player.y - 1] != 'm') {
             this.board[player.x][player.y] = this.board[player.x][player.y].charAt(0);
@@ -85,7 +86,7 @@ class Board {
                 this.board[player.x][player.y - 1] = this.board[player.x][player.y - 1] + id;
             }
         } else {
-            this.fdp;
+            this.CantMoveOnWall();
         }
     }
 
@@ -126,8 +127,8 @@ class Board {
     }
 
 
-    fdp() {
-        console.log("gros fdp");
+    CantMoveOnWall() {
+        console.log("Tu ne peux pas te déplacer à travers les murs");
     }
 
     toString() {
