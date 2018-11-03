@@ -77,6 +77,21 @@ class Board {
     }
 
 
+    PlayerLeaveRoom(id, x1, y1, letter) {
+        let x = new Number(x1);
+        let y = new Number(y1);
+
+        //condition de sortie d'une piece (Avoir la lettre de la piece(En haut,bas,gauche,droite))
+        if (letter === this.board[x + 1][y].charAt(0) || letter === this.board[x - 1][y].charAt(0) || letter === this.board[x][y + 1].charAt(0) || letter === this.board[x][y - 1].charAt(0)) {
+            let player = this.getPositionPlayer(id);
+            this.board[player.x][player.y] = this.board[player.x][player.y].charAt(0);
+            this.placePlayer(id, x, y);
+        } else {
+            this.CantMoveOnThisCase();
+            return false;
+        }
+    }
+
     // methode qui place les joueurs dans une salle
 
     placementRoom(id, x, y) {

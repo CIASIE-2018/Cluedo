@@ -89,6 +89,9 @@ let Game = {
     PlayerCard: []      //liste des Cartes de chaque joueurs
 };
 
+//Sauvegarde de la salle dans laquelle le joueur vient d'arriver.
+let PlayerInTheRoom = [];
+
 
 
 //Nombre de Cartes en fonction du nombre de joueurs
@@ -172,21 +175,37 @@ serverSocket.on("connection", clientSocket => {
         if (msg[0] == PlayTurnOfPlayer.TurnIdPlayer) {
             if (PlayTurnOfPlayer.Action === "Move") {
                 if (RollDicePlayer > 0) {
-                    let BoolMove = board.movePlayer(IdNumOfPlayer, msg[1], msg[2]);
-                
-                    if ( BoolMove !== false) {
-                        RollDicePlayer--;
 
-                        let strRoom = "ABCDEFGHI";
-                        if (strRoom.includes(board.board[msg[1]][msg[2]])) {  // Le joueur à atteind une pièce.
-                            RollDicePlayer = 0;
-                            PlayTurnOfPlayer.Action = "Offer";
-                        } else {
-                            if (RollDicePlayer === 0) {   // Le dés est à 0.
-                                NextTurnPlayer();
+                    let strRoom = "ABCDEFGHI";
+
+                    if (strRoom.includes(PlayerInTheRoom[TableOFPlayer.indexOf(msg[0])])) { //Le joueur est dans une piece
+                        let BoolLeaveRoom = board.PlayerLeaveRoom(IdNumOfPlayer, msg[1], msg[2],PlayerInTheRoom[TableOFPlayer.indexOf(msg[0])]);
+                        if (BoolLeaveRoom !== false ) {
+                            PlayerInTheRoom[TableOFPlayer.indexOf(msg[0])] = 0;
+                            RollDicePlayer--;
+                        }
+
+                    } else {
+                        let BoolMove = board.movePlayer(IdNumOfPlayer, msg[1], msg[2]);
+
+                        if (BoolMove !== false) {
+                            RollDicePlayer--;
+                        
+                            if (strRoom.includes(board.board[msg[1]][msg[2]])) {  // Le joueur à atteind une pièce.
+                                RollDicePlayer = 0;
+                                PlayTurnOfPlayer.Action = "Offer";
+    
+                                PlayerInTheRoom[TableOFPlayer.indexOf(msg[0])] = board.board[msg[1]][msg[2]];
+    
+                                console.log(PlayerInTheRoom);
+                            } else {
+                                if (RollDicePlayer === 0) {   // Le dés est à 0.
+                                    NextTurnPlayer();
+                                }
                             }
                         }
                     }
+
 
                     console.log(RollDicePlayer);
                 }
@@ -234,7 +253,7 @@ serverSocket.on("connection", clientSocket => {
 
                     if (CardFound.length === 0) {
                         msg = "Pas de cartes reçu";
-                        clientSocket.emit('NoCard', msg );
+                        clientSocket.emit('NoCard', msg);
                         NextTurnPlayer();
                     } else {
                         Str = CardFound[0].split(",");
