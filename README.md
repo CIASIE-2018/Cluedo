@@ -22,31 +22,3 @@ Les cartes enlevées sont : Le meurtirer, l'arme du crime et le lieu du crime. C
   + Entrer "npm install"
   + Entrer "npm run start"
   + Lancer un navigateur à l'adresse "localhost:8080"
-
-Première pull request :
-
-Installation de Express / Twig / Semantic / NodeJS
-
-Mise en place de l'architecture
-
-Configuration du git ignore
-
-Début de code pour l'acceuil(index.html) et l'objet joueur (joueur.js) 
-
-Apprentissage Twig + Semantic + NodeJS
-
-
-
-grid :
-
-x = Mur
-
-o = Chemin
-
-p{chiffre} = Porte d'une pièce
-
-{chiffre} = id d'un joueur
-
-
-Les 3 cartes enlevées sont : Le meurtirer, l'arme du crime et le lieu du crime. Ces 3 infos sont à trouver pour les autres joueurs pour gagner la partie.
-
