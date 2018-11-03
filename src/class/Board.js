@@ -130,14 +130,6 @@ class Board {
         console.log("gros fdp");
     }
 
-    //methode pour un lancer deux dés a 6 faces
-    rollTheDice() {
-        let d1 = Math.floor(Math.random() * 6) + 1;
-        let d2 = Math.floor(Math.random() * 6) + 1;
-        let somme = d1 + d2;
-        return { somme }
-    }
-
     toString() {
         this.board.forEach(element => {
             console.log(element.toString())
