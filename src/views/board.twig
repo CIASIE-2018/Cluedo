@@ -62,4 +62,39 @@
             socket.emit('Move', [MyUuiD, i, j]);
         });
     }
+    socket.on('NewBoard', board => {
+        let content = "";
+        let strRoom = "ABCDEFGHI";
+        let idPlayer = "123456";
+        let Wall = "m";
+        let Start = "S";
+        let i = 0;
+        for (i; i < 25; i++) {
+            let j = 0;
+            content += "<div id='ligne'>";
+            for (j; j < 25; j++) {
+                if (board[i][j] == 'v') {
+                    content += "<button id='MyCustomButton2' class='ButtonInvisible'><p class='PInvisible'>" + board[i][j] + "</p></button>"
+                } else if (idPlayer.includes(board[i][j].charAt(1)) && board[i][j].length === 2) {
+                    if (board[i][j].charAt(0) == 'm') {
+                        content += "<button id='MyCustomButton2' onclick=\"MovePlayer('{{MyUuiD}}','"+i+"','"+j+"')\" class='image_"+i+"_"+j+" NoneBorder'><p class='PVisible PlayerTextColor'>J"+board[i][j].charAt(1)+"</p></button>";
+                    } else if (board[i][j].charAt(0) == 'x') {
+                        content += "<button id='MyCustomButton2' onclick=\"MovePlayer('{{MyUuiD}}','"+i+"','"+j+"')\" class='CaseStyle redBorderBox'><p class='PVisible PlayerTextColor'>J"+board[i][j].charAt(1)+"</p></button>";
+                    } else if (board[i][j].charAt(0) == 'S') {
+                        content += "<button id='MyCustomButton2' onclick=\"MovePlayer('{{MyUuiD}}','"+i+"','"+j+"')\" class='CaseStartStyle redBorderBox'><p class='PVisible PlayerTextColor'>J"+board[i][j].charAt(1)+"</p></button>";
+                    }
+                } else if (strRoom.includes(board[i][j])) {
+                    content += "<button id='MyCustomButton2' onclick=\"MovePlayer('{{MyUuiD}}','"+i+"','"+j+"')\" class='image_"+i+"_"+j+" RoomLetterStyle'><p class='PInvisible'>"+board[i][j]+"</p></button>";
+                } else if (Wall.includes(board[i][j].charAt(0))) {
+                    content += "<button id='MyCustomButton2' class='image_"+i+"_"+j+" WallStyle'><p class='PInvisible'>" + board[i][j] + "</p></button>";
+                } else if (board[i][j] == 'S' ) {
+                    content += "<button id='MyCustomButton2' class='CaseStartStyle'><p class='PInvisible'>" + board[i][j] + "</p></button>";
+                } else {
+                    content += "<button id='MyCustomButton2' onclick=\"MovePlayer('{{MyUuiD}}','"+i+"','"+j+"')\" class='CaseStyle'><p class='PInvisible'>"+board[i][j]+"</p></button>";
+                }
+            }
+            content += "</div>";
+        }
+        $('#div-board').empty().prepend(content);
+    });
 </script>

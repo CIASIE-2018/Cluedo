@@ -196,8 +196,6 @@ serverSocket.on("connection", clientSocket => {
                                 PlayTurnOfPlayer.Action = "Offer";
     
                                 PlayerInTheRoom[TableOFPlayer.indexOf(msg[0])] = board.board[msg[1]][msg[2]];
-    
-                                console.log(PlayerInTheRoom);
                             } else {
                                 if (RollDicePlayer === 0) {   // Le dés est à 0.
                                     NextTurnPlayer();
@@ -205,8 +203,7 @@ serverSocket.on("connection", clientSocket => {
                             }
                         }
                     }
-
-
+                    clientSocket.broadcast.emit('NewBoard', board.board);
                     console.log(RollDicePlayer);
                 }
             } else if (PlayTurnOfPlayer.Action === "RollDice") {
