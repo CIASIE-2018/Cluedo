@@ -95,53 +95,53 @@ class Board {
     placementRoom(id, x, y) {
         switch (this.board[x][y]) {
             case ('A'):
-                this.board[0][id - 1] = this.board[0][id - 1] + id;
+                this.board[1][id - 1] = this.board[1][id - 1] + id;
                 break;
             case ('B'):
-                this.board[id - 1][10] = this.board[id - 1][10] + id;
+                this.board[1][8 + id] = this.board[1][8 + id] + id;
                 break;
             case ('C'):
-                this.board[id - 1][19] = this.board[id - 1][19] + id;
+                this.board[3][16 + id] = this.board[3][16 + id] + id;
                 break;
             case ('D'):
-                this.board[8 + id][19] = this.board[9][19] + id;
+                this.board[11][7 + id] = this.board[11][7 + id] + id;
                 break;
             case ('E'):
-                this.board[18 + id][20] = this.board[18 + id][20] + id;
+                this.board[21][17 + id] = this.board[21][17 + id] + id;
                 break;
             case ('F'):
-                this.board[16 + id][12] = this.board[16 + id][12] + id;
+                this.board[21][8 + id] = this.board[21][8 + id] + id;
                 break;
             case ('G'):
-                this.board[2 + id][19] = this.board[2 + id][19] + id;
+                this.board[21][id - 1] = this.board[21][id - 1] + id;
                 break;
             case ('H'):
-                this.board[2 + id][12] = this.board[2 + id][12] + id;
+                this.board[14][id - 1] = this.board[14][id - 1] + id;
                 break;
             case ('I'):
-                this.board[2 + id][6] = this.board[2 + id][6] + id;
+                this.board[7][id - 1] = this.board[7][id - 1] + id;
                 break;
 
-            }
-        }
-
-
-        fdp() {
-            console.log("gros fdp");
-        }
-
-        //methode pour un lancer deux dés a 6 faces
-        rollTheDice() {
-            let d1 = Math.floor(Math.random() * 6) + 1;
-            let d2 = Math.floor(Math.random() * 6) + 1;
-            let somme = d1 + d2;
-            return { somme }
-        }
-
-        toString(){
-            this.board.forEach(element => {
-                console.log(element.toString())
-            });
         }
     }
+
+
+    fdp() {
+        console.log("gros fdp");
+    }
+
+    //methode pour un lancer deux dés a 6 faces
+    rollTheDice() {
+        let d1 = Math.floor(Math.random() * 6) + 1;
+        let d2 = Math.floor(Math.random() * 6) + 1;
+        let somme = d1 + d2;
+        return { somme }
+    }
+
+    toString() {
+        this.board.forEach(element => {
+            console.log(element.toString())
+        });
+    }
+}
 module.exports = Board;
