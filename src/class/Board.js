@@ -49,36 +49,21 @@ class Board {
             } else {
                 this.board[player.x + 1][player.y] = this.board[player.x + 1][player.y] + id;
             }
-        } else {
-            this.CantMoveOnWall();
-        }
-
-
-        if (player.x - 1 == x && this.board[player.x - 1][player.y] != 'm') {
+        } else if (player.x - 1 == x && this.board[player.x - 1][player.y] != 'm') {
             this.board[player.x][player.y] = this.board[player.x][player.y].charAt(0);
             if (reg.test(this.board[player.x - 1][player.y])) {
                 this.placementRoom(id, player.x - 1, player.y);
             } else {
                 this.board[player.x - 1][player.y] = this.board[player.x - 1][player.y] + id;
             }
-        } else {
-            this.CantMoveOnWall();
-        }
-
-
-        if (player.y + 1 == y && this.board[player.x][player.y + 1] != 'm') {
+        } else if (player.y + 1 == y && this.board[player.x][player.y + 1] != 'm') {
             this.board[player.x][player.y] = this.board[player.x][player.y].charAt(0);
             if (reg.test(this.board[player.x][player.y + 1])) {
                 this.placementRoom(id, player.x, player.y + 1);
             } else {
                 this.board[player.x][player.y + 1] = this.board[player.x][player.y + 1] + id;
             }
-        } else {
-            this.CantMoveOnWall();
-        }
-
-
-        if (player.y - 1 == y && this.board[player.x][player.y - 1] != 'm') {
+        } else if (player.y - 1 == y && this.board[player.x][player.y - 1] != 'm') {
             this.board[player.x][player.y] = this.board[player.x][player.y].charAt(0);
             if (reg.test(this.board[player.x][player.y - 1])) {
                 this.placementRoom(id, player.x, player.y - 1);

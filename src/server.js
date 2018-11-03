@@ -174,9 +174,18 @@ serverSocket.on("connection", clientSocket => {
                 if (RollDicePlayer > 0) {
                     RollDicePlayer--;
                     board.movePlayer(IdNumOfPlayer, msg[1], msg[2]);
-                    if (RollDicePlayer === 0) {   //Ajouter: Ou joueur dans une piece
+
+                    let strRoom = "ABCDEFGHI";
+                    if (strRoom.includes(board.board[msg[1]][msg[2]])) {  // Le joueur à atteind une pièce.
+                        RollDicePlayer = 0;
                         PlayTurnOfPlayer.Action = "Offer";
+                    } else {
+                        if (RollDicePlayer === 0) {   // Le dés est à 0.
+                            NextTurnPlayer();
+                        }
                     }
+
+
                     console.log(RollDicePlayer);
                 }
             } else if (PlayTurnOfPlayer.Action === "RollDice") {
@@ -339,6 +348,7 @@ function FixePlayerStatusInGame() {
 }
 
 function NextTurnPlayer() {
+    console.log("Joueur Suivant");
     let Turn = PlayTurnOfPlayer.TurnIdPlayer;  //Tour du joueur actuel
     let Status = "NeedToChange";
 
