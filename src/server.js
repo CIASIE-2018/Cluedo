@@ -172,19 +172,21 @@ serverSocket.on("connection", clientSocket => {
         if (msg[0] == PlayTurnOfPlayer.TurnIdPlayer) {
             if (PlayTurnOfPlayer.Action === "Move") {
                 if (RollDicePlayer > 0) {
-                    RollDicePlayer--;
-                    board.movePlayer(IdNumOfPlayer, msg[1], msg[2]);
+                    let BoolMove = board.movePlayer(IdNumOfPlayer, msg[1], msg[2]);
+                
+                    if ( BoolMove !== false) {
+                        RollDicePlayer--;
 
-                    let strRoom = "ABCDEFGHI";
-                    if (strRoom.includes(board.board[msg[1]][msg[2]])) {  // Le joueur à atteind une pièce.
-                        RollDicePlayer = 0;
-                        PlayTurnOfPlayer.Action = "Offer";
-                    } else {
-                        if (RollDicePlayer === 0) {   // Le dés est à 0.
-                            NextTurnPlayer();
+                        let strRoom = "ABCDEFGHI";
+                        if (strRoom.includes(board.board[msg[1]][msg[2]])) {  // Le joueur à atteind une pièce.
+                            RollDicePlayer = 0;
+                            PlayTurnOfPlayer.Action = "Offer";
+                        } else {
+                            if (RollDicePlayer === 0) {   // Le dés est à 0.
+                                NextTurnPlayer();
+                            }
                         }
                     }
-
 
                     console.log(RollDicePlayer);
                 }
