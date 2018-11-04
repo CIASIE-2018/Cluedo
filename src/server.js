@@ -129,6 +129,7 @@ app.get("/cluedo", (request, response) => {
 
 
 
+console.log(hidden)
 
 //Variables socket
 
@@ -271,15 +272,16 @@ serverSocket.on("connection", clientSocket => {
     });
 
 
-
     // SOCKET ACCUSED
     clientSocket.on("Accused", msg => {
         if (msg[0] == PlayTurnOfPlayer.TurnIdPlayer) {
             if (PlayTurnOfPlayer.Action === "Offer") {
                 if (BoolCorrectAccusation(msg[1]) === true) {
-                    LogAccused = "Le Joueur " + (TableOFPlayer.indexOf(msg[0]) + 1) + " a gagné. Accusé : " + msg[1].join(", ");
+                    let LogAccused = "Le Joueur " + (TableOFPlayer.indexOf(msg[0]) + 1) + " a gagné. Accusé : " + msg[1].join(", ");
                     clientSocket.broadcast.emit('SetWinningPlayer', LogAccused);
                 } else {
+                    let LogAccused = "Vous avez perdu la partie."
+                    clientSocket.emit('SetLosePlayer', LogAccused);
                     RemovePlayerFromGame(msg[0]);
                     NextTurnPlayer();
                 }
