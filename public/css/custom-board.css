@@ -22,10 +22,15 @@
 }
 
 #MyCustomButton {
-    /* border: solid orange 0.2px; */
     height: 31px;
     width: 31px;
     margin-right: -3px;
+    box-sizing : border-box;
+    padding: 0;
+}
+#MyCustomButton2 {
+    height: 31px;
+    width: 31px;
     box-sizing : border-box;
     padding: 0;
 }
@@ -51,7 +56,7 @@
 }
 .CaseStyle {
     border: solid #EF3B36 0.2px; 
-    background: radial-gradient(circle, #FFFFFF 40%, #EF3B36);
+    background: radial-gradient(circle, #FFFFFF 55%, #EF3B36);
 }
 .CaseStartStyle {
     border: solid #EF3B36 0.2px; 
@@ -71,7 +76,7 @@
 
 #ligne {
     height: 31px;
-    width: calc(31px * 25);
+    width: calc(31px * 26);
 }
 
 #board {
@@ -88,7 +93,7 @@
 }
 
 #div-board {
-    width: calc(31px * 25);
+    width: auto;
 }
 
 #width-option {

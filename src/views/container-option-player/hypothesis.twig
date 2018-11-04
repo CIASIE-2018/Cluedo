@@ -54,7 +54,7 @@
                 $('#LogErrorHypo').empty().prepend(error);
             });
             socket.on('NoCard', msg => {
-                $('#TextDisplay').prepend(msg);
+                $('#TextDisplay').append("<p>"+msg+"</p>");
             });
         });
     }

@@ -32,7 +32,7 @@
         if (test == MyUuiD) {
             socket.emit('GetCard', test);
             socket.on("SeeCardFromPlayer", SeeCard => {
-                $('#TextDisplay').prepend(SeeCard);
+                $('#TextDisplay').append("<p>"+SeeCard+"</p>");
             });
         }
     });

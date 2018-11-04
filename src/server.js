@@ -89,6 +89,9 @@ let Game = {
     PlayerCard: []      //liste des Cartes de chaque joueurs
 };
 
+//Sauvegarde de la salle dans laquelle le joueur vient d'arriver.
+let PlayerInTheRoom = [];
+
 
 
 //Nombre de Cartes en fonction du nombre de joueurs
@@ -172,12 +175,35 @@ serverSocket.on("connection", clientSocket => {
         if (msg[0] == PlayTurnOfPlayer.TurnIdPlayer) {
             if (PlayTurnOfPlayer.Action === "Move") {
                 if (RollDicePlayer > 0) {
-                    RollDicePlayer--;
-                    board.movePlayer(IdNumOfPlayer, msg[1], msg[2]);
-                    if (RollDicePlayer === 0) {   //Ajouter: Ou joueur dans une piece
-                        PlayTurnOfPlayer.Action = "Offer";
+
+                    let strRoom = "ABCDEFGHI";
+
+                    if (strRoom.includes(PlayerInTheRoom[TableOFPlayer.indexOf(msg[0])])) { //Le joueur est dans une piece
+                        let BoolLeaveRoom = board.PlayerLeaveRoom(IdNumOfPlayer, msg[1], msg[2],PlayerInTheRoom[TableOFPlayer.indexOf(msg[0])]);
+                        if (BoolLeaveRoom !== false ) {
+                            PlayerInTheRoom[TableOFPlayer.indexOf(msg[0])] = 0;
+                            RollDicePlayer--;
+                        }
+
+                    } else {
+                        let BoolMove = board.movePlayer(IdNumOfPlayer, msg[1], msg[2]);
+
+                        if (BoolMove !== false) {
+                            RollDicePlayer--;
+                        
+                            if (strRoom.includes(board.board[msg[1]][msg[2]])) {  // Le joueur à atteind une pièce.
+                                RollDicePlayer = 0;
+                                PlayTurnOfPlayer.Action = "Offer";
+    
+                                PlayerInTheRoom[TableOFPlayer.indexOf(msg[0])] = board.board[msg[1]][msg[2]];
+                            } else {
+                                if (RollDicePlayer === 0) {   // Le dés est à 0.
+                                    NextTurnPlayer();
+                                }
+                            }
+                        }
                     }
-                    console.log(RollDicePlayer);
+                    clientSocket.broadcast.emit('NewBoard', board.board);
                 }
             } else if (PlayTurnOfPlayer.Action === "RollDice") {
                 console.log("Tu dois lancer les dés");
@@ -223,7 +249,7 @@ serverSocket.on("connection", clientSocket => {
 
                     if (CardFound.length === 0) {
                         msg = "Pas de cartes reçu";
-                        clientSocket.emit('NoCard', msg );
+                        clientSocket.emit('NoCard', msg);
                         NextTurnPlayer();
                     } else {
                         Str = CardFound[0].split(",");
@@ -245,16 +271,18 @@ serverSocket.on("connection", clientSocket => {
     });
 
 
-
     // SOCKET ACCUSED
     clientSocket.on("Accused", msg => {
         if (msg[0] == PlayTurnOfPlayer.TurnIdPlayer) {
             if (PlayTurnOfPlayer.Action === "Offer") {
                 if (BoolCorrectAccusation(msg[1]) === true) {
-                    LogAccused = "Le Joueur " + (TableOFPlayer.indexOf(msg[0]) + 1) + " a gagné. Accusé : " + msg[1].join(", ");
+                    let LogAccused = "Le Joueur " + (TableOFPlayer.indexOf(msg[0]) + 1) + " a gagné. Accusé : " + msg[1].join(", ");
                     clientSocket.broadcast.emit('SetWinningPlayer', LogAccused);
                 } else {
+                    let LogAccused = "Vous avez perdu la partie."
+                    clientSocket.emit('SetLosePlayer', LogAccused);
                     RemovePlayerFromGame(msg[0]);
+                    clientSocket.broadcast.emit('NewBoard', board.board);
                     NextTurnPlayer();
                 }
             } else {
@@ -339,6 +367,7 @@ function FixePlayerStatusInGame() {
 }
 
 function NextTurnPlayer() {
+    console.log("Joueur Suivant");
     let Turn = PlayTurnOfPlayer.TurnIdPlayer;  //Tour du joueur actuel
     let Status = "NeedToChange";
 
@@ -364,6 +393,8 @@ function NextTurnPlayer() {
 }
 
 function RemovePlayerFromGame(IdPlayer) {
+    let IdNumOfPlayer = TableOFPlayer.indexOf(IdPlayer) + 1;
+    board.RemovePlayerFromTheBoard(IdNumOfPlayer);
     PlayerStatusInGame.forEach(function (element) {
         if (element[0] === IdPlayer) {
             element[1] = "Lose";

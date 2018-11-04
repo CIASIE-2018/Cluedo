@@ -51,6 +51,9 @@
             socket.on("LogErrorAccu", error => {
                 $('#LogErrorAccu').empty().prepend(error);
             });
+            socket.on('SetLosePlayer', Loser => {
+                $('#StatusGame').empty().prepend(Loser);
+            });
         });
     }
 </script>
