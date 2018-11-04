@@ -53,6 +53,9 @@ app.get("/", (request, response) => {
         throw 'TooManyConnection';
     }
 });
+app.get("/rules",(request,response)=>{
+    response.render("rules");
+});
 
 
 
