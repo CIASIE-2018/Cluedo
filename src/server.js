@@ -129,7 +129,7 @@ app.get("/cluedo", (request, response) => {
         }
 
         let cardPack = Game.PlayerCard[IdNumOfPlayer];
-        response.render("cluedo", { board, ListOfAllCards, cardPack, MyUuiD, who });
+        response.render("cluedo", { board, ListOfAllCards, cardPack, MyUuiD });
     }
 });
 
