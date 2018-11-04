@@ -1,0 +1,23 @@
+h2{
+    background: none repeat scroll 0 0 rgba(0,0,0,0);
+    color: #FF7800;
+    border: medium none!important;
+    font-size: 2.5em;
+    margin: 10px 0;
+    padding: 0;
+}
+
+.texte{
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    text-align: justify;
+    font-size: 1.6em;
+}
+
+li{
+    font-size: 1.6em; 
+    margin: 1%;
+}
+
