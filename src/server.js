@@ -129,7 +129,6 @@ app.get("/cluedo", (request, response) => {
 
 
 
-console.log(hidden)
 
 //Variables socket
 

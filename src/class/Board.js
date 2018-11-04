@@ -41,7 +41,6 @@ class Board {
 
     movePlayer(id, x, y) {
         let reg = new RegExp('[A-I]');// reg ex pour tester les lettre
-        let idPlayer = "123456";
         let player = this.getPositionPlayer(id);
         if (player.x + 1 == x && player.y == y && this.board[player.x + 1][player.y] != 'm' && this.board[player.x + 1][player.y].length !== 2) {
             this.board[player.x][player.y] = this.board[player.x][player.y].charAt(0);
