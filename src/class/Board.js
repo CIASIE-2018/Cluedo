@@ -128,6 +128,11 @@ class Board {
         }
     }
 
+    RemovePlayerFromTheBoard(IdPlayer) {
+        let player = this.getPositionPlayer(IdPlayer);
+        this.board[player.x][player.y] = this.board[player.x][player.y].charAt(0);
+    }
+
 
     CantMoveOnThisCase() {
         console.log("Action impossible.");

@@ -283,6 +283,7 @@ serverSocket.on("connection", clientSocket => {
                     let LogAccused = "Vous avez perdu la partie."
                     clientSocket.emit('SetLosePlayer', LogAccused);
                     RemovePlayerFromGame(msg[0]);
+                    clientSocket.broadcast.emit('NewBoard', board.board);
                     NextTurnPlayer();
                 }
             } else {
@@ -393,6 +394,8 @@ function NextTurnPlayer() {
 }
 
 function RemovePlayerFromGame(IdPlayer) {
+    let IdNumOfPlayer = TableOFPlayer.indexOf(IdPlayer) + 1;
+    board.RemovePlayerFromTheBoard(IdNumOfPlayer);
     PlayerStatusInGame.forEach(function (element) {
         if (element[0] === IdPlayer) {
             element[1] = "Lose";
