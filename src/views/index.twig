@@ -15,16 +15,17 @@
                     </a>
                     <h1 class="titre">Joueurs :</h1>
                     <ul id="ListPlayers" style="list-style : none;">
-                        {% for ListOfPlayer in TableOFPlayer %}
-                            {% if MyUuiD == ListOfPlayer %}
-                                <li style="color: red;">{{ ListOfPlayer }}</li>
-                            {% else %}
+                        {% for ListOfPlayer in TableOFPseudo %}
                                 <li>{{ ListOfPlayer }}</li>
-                            {% endif %}
                         {% endfor %}
                     </ul>
+                    <p> Vous êtes le {{Pseudo}}</p>
                 </div>
             </div>
         </div>
     </body>
 </html>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+
+</script>

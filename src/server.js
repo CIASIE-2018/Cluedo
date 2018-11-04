@@ -36,22 +36,29 @@ app.use(session);
 
 //Tableau de sauvegarde des players
 let TableOFPlayer = new Array();
+let TableOFPseudo = new Array();
 let PlayerMax = 0;
+let MyUuiD = null;
 
 app.get("/", (request, response) => {
     //Sauvergarde des joueurs
-    let MyUuiD = request.session.player.uid;
+    MyUuiD = request.session.player.uid;
+    let Pseudo
 
     //Si l'Uuid n'existe pas && Nombre Max de joueurs dans la partie
     if ((TableOFPlayer.indexOf(MyUuiD) === -1) && (PlayerMax < 6)) {  //Premiere connexion du joueur
         TableOFPlayer.push(MyUuiD);
+        TableOFPseudo.push("Joueur "+(TableOFPlayer.length));
+        Pseudo="Joueur "+(TableOFPlayer.indexOf(MyUuiD)+1);
         PlayerMax++;
-        response.render("index", { TableOFPlayer, MyUuiD });
+        response.render("index", { TableOFPlayer, MyUuiD, TableOFPseudo,Pseudo });
     } else if (TableOFPlayer.includes(MyUuiD)) { //Le joueur est déjà dans le lobby 
-        response.render("index", { TableOFPlayer, MyUuiD });
+        Pseudo="Joueur "+(TableOFPlayer.indexOf(MyUuiD)+1);
+        response.render("index", { TableOFPlayer, MyUuiD, TableOFPseudo,Pseudo });
     } else { //Trop de joueurs connectés
         throw 'TooManyConnection';
     }
+
 });
 
 
@@ -122,7 +129,7 @@ app.get("/cluedo", (request, response) => {
         }
 
         let cardPack = Game.PlayerCard[IdNumOfPlayer];
-        response.render("cluedo", { board, ListOfAllCards, cardPack, MyUuiD });
+        response.render("cluedo", { board, ListOfAllCards, cardPack, MyUuiD, who });
     }
 });
 
@@ -366,8 +373,8 @@ function FixePlayerStatusInGame() {
     });
 }
 
-function NextTurnPlayer() {
-    console.log("Joueur Suivant");
+function NextTurnPlayer(res) {
+
     let Turn = PlayTurnOfPlayer.TurnIdPlayer;  //Tour du joueur actuel
     let Status = "NeedToChange";
 
