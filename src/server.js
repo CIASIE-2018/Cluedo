@@ -60,6 +60,9 @@ app.get("/", (request, response) => {
     }
 
 });
+app.get("/rules",(request,response)=>{
+    response.render("rules");
+});
 
 
 
