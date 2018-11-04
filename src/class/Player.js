@@ -13,15 +13,5 @@ class Player {
     getPseudo() {
         return this.pseudo;
     }
-
-    askCartes(joueur,cards) {
-        if(joueur.checkCartes(joueur.getCartes(),cards)){
-            //possède une/plusieurs cards
-        } else {
-            //joueur suivant
-        }
-    }
-
-
 }
 module.exports = Player;
