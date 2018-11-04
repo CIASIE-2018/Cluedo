@@ -124,7 +124,7 @@ class Board {
 
         }
     }
-    
+
     fdp() {
         console.log("gros fdp");
     }
